@@ -1,0 +1,18 @@
+#Consigna:
+
+Desarrolle un sistema para gestionar la información de los proyectos de una empresa de desarrollo de software, teniendo en cuenta que:
+    »En un momento dado, un cliente puede tener varios proyectos en curso.
+    »Se desea almacenar los datos personales del cliente, como su nombre, dirección, correo electrónico y número de teléfono. Además, cada cliente tiene asignado un código único de identificación.
+    »Cada proyecto es realizado para un único cliente, pero puede involucrar a varios desarrolladores.
+    »Es importante registrar la fecha de inicio y finalización de cada proyecto, el presupuesto asignado, el estado de avance y si el proyecto ha sido completado.
+    »Todos los desarrolladores están disponibles en la empresa hasta que sean asignados a un proyecto. Se requiere almacenar información sobre los desarrolladores, como su nombre, habilidades y disponibilidad.
+    »Los proyectos pueden ser solicitados por el cliente en persona, por teléfono o a través de correo electrónico.
+    »El sistema debe permitir el acceso a tres tipos de usuarios: clientes (con acceso solo para consultar sus proyectos), gerentes de proyecto (que administran los proyectos y clientes) y administradores de la empresa (encargados de gestionar los desarrolladores y todos los tipos de usuarios del sistema).
+
+
+Para ello:
+    »Analice los requerimientos anteriores
+    »Determine los objetos requeridos para implementar ese sistema
+    »Establezca los atributos que deben tener estos objetos
+    »Fije los comportamientos que exhibirán estos objetos
+    »Especifique la forma en que los objetos deben interactuar entre sí para cumplir con los requerimientos del sistema
