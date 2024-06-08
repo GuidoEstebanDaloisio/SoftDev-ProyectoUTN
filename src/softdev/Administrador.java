@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Administrador extends Usuario implements MenuAdministrador {
 
     public Administrador(String nombre, String contrasenia) {
-        super(nombre, contrasenia, 12);
+        super(nombre, contrasenia, 12, Administrador.class.getSimpleName());
     }
 
     @Override
@@ -77,24 +77,18 @@ public class Administrador extends Usuario implements MenuAdministrador {
         return opcion;
     }
 
-    public String seleccionarTipoUsuario() {
-        return elegirTipoDeUsuario();
-    }
 
-    public Usuario crearUsuario(int ultimoIdCliente, String tipoUsuario) {
+    public Usuario crearUsuario(int ultimoIdCliente) {
         Usuario nuevoUsuario = null;
 
+        String tipoUsuario = elegirTipoDeUsuario();
+        
         String nombreYContraseña[] = interfazCrearUsuario(tipoUsuario);
 
         switch (tipoUsuario) {
             case "CLIENTE" -> {
                 String direccionMailTelefono[] = ingresarDatosDelCliente();
                 nuevoUsuario = new Cliente(ultimoIdCliente + 1, direccionMailTelefono[0], direccionMailTelefono[1], Integer.parseInt(direccionMailTelefono[2]), nombreYContraseña[0], nombreYContraseña[1]);
-                if (nuevoUsuario != null) {
-                    System.out.println("Cliente generado exitosamente");
-                } else {
-                    System.out.println("Error al crear el cliente");
-                }
             }
             case "GERENTE" ->
                 nuevoUsuario = new Gerente(nombreYContraseña[0], nombreYContraseña[1]);
@@ -126,7 +120,7 @@ public class Administrador extends Usuario implements MenuAdministrador {
 
     }
 
-    public void verClientes(ArrayList<Cliente> clientes) {
+    public void mostrarClientes(ArrayList<Cliente> clientes) {
         if (clientes.isEmpty()) {
             System.out.println("*******************************************");
             System.out.println("EN ESTE MOMENTO NO HAY CLIENTES REGISTRADOS");
@@ -148,7 +142,7 @@ public class Administrador extends Usuario implements MenuAdministrador {
 
     }
 
-    public void verGerentes(ArrayList<Gerente> gerentes) {
+    public void mostrarGerentes(ArrayList<Gerente> gerentes) {
          if (gerentes.isEmpty()) {
             System.out.println("*******************************************");
             System.out.println("EN ESTE MOMENTO NO HAY GERENTES REGISTRADOS");
@@ -165,7 +159,7 @@ public class Administrador extends Usuario implements MenuAdministrador {
         }
     }
 
-    public void verAdministradores(ArrayList<Administrador> administradores) {
+    public void mostrarAdministradores(ArrayList<Administrador> administradores) {
         if (administradores.isEmpty()) {
             System.out.println("**************************************************");
             System.out.println("EN ESTE MOMENTO NO HAY ADMINISTRADORES REGISTRADOS");
@@ -182,11 +176,11 @@ public class Administrador extends Usuario implements MenuAdministrador {
         }
     }
 
-    public void verDesarrolladoresDisponbles() {
+    public void mostrarDesarrolladoresDisponbles() {
 
     }
 
-    public void verDesarrolladoresAsignados() {
+    public void mostrarDesarrolladoresAsignados() {
 
     }
 }

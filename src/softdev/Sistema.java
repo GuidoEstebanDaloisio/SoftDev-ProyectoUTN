@@ -10,13 +10,17 @@ public class Sistema implements MenuInicio {
     private ArrayList<Administrador> administradores;
     private ArrayList<Desarrollador> desarrolladores;
 
+    private ArrayList<Usuario> usuarios;
+
     private String usuarioActual;
-    private String contraseñaDeUsuarioActual;
     private int ultimoIdCliente = 0;
     private int ultimoIdDesarrollador;
 
     public Sistema() {
         // Inicializamos los ArrayLists
+
+        usuarios = new ArrayList<>();
+
         clientes = new ArrayList<>();
         gerentes = new ArrayList<>();
         administradores = new ArrayList<>();
@@ -27,22 +31,15 @@ public class Sistema implements MenuInicio {
     public void iniciar() {
         boolean salir = false;
 
-        
-        
-        
-        
-        if (administradores.isEmpty()) {
+        if (usuarios.isEmpty()) {
             //Primero creamos el primer usuario que va a ser un Administrador
             String primerUsuarioYContraseña[];
             primerUsuarioYContraseña = primerInicioDeSesion();
 
             crearPrimerUsuario(primerUsuarioYContraseña[0], primerUsuarioYContraseña[1]);
 
-            //Ahora que el primer administrador esta en el sistema:
-            //Obtenemos al primer administrador 
-            Administrador primerAdmin = administradores.get(0);
+            Administrador primerAdmin = (Administrador) usuarios.get(0);
 
-            //Le damos la bienvenida
             bienvenida(usuarioActual);
 
             while (!salir) {
@@ -61,23 +58,13 @@ public class Sistema implements MenuInicio {
         }
     }
 
-    private void crearPrimerUsuario(String primerNombreUsuario, String primeraContrasenia) {
-        Administrador primerUsuario = new Administrador(primerNombreUsuario, primeraContrasenia);
-
-        administradores.add(primerUsuario);
-
-        usuarioActual = primerNombreUsuario;
-        contraseñaDeUsuarioActual = primeraContrasenia;
-    }
-
     private boolean ejecutarAccion(String opcion, Usuario usuario) {
         boolean salir = false;
 
         switch (opcion) {
             case "NUEVO_USUARIO": {
-                String tipoUsuario = ((Administrador) usuario).seleccionarTipoUsuario();
-                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario(ultimoIdCliente, tipoUsuario);
-                guardarUsuario(nuevoUsuario, tipoUsuario);
+                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario(ultimoIdCliente);
+                guardarUsuario(nuevoUsuario);
                 break;
             }
             case "BORRAR_USUARIO": {
@@ -101,15 +88,16 @@ public class Sistema implements MenuInicio {
                 break;
             }
             case "VER_CLIENTES": {
-                ((Administrador) usuario).verClientes(clientes);
+
+                ((Administrador) usuario).mostrarClientes(obtenerUsuariosPorTipo(Cliente.class.getSimpleName()));
                 break;
             }
             case "VER_GERENTES": {
-                ((Administrador) usuario).verGerentes(gerentes);
+                ((Administrador) usuario).mostrarGerentes(obtenerUsuariosPorTipo(Gerente.class.getSimpleName()));
                 break;
             }
             case "VER_ADMINISTRADORES": {
-                ((Administrador) usuario).verAdministradores(administradores);
+                ((Administrador) usuario).mostrarAdministradores(obtenerUsuariosPorTipo(Administrador.class.getSimpleName()));
 
                 break;
             }
@@ -129,22 +117,33 @@ public class Sistema implements MenuInicio {
         return salir;
     }
 
-    private void guardarUsuario(Usuario usuario, String tipoUsuario) {
-        if (tipoUsuario.equals("CLIENTE")) {
-            clientes.add((Cliente) usuario);
-        } else if (tipoUsuario.equals("GERENTE")) {
-            gerentes.add((Gerente) usuario);
-        } else if (tipoUsuario.equals("ADMINISTRADOR")) {
-            administradores.add((Administrador) usuario);
-        }
+    private void crearPrimerUsuario(String primerNombreUsuario, String primeraContrasenia) {
+        Administrador primerUsuario = new Administrador(primerNombreUsuario, primeraContrasenia);
+
+        usuarios.add(primerUsuario);
+
+        usuarioActual = primerNombreUsuario;
     }
 
-    public void setUltimoIdCliente(int ultimoIdCliente) {
+    private void guardarUsuario(Usuario usuario) {
+        usuarios.add(usuario);
+    }
+
+    private void setUltimoIdCliente(int ultimoIdCliente) {
         this.ultimoIdCliente = ultimoIdCliente;
     }
 
-    public void setUltimoIdDesarrollador(int ultimoIdDesarrollador) {
+    private void setUltimoIdDesarrollador(int ultimoIdDesarrollador) {
         this.ultimoIdDesarrollador = ultimoIdDesarrollador;
     }
 
+     private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(String tipoUsuario) {
+        ArrayList<T> usuariosFiltrados = new ArrayList<>();
+        for (Usuario usuario : usuarios) {
+            if (usuario.getClass().getSimpleName().equals(tipoUsuario)) {
+                usuariosFiltrados.add((T) usuario);
+            }
+        }
+        return usuariosFiltrados;
+    }
 }
