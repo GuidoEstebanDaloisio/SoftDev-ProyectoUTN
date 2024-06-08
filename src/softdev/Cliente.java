@@ -8,7 +8,7 @@ public class Cliente extends Usuario {
     private int telefono;
 
     public Cliente(int id, String direccion, String mail, int telefono, String nombre, String contrasenia) {
-        super(nombre, contrasenia);
+        super(nombre, contrasenia, 3);
         this.id = id;
         this.direccion = direccion;
         this.mail = mail;
@@ -16,11 +16,11 @@ public class Cliente extends Usuario {
     }
 
     @Override
-    public void mostrarAcciones() {
+    public int elegirAccion() {
         System.out.println("(1)Solicitar proyecto");
         System.out.println("(2)Consultar por proyecto");
         System.out.println("(3)Salir");
-
+        return 0;
     }
 
     public void solicitarProyecto() {

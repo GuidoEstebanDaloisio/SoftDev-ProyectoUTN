@@ -1,9 +1,8 @@
 package softdev;
 
 import java.util.ArrayList;
-import static softdev.EntradaSalida.*;
 
-public class Sistema {
+public class Sistema implements MenuInicio {
 
     private ArrayList<Cliente> clientes;
     private ArrayList<Gerente> gerentes;
@@ -44,11 +43,8 @@ public class Sistema {
             while (!salir) {
 
                 // Llamamos al método mostrarAcciones
-                primerAdmin.mostrarAcciones();
-                int entrada = leerEntrada();
+                int entrada = primerAdmin.elegirAccion();
 
-                
-                
                 //Y ejecutamos la accion solicitada a la vez que consultamos si eligieron la opcion de salir
                 salir = accionesDeUsuario(primerAdmin, entrada);
             }
@@ -70,7 +66,7 @@ public class Sistema {
         contraseñaDeUsuarioActual = primeraContrasenia;
     }
 
- private boolean accionesDeUsuario(Usuario usuario, int accionNum) {
+    private boolean accionesDeUsuario(Usuario usuario, int accionNum) {
         boolean salir = false;
         if (usuario instanceof Cliente) {
             switch (accionNum) {
@@ -96,6 +92,10 @@ public class Sistema {
                     ((Administrador) usuario).verClientes(clientes);
                     break;
                 }
+                case 7: {
+                    ((Administrador) usuario).verAdministradores(administradores);
+                    break;
+                }
                 case 10: {
                     salir = true;
                     break;
@@ -103,7 +103,10 @@ public class Sistema {
                 // Otras acciones para Administrador
             }
         } else {
-            error("Tipo de usuario inválido");
+
+            System.out.println("###################################################");
+            System.out.println("ERROR: Tipo de usuario inválido");
+            System.out.println("###################################################");
         }
         return salir;
     }

@@ -1,22 +1,24 @@
 package softdev;
 
 import java.util.ArrayList;
-import static softdev.EntradaSalida.*;
 
-public class Administrador extends Usuario {
+public class Administrador extends Usuario implements MenuAdministrador {
 
     public Administrador(String nombre, String contrasenia) {
-        super(nombre, contrasenia);
+        super(nombre, contrasenia, 10);
     }
 
     @Override
-    public void mostrarAcciones() {
+    public int elegirAccion() {
+        System.out.println("==================================================================================");
         System.out.println("(1)Crear usuario                        | (5)Ver clientes");
         System.out.println("(2)Eliminar usuario                     | (6)Ver gerentes");
         System.out.println("(3)Registrar desarrolador               | (7)Ver administradores");
         System.out.println("(4)Eliminar desarrolador                | (8)Ver desarrolladores dipobles");
         System.out.println("(5)Asignar desarrolador a un proyecto   | (9)Ver desarrolladores asignados");
         System.out.println("(6)Quitar desarrolador de un proyecto   | (10)Salir");
+
+        return leerOpcionMenu(cantidadDeOpciones);
     }
 
     public Usuario crearUsuario(int ultimoIdCliente) {
@@ -80,8 +82,14 @@ public class Administrador extends Usuario {
 
     }
 
-    public void verAdministradores() {
+    public void verAdministradores(ArrayList<Administrador> administradores) {
+        presentarListaDeAdministradores();
 
+        for (Administrador administrador : administradores) {
+            System.out.println("-----------------------");
+            System.out.println("Nombre: " + administrador.getNombre()+"\n");
+        }
+        System.out.println("-----------------------");
     }
 
     public void verDesarrolladoresDisponbles() {
@@ -92,4 +100,10 @@ public class Administrador extends Usuario {
 
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    
+    
 }
