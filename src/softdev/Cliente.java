@@ -16,11 +16,16 @@ public class Cliente extends Usuario {
     }
 
     @Override
-    public int elegirAccion() {
+    public String elegirAccion() {
         System.out.println("(1)Solicitar proyecto");
         System.out.println("(2)Consultar por proyecto");
         System.out.println("(3)Salir");
-        return 0;
+        return null;
+    }
+
+    @Override
+    public String ejecutarAccion(int accionNum) {
+        return null;
     }
 
     public void solicitarProyecto() {
@@ -46,13 +51,4 @@ public class Cliente extends Usuario {
     public int getTelefono() {
         return telefono;
     }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
 }

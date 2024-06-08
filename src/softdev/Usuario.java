@@ -14,6 +14,13 @@ public abstract class Usuario {
 
 
 
-    public abstract int elegirAccion();
+    public abstract String elegirAccion();
 
+    public abstract String ejecutarAccion(int accionNum);
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    
 }

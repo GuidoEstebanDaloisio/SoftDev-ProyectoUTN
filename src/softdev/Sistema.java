@@ -1,6 +1,7 @@
 package softdev;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class Sistema implements MenuInicio {
 
@@ -26,6 +27,10 @@ public class Sistema implements MenuInicio {
     public void iniciar() {
         boolean salir = false;
 
+        
+        
+        
+        
         if (administradores.isEmpty()) {
             //Primero creamos el primer usuario que va a ser un Administrador
             String primerUsuarioYContraseña[];
@@ -42,11 +47,10 @@ public class Sistema implements MenuInicio {
 
             while (!salir) {
 
-                // Llamamos al método mostrarAcciones
-                int entrada = primerAdmin.elegirAccion();
+                String entrada = primerAdmin.elegirAccion();
 
-                //Y ejecutamos la accion solicitada a la vez que consultamos si eligieron la opcion de salir
-                salir = accionesDeUsuario(primerAdmin, entrada);
+                salir = ejecutarAccion(entrada, primerAdmin);
+
             }
 
         } else {
@@ -66,57 +70,71 @@ public class Sistema implements MenuInicio {
         contraseñaDeUsuarioActual = primeraContrasenia;
     }
 
-    private boolean accionesDeUsuario(Usuario usuario, int accionNum) {
+    private boolean ejecutarAccion(String opcion, Usuario usuario) {
         boolean salir = false;
-        if (usuario instanceof Cliente) {
-            switch (accionNum) {
-                case 3:
-                    salir = true;
-                    break;
-            }
-        } else if (usuario instanceof Gerente) {
-            switch (accionNum) {
-                case 4:
-                    salir = true;
-                    break;
-            }
-        } else if (usuario instanceof Administrador) {
-            switch (accionNum) {
-                case 1: {
-                    Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario(ultimoIdCliente);
-                    ultimoIdCliente++;
-                    guardarUsuario(nuevoUsuario);
-                    break;
-                }
-                case 5: {
-                    ((Administrador) usuario).verClientes(clientes);
-                    break;
-                }
-                case 7: {
-                    ((Administrador) usuario).verAdministradores(administradores);
-                    break;
-                }
-                case 10: {
-                    salir = true;
-                    break;
-                }
-                // Otras acciones para Administrador
-            }
-        } else {
 
-            System.out.println("###################################################");
-            System.out.println("ERROR: Tipo de usuario inválido");
-            System.out.println("###################################################");
+        switch (opcion) {
+            case "NUEVO_USUARIO": {
+                String tipoUsuario = ((Administrador) usuario).seleccionarTipoUsuario();
+                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario(ultimoIdCliente, tipoUsuario);
+                guardarUsuario(nuevoUsuario, tipoUsuario);
+                break;
+            }
+            case "BORRAR_USUARIO": {
+                salir = true;
+                break;
+            }
+            case "NUEVO_DESARROLLADOR": {
+                salir = true;
+                break;
+            }
+            case "BORRAR_DESARROLLADOR": {
+                salir = true;
+                break;
+            }
+            case "ASIGNAR_DESARROLLADOR": {
+                salir = true;
+                break;
+            }
+            case "DESASIGNAR_DESARROLLADOR": {
+                salir = true;
+                break;
+            }
+            case "VER_CLIENTES": {
+                ((Administrador) usuario).verClientes(clientes);
+                break;
+            }
+            case "VER_GERENTES": {
+                ((Administrador) usuario).verGerentes(gerentes);
+                break;
+            }
+            case "VER_ADMINISTRADORES": {
+                ((Administrador) usuario).verAdministradores(administradores);
+
+                break;
+            }
+            case "VER_DESARROLLADORES_DISPONIBLES": {
+                salir = true;
+                break;
+            }
+            case "VER_DESARROLLADORES_ASIGNADOS": {
+                salir = true;
+                break;
+            }
+            case "SALIR": {
+                salir = true;
+                break;
+            }
         }
         return salir;
     }
 
-    private void guardarUsuario(Usuario usuario) {
-        if (usuario instanceof Cliente) {
+    private void guardarUsuario(Usuario usuario, String tipoUsuario) {
+        if (tipoUsuario.equals("CLIENTE")) {
             clientes.add((Cliente) usuario);
-        } else if (usuario instanceof Gerente) {
+        } else if (tipoUsuario.equals("GERENTE")) {
             gerentes.add((Gerente) usuario);
-        } else if (usuario instanceof Administrador) {
+        } else if (tipoUsuario.equals("ADMINISTRADOR")) {
             administradores.add((Administrador) usuario);
         }
     }
