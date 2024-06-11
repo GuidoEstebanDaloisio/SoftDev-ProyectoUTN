@@ -13,8 +13,8 @@ public class Administrador extends Usuario implements MenuAdministrador {
         System.out.println("==================================================================================");
         System.out.println("(1)Crear usuario                        | (7)Ver clientes");
         System.out.println("(2)Eliminar usuario                     | (8)Ver gerentes");
-        System.out.println("(3)Registrar desarrolador               | (9)Ver administradores");
-        System.out.println("(4)Eliminar desarrolador                | (10)Ver desarrolladores dipobles");
+        System.out.println("(3)Registrar desarrollador               | (9)Ver administradores");
+        System.out.println("(4)Eliminar desarrolador                | (10)Ver desarrolladores diponibles");
         System.out.println("(5)Asignar desarrolador a un proyecto   | (11)Ver desarrolladores asignados");
         System.out.println("(6)Quitar desarrolador de un proyecto   | (12)Salir");
 
@@ -25,87 +25,76 @@ public class Administrador extends Usuario implements MenuAdministrador {
     public String ejecutarAccion(int accionNum) {
         String opcion = null;
         switch (accionNum) {
-            case 1: {
+            case 1 -> {
                 opcion = "NUEVO_USUARIO";
-                break;
             }
-            case 2: {
+            case 2 -> {
                 opcion = "BORRAR_USUARIO";
-                break;
             }
-            case 3: {
+            case 3 -> {
                 opcion = "NUEVO_DESARROLLADOR";
-                break;
             }
-            case 4: {
+            case 4 -> {
                 opcion = "BORRAR_DESARROLLADOR";
-                break;
             }
-            case 5: {
+            case 5 -> {
                 opcion = "ASIGNAR_DESARROLLADOR";
-                break;
             }
-            case 6: {
+            case 6 -> {
                 opcion = "DESASIGNAR_DESARROLLADOR";
-                break;
             }
-            case 7: {
+            case 7 -> {
                 opcion = "VER_CLIENTES";
-                break;
             }
-            case 8: {
+            case 8 -> {
                 opcion = "VER_GERENTES";
-                break;
             }
-            case 9: {
+            case 9 -> {
                 opcion = "VER_ADMINISTRADORES";
-                break;
             }
-            case 10: {
+            case 10 -> {
                 opcion = "VER_DESARROLLADORES_DISPONIBLES";
-                break;
             }
-            case 11: {
+            case 11 -> {
                 opcion = "VER_DESARROLLADORES_ASIGNADOS";
-                break;
             }
-            case 12: {
+            case 12 -> {
                 opcion = "SALIR";
-                break;
             }
         }
         return opcion;
     }
 
-
     public Usuario crearUsuario(int ultimoIdCliente) {
         Usuario nuevoUsuario = null;
 
-        String tipoUsuario = elegirTipoDeUsuario();
-        
-        String nombreYContraseña[] = interfazCrearUsuario(tipoUsuario);
+        String tipoUsuarioNombreYContraseña[] = ingresarDatosParaNuevoUsuario();
 
-        switch (tipoUsuario) {
+        switch (tipoUsuarioNombreYContraseña[0]) {
             case "CLIENTE" -> {
                 String direccionMailTelefono[] = ingresarDatosDelCliente();
-                nuevoUsuario = new Cliente(ultimoIdCliente + 1, direccionMailTelefono[0], direccionMailTelefono[1], Integer.parseInt(direccionMailTelefono[2]), nombreYContraseña[0], nombreYContraseña[1]);
+                nuevoUsuario = new Cliente(ultimoIdCliente + 1, direccionMailTelefono[0], direccionMailTelefono[1], Integer.parseInt(direccionMailTelefono[2]), tipoUsuarioNombreYContraseña[1], tipoUsuarioNombreYContraseña[2]);
             }
             case "GERENTE" ->
-                nuevoUsuario = new Gerente(nombreYContraseña[0], nombreYContraseña[1]);
+                nuevoUsuario = new Gerente(tipoUsuarioNombreYContraseña[1], tipoUsuarioNombreYContraseña[2]);
             case "ADMINISTRADOR" ->
-                nuevoUsuario = new Administrador(nombreYContraseña[0], nombreYContraseña[1]);
+                nuevoUsuario = new Administrador(tipoUsuarioNombreYContraseña[1], tipoUsuarioNombreYContraseña[2]);
             default -> {
             }
         }
         return nuevoUsuario;
     }
 
-    public void eliminarUsuario() {
+    public void eliminarUsuario(Usuario usuario) {
 
     }
 
-    public void registrarDesarrollador() {
+    public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador) {
+        String nombreYHabilidad[] = ingresarDatosParaNuevoDesarrollador();
 
+        Desarrollador nuevoDesarrollador = new Desarrollador(ultimoIdDesarrollador + 1, nombreYHabilidad[0], nombreYHabilidad[1]);
+
+        return nuevoDesarrollador;
     }
 
     public void eliminarDesarrollador() {
@@ -143,17 +132,17 @@ public class Administrador extends Usuario implements MenuAdministrador {
     }
 
     public void mostrarGerentes(ArrayList<Gerente> gerentes) {
-         if (gerentes.isEmpty()) {
+        if (gerentes.isEmpty()) {
             System.out.println("*******************************************");
             System.out.println("EN ESTE MOMENTO NO HAY GERENTES REGISTRADOS");
             System.out.println("*******************************************");
         } else {
-            presentarListaDeClientes();
+            presentarListaDeGerentes();
 
             for (Gerente gerente : gerentes) {
                 System.out.println("------------------");
                 System.out.println("Nombre: " + gerente.getNombre());
-                System.out.println(); // Salto de línea entre cada cliente
+                System.out.println();
             }
             System.out.println("------------------");
         }
@@ -165,22 +154,52 @@ public class Administrador extends Usuario implements MenuAdministrador {
             System.out.println("EN ESTE MOMENTO NO HAY ADMINISTRADORES REGISTRADOS");
             System.out.println("**************************************************");
         } else {
-            presentarListaDeClientes();
+            presentarListaDeAdministradores();
 
             for (Administrador administrador : administradores) {
                 System.out.println("-------------------------");
                 System.out.println("Nombre: " + administrador.getNombre());
-                System.out.println(); // Salto de línea entre cada cliente
+                System.out.println();
             }
             System.out.println("-------------------------");
         }
     }
 
-    public void mostrarDesarrolladoresDisponbles() {
+    public void mostrarDesarrolladoresDisponbles(ArrayList<Desarrollador> desarrolladores) {
+        if (desarrolladores.isEmpty()) {
+            System.out.println("**************************************************");
+            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES DISPONIBLES");
+            System.out.println("**************************************************");
+        } else {
+            presentarListaDeDesarrolladoresDisponibles();
 
+            for (Desarrollador desarrollador : desarrolladores) {
+                System.out.println("-------------------------------------");
+                System.out.println("Id: " + desarrollador.getId());
+                System.out.println("Nombre: " + desarrollador.getNombre());
+                System.out.println("Habilidad: " + desarrollador.getHabilidad());
+                System.out.println();
+            }
+            System.out.println("-------------------------------------");
+        }
     }
 
-    public void mostrarDesarrolladoresAsignados() {
+    public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores) {
+        if (desarrolladores.isEmpty()) {
+            System.out.println("**************************************************");
+            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES DISPONIBLES");
+            System.out.println("**************************************************");
+        } else {
+            presentarListaDeDesarrolladoresAsignados();
 
+            for (Desarrollador desarrollador : desarrolladores) {
+                System.out.println("-----------------------------------");
+                System.out.println("Id: " + desarrollador.getId());
+                System.out.println("Nombre: " + desarrollador.getNombre());
+                System.out.println("Habilidad: " + desarrollador.getHabilidad());
+                System.out.println();
+            }
+            System.out.println("-----------------------------------");
+        }
     }
 }

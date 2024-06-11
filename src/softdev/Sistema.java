@@ -1,29 +1,20 @@
 package softdev;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class Sistema implements MenuInicio {
 
-    private ArrayList<Cliente> clientes;
-    private ArrayList<Gerente> gerentes;
-    private ArrayList<Administrador> administradores;
     private ArrayList<Desarrollador> desarrolladores;
 
     private ArrayList<Usuario> usuarios;
 
     private String usuarioActual;
-    private int ultimoIdCliente = 0;
-    private int ultimoIdDesarrollador;
 
     public Sistema() {
         // Inicializamos los ArrayLists
 
         usuarios = new ArrayList<>();
 
-        clientes = new ArrayList<>();
-        gerentes = new ArrayList<>();
-        administradores = new ArrayList<>();
         desarrolladores = new ArrayList<>();
 
     }
@@ -63,7 +54,7 @@ public class Sistema implements MenuInicio {
 
         switch (opcion) {
             case "NUEVO_USUARIO": {
-                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario(ultimoIdCliente);
+                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario(obtenerUltimoIdCliente());
                 guardarUsuario(nuevoUsuario);
                 break;
             }
@@ -72,7 +63,8 @@ public class Sistema implements MenuInicio {
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
-                salir = true;
+                Desarrollador nuevoDesarrollador = ((Administrador) usuario).registrarDesarrollador(obtenerUltimoIdDesarrollador());
+                guardarDesarrollador(nuevoDesarrollador);
                 break;
             }
             case "BORRAR_DESARROLLADOR": {
@@ -102,14 +94,15 @@ public class Sistema implements MenuInicio {
                 break;
             }
             case "VER_DESARROLLADORES_DISPONIBLES": {
-                salir = true;
+                ((Administrador) usuario).mostrarDesarrolladoresDisponbles(obtenerDesarrolladoresDisponibles());
                 break;
             }
             case "VER_DESARROLLADORES_ASIGNADOS": {
-                salir = true;
+                ((Administrador) usuario).mostrarDesarrolladoresAsignados(obtenerDesarrolladoresAsignados());
                 break;
             }
             case "SALIR": {
+                saludoDespedida();
                 salir = true;
                 break;
             }
@@ -125,19 +118,39 @@ public class Sistema implements MenuInicio {
         usuarioActual = primerNombreUsuario;
     }
 
+    private int obtenerUltimoIdCliente() {
+        int maxId = 0;
+        for (Usuario usuario : usuarios) {
+            if (usuario.getClass().getSimpleName().equals(Cliente.class.getSimpleName())) {
+                int id = ((Cliente) usuario).getId();
+                if (id > maxId) {
+                    maxId = id;
+                }
+            }
+        }
+        return maxId;
+    }
+
+    private int obtenerUltimoIdDesarrollador() {
+        int maxId = 0;
+        for (Desarrollador desarrollador : desarrolladores) {
+            int id = desarrollador.id;
+            if (id > maxId) {
+                maxId = id;
+            }
+        }
+        return maxId;
+    }
+
     private void guardarUsuario(Usuario usuario) {
         usuarios.add(usuario);
     }
 
-    private void setUltimoIdCliente(int ultimoIdCliente) {
-        this.ultimoIdCliente = ultimoIdCliente;
+    private void guardarDesarrollador(Desarrollador desarrollador) {
+        desarrolladores.add(desarrollador);
     }
 
-    private void setUltimoIdDesarrollador(int ultimoIdDesarrollador) {
-        this.ultimoIdDesarrollador = ultimoIdDesarrollador;
-    }
-
-     private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(String tipoUsuario) {
+    private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(String tipoUsuario) {
         ArrayList<T> usuariosFiltrados = new ArrayList<>();
         for (Usuario usuario : usuarios) {
             if (usuario.getClass().getSimpleName().equals(tipoUsuario)) {
@@ -145,5 +158,25 @@ public class Sistema implements MenuInicio {
             }
         }
         return usuariosFiltrados;
+    }
+
+    private ArrayList<Desarrollador> obtenerDesarrolladoresDisponibles() {
+        ArrayList<Desarrollador> desarrolladoresDisponibles = new ArrayList<>();
+        for (Desarrollador desarrollador : desarrolladores) {
+            if (desarrollador.disponible) {
+                desarrolladoresDisponibles.add(desarrollador);
+            }
+        }
+        return desarrolladoresDisponibles;
+    }
+
+    private ArrayList<Desarrollador> obtenerDesarrolladoresAsignados() {
+        ArrayList<Desarrollador> desarrolladoresAsignados = new ArrayList<>();
+        for (Desarrollador desarrollador : desarrolladores) {
+            if (!desarrollador.disponible) {
+                desarrolladoresAsignados.add(desarrollador);
+            }
+        }
+        return desarrolladoresAsignados;
     }
 }

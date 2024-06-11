@@ -52,7 +52,7 @@ public interface Menu {
                 opcion = entrada.nextInt();
                 if (!opcionValida(cantidadOpciones, opcion)) {
                     System.out.println("     -----------------------------------------------");
-                    System.out.printf("     Opcion no valida, ingrse un numero entre 1 y %d\n", cantidadOpciones);
+                    System.out.printf("     Opcion no valida, ingrese un numero entre 1 y %d\n", cantidadOpciones);
                     System.out.println("     -----------------------------------------------\n");
                 }
             } catch (InputMismatchException e) {

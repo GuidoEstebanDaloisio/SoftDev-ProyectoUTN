@@ -4,7 +4,54 @@ import java.util.Scanner;
 
 public interface MenuAdministrador extends Menu {
 
-    default String elegirTipoDeUsuario() {
+    default String[] ingresarDatosParaNuevoUsuario() {
+        String contorno = "=================================================";
+        String mensaje = "Ingrese los datos para registrar un nuevo usuario";
+
+        System.out.println(contorno);
+        System.out.println(mensaje);
+        System.out.println(contorno);
+
+        String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
+        String nombreYContraseña[] = interfazCrearUsuario(tipoUsuario);
+
+        String tipoUsuarioNombreYContraseña[] = {tipoUsuario, nombreYContraseña[0], nombreYContraseña[1]};
+
+        return tipoUsuarioNombreYContraseña;
+    }
+
+    default void ingresarDatosParaBorrarUsuario() {
+        String contorno = "=============================================";
+        String mensaje = "Ingrese los datos del usuario que desea borrar";
+
+        System.out.println(contorno);
+        System.out.println(mensaje);
+        System.out.println(contorno);
+
+        String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
+
+    }
+
+    default String[] ingresarDatosParaNuevoDesarrollador() {
+        Scanner entrada = new Scanner(System.in);
+
+        System.out.println("=======================================================");
+        System.out.println("Ingrese los datos para registrar un nuevo desarrollador");
+        System.out.println("=======================================================");
+
+        System.out.printf("Nombre: ");
+        String nombre = entrada.next();
+
+        System.out.printf("Habilidad: ");
+        String habilidad = entrada.next();
+
+        String nombreYHabilidad[] = {nombre, habilidad};
+
+        espaciarPantallas();
+        return nombreYHabilidad;
+    }
+
+    default String elegirTipoDeUsuario(String contorno, String mensaje) {
         String tipoUsuario = "";
 
         while (!tipoUsuarioValido(tipoUsuario)) {
@@ -14,11 +61,13 @@ public interface MenuAdministrador extends Menu {
                 System.out.println("          ------------------------");
                 System.out.println("          TIPO DE USUARIO INVALIDO");
                 System.out.println("          ------------------------");
-            }
 
-            System.out.println("=================================================");
-            System.out.println("Ingrese los datos para registrar un nuevo usuario");
-            System.out.println("=================================================");
+                //Se repite el primer mensaje para que el usuario sepa que debe poner
+                System.out.println(contorno);
+                System.out.println(mensaje);
+                System.out.println(contorno);
+
+            }
 
             System.out.printf("Tipo de usuario: ");
             Scanner entrada = new Scanner(System.in);
@@ -63,16 +112,29 @@ public interface MenuAdministrador extends Menu {
         System.out.println("------------------");
         System.out.println("Lista de clientes:");
     }
-    
+
     default void presentarListaDeGerentes() {
         espaciarPantallas();
         System.out.println("------------------");
         System.out.println("Lista de gerentes:");
     }
-    
+
     default void presentarListaDeAdministradores() {
         espaciarPantallas();
         System.out.println("-------------------------");
         System.out.println("Lista de administradores:");
     }
+
+    default void presentarListaDeDesarrolladoresDisponibles() {
+        espaciarPantallas();
+        System.out.println("-------------------------------------");
+        System.out.println("Lista de desarrolladores disponibles:");
+    }
+
+    default void presentarListaDeDesarrolladoresAsignados() {
+        espaciarPantallas();
+        System.out.println("-----------------------------------");
+        System.out.println("Lista de desarrolladores asignados:");
+    }
+
 }

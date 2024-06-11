@@ -43,6 +43,12 @@ public interface MenuInicio extends Menu {
         return ingresarUsuarioYContraseña();
     }
     
+    default void saludoDespedida(){
+        System.out.println("===================================");
+        System.out.println("Gracias por usar el sistema SoftDev");
+        System.out.println("         ¡Vuelva pronto!");
+        System.out.println("===================================");
+    }
     
     //----------------------EXCLUSIVO DEL PRIMER USUARIO----------------------
     default String[] primerInicioDeSesion() {
