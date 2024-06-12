@@ -2,14 +2,12 @@ package softdev;
 
 public class Cliente extends Usuario {
 
-    private int id;
     private String direccion;
     private String mail;
     private int telefono;
 
-    public Cliente(int id, String direccion, String mail, int telefono, String nombre, String contrasenia) {
-        super(nombre, contrasenia, 3, "Cliente");
-        this.id = id;
+    public Cliente(String direccion, String mail, int telefono, String nombre, String contrasenia) {
+        super(nombre, contrasenia, 3);
         this.direccion = direccion;
         this.mail = mail;
         this.telefono = telefono;
@@ -34,10 +32,6 @@ public class Cliente extends Usuario {
 
     public void consultarProyecto() {
 
-    }
-
-    public int getId() {
-        return id;
     }
 
     public String getDireccion() {

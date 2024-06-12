@@ -20,8 +20,9 @@ public interface MenuAdministrador extends Menu {
         return tipoUsuarioNombreYContraseña;
     }
 
-    default void ingresarDatosParaBorrarUsuario() {
-        String contorno = "=============================================";
+    default String[] ingresarDatosParaBorrarUsuario() {
+        Scanner entrada = new Scanner(System.in);
+        String contorno = "==============================================";
         String mensaje = "Ingrese los datos del usuario que desea borrar";
 
         System.out.println(contorno);
@@ -29,6 +30,16 @@ public interface MenuAdministrador extends Menu {
         System.out.println(contorno);
 
         String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
+
+        System.out.printf("Id: ");
+        String id = entrada.next();
+
+        System.out.printf("Nombre: ");
+        String nombre = entrada.next().toUpperCase();
+
+        String tipoUsuarioIdYNombre[] = {tipoUsuario, id, nombre};
+        espaciarPantallas();
+        return tipoUsuarioIdYNombre;
 
     }
 
@@ -72,7 +83,6 @@ public interface MenuAdministrador extends Menu {
             System.out.printf("Tipo de usuario: ");
             Scanner entrada = new Scanner(System.in);
             tipoUsuario = entrada.next().toUpperCase();
-            tipoUsuario = deLetraInicialATipoDeUsuario(tipoUsuario);
 
         }
         return tipoUsuario;

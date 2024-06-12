@@ -1,9 +1,9 @@
 package softdev;
 
 public class Gerente extends Usuario {
-
-    public Gerente(String nombre, String contrasenia) {
-        super(nombre, contrasenia, 4, "Gerente");
+   
+    public Gerente( String nombre, String contrasenia) {
+        super(nombre, contrasenia, 4);
     }
 
     @Override

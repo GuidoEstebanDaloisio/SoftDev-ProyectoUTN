@@ -2,19 +2,16 @@ package softdev;
 
 public abstract class Usuario {
 
+    protected int id;
     protected String nombre;
     protected String contrasenia;
     protected int cantidadDeOpciones;
-    protected String tipoUsuario;
 
-    public Usuario(String nombre, String contrasenia, int cantidadDeOpciones, String tipoUsuario) {
+    public Usuario(String nombre, String contrasenia, int cantidadDeOpciones) {
         this.nombre = nombre;
         this.contrasenia = contrasenia;
         this.cantidadDeOpciones = cantidadDeOpciones;
-        this.tipoUsuario = tipoUsuario;
     }
-
-
 
     public abstract String elegirAccion();
 
@@ -24,7 +21,13 @@ public abstract class Usuario {
         return nombre;
     }
 
-    public String getTipoUsuario() {
-        return tipoUsuario;
-    }   
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+
 }

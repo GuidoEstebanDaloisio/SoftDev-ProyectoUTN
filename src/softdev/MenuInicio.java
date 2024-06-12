@@ -46,7 +46,7 @@ public interface MenuInicio extends Menu {
     default void saludoDespedida(){
         System.out.println("===================================");
         System.out.println("Gracias por usar el sistema SoftDev");
-        System.out.println("         ¡Vuelva pronto!");
+        System.out.println("         Vuelva pronto!");
         System.out.println("===================================");
     }
     

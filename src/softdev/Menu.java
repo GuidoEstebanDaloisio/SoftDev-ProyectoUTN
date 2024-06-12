@@ -3,12 +3,16 @@ package softdev;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+
 public interface Menu {
 
     default boolean tipoUsuarioValido(String tipoUsuario) {
         return tipoUsuario.equals("CLIENTE") || tipoUsuario.equals("GERENTE") || tipoUsuario.equals("ADMINISTRADOR");
     }
 
+
+    
+    
     default boolean opcionValida(int canatidadOpciones, int opcionNum) {
         return 1 <= opcionNum && opcionNum <= canatidadOpciones;
     }
@@ -33,7 +37,7 @@ public interface Menu {
     default String[] ingresarUsuarioYContraseña() {
         System.out.printf("Nombre de usuario: ");
         Scanner entrada = new Scanner(System.in);
-        String nombreUsuario = entrada.next();
+        String nombreUsuario = entrada.next().toUpperCase();
 
         System.out.printf("Contrasenia: ");
         String contraseniaUsuario = entrada.next();

@@ -54,12 +54,15 @@ public class Sistema implements MenuInicio {
 
         switch (opcion) {
             case "NUEVO_USUARIO": {
-                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario(obtenerUltimoIdCliente());
+                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario();
+                int id = obtenerUltimoId(nuevoUsuario.getClass().getSimpleName()) + 1;
+                nuevoUsuario.setId(id);
                 guardarUsuario(nuevoUsuario);
                 break;
             }
             case "BORRAR_USUARIO": {
-                salir = true;
+                String tipoUsuarioIdYNombre[] = ((Administrador) usuario).solicitarEliminarUsuario();
+                borrarUsuario(tipoUsuarioIdYNombre[0], tipoUsuarioIdYNombre[1], tipoUsuarioIdYNombre[2]);
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
@@ -118,11 +121,11 @@ public class Sistema implements MenuInicio {
         usuarioActual = primerNombreUsuario;
     }
 
-    private int obtenerUltimoIdCliente() {
+    private int obtenerUltimoId(String tipoUsuario) {
         int maxId = 0;
         for (Usuario usuario : usuarios) {
-            if (usuario.getClass().getSimpleName().equals(Cliente.class.getSimpleName())) {
-                int id = ((Cliente) usuario).getId();
+            if (usuario.getClass().getSimpleName().equals(tipoUsuario)) {
+                int id = usuario.getId();
                 if (id > maxId) {
                     maxId = id;
                 }
@@ -148,6 +151,20 @@ public class Sistema implements MenuInicio {
 
     private void guardarDesarrollador(Desarrollador desarrollador) {
         desarrolladores.add(desarrollador);
+    }
+
+    private void borrarUsuario(String tipo, String idRecibida, String nombre) {
+        int id = Integer.parseInt(idRecibida);
+
+        // Buscar el usuario en la lista de usuarios
+        for (Usuario usuario : usuarios) {
+            if (usuario.getNombre().equals(nombre) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo) && usuario.getId() == id) {
+                usuarios.remove(usuario); // Eliminar el usuario encontrado
+                System.out.println("El usuario "+ nombre +" fue borrado exitosamente.");
+                return;
+            }
+        }
+        System.out.println("No se encontro ningun usuario con los datos especificados.");
     }
 
     private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(String tipoUsuario) {
