@@ -42,6 +42,26 @@ public interface MenuAdministrador extends Menu {
         return tipoUsuarioIdYNombre;
 
     }
+    
+    default String[] ingresarDatosParaBorrarDesarrollador() {
+        Scanner entrada = new Scanner(System.in);
+        String contorno = "====================================================";
+        String mensaje = "Ingrese los datos del desarrollador que desea borrar";
+
+        System.out.println(contorno);
+        System.out.println(mensaje);
+        System.out.println(contorno);
+
+        System.out.printf("Id: ");
+        String id = entrada.next();
+
+        System.out.printf("Nombre: ");
+        String nombre = entrada.next().toUpperCase();
+
+        String idYNombre[] = {id, nombre.toUpperCase()};
+        espaciarPantallas();
+        return idYNombre;
+    }
 
     default String[] ingresarDatosParaNuevoDesarrollador() {
         Scanner entrada = new Scanner(System.in);
@@ -56,7 +76,7 @@ public interface MenuAdministrador extends Menu {
         System.out.printf("Habilidad: ");
         String habilidad = entrada.next();
 
-        String nombreYHabilidad[] = {nombre, habilidad};
+        String nombreYHabilidad[] = {nombre.toUpperCase(), habilidad.toUpperCase()};
 
         espaciarPantallas();
         return nombreYHabilidad;

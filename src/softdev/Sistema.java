@@ -7,15 +7,16 @@ public class Sistema implements MenuInicio {
     private ArrayList<Desarrollador> desarrolladores;
 
     private ArrayList<Usuario> usuarios;
+    
+    private ArrayList<Proyecto> proyectos;
 
     private String usuarioActual;
 
     public Sistema() {
         // Inicializamos los ArrayLists
-
         usuarios = new ArrayList<>();
-
         desarrolladores = new ArrayList<>();
+        proyectos = new ArrayList<>(); 
 
     }
 
@@ -55,7 +56,7 @@ public class Sistema implements MenuInicio {
         switch (opcion) {
             case "NUEVO_USUARIO": {
                 Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario();
-                int id = obtenerUltimoId(nuevoUsuario.getClass().getSimpleName()) + 1;
+                int id = obtenerUltimoIdUsuario(nuevoUsuario.getClass().getSimpleName()) + 1;
                 nuevoUsuario.setId(id);
                 guardarUsuario(nuevoUsuario);
                 break;
@@ -71,7 +72,8 @@ public class Sistema implements MenuInicio {
                 break;
             }
             case "BORRAR_DESARROLLADOR": {
-                salir = true;
+                String desarrolladorIdYNombre[] = ((Administrador) usuario).solicitarEliminarDesarrollador();
+                borrarDesarrollador(desarrolladorIdYNombre[0], desarrolladorIdYNombre[1]);
                 break;
             }
             case "ASIGNAR_DESARROLLADOR": {
@@ -121,7 +123,7 @@ public class Sistema implements MenuInicio {
         usuarioActual = primerNombreUsuario;
     }
 
-    private int obtenerUltimoId(String tipoUsuario) {
+    private int obtenerUltimoIdUsuario(String tipoUsuario) {
         int maxId = 0;
         for (Usuario usuario : usuarios) {
             if (usuario.getClass().getSimpleName().equals(tipoUsuario)) {
@@ -160,11 +162,26 @@ public class Sistema implements MenuInicio {
         for (Usuario usuario : usuarios) {
             if (usuario.getNombre().equals(nombre) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo) && usuario.getId() == id) {
                 usuarios.remove(usuario); // Eliminar el usuario encontrado
-                System.out.println("El usuario "+ nombre +" fue borrado exitosamente.");
+                System.out.println("El usuario " + usuario.getClass().getSimpleName() +" "+ nombre + " fue borrado exitosamente.");
                 return;
             }
         }
         System.out.println("No se encontro ningun usuario con los datos especificados.");
+    }
+
+    private void borrarDesarrollador(String idRecibida, String nombre) {
+        int id = Integer.parseInt(idRecibida);
+        
+        // Buscar el desarrollador en la lista de desarrolladores
+        for (Desarrollador desarrollador : desarrolladores) {
+                       
+            if (desarrollador.getNombre().equals(nombre) && desarrollador.getId() == id) {
+                desarrolladores.remove(desarrollador); // Eliminar el desarrollador encontrado
+                System.out.println("El desarrollador " + nombre + " fue borrado exitosamente.");
+                return;
+            }
+        }
+        System.out.println("No se encontró ningún desarrollador con los datos especificados.");
     }
 
     private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(String tipoUsuario) {

@@ -101,8 +101,8 @@ public class Administrador extends Usuario implements MenuAdministrador {
         return nuevoDesarrollador;
     }
 
-    public void eliminarDesarrollador() {
-
+    public String[] solicitarEliminarDesarrollador() {
+        return ingresarDatosParaBorrarDesarrollador();
     }
 
     public void asignarDesarrollador() {
@@ -192,9 +192,9 @@ public class Administrador extends Usuario implements MenuAdministrador {
 
     public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores) {
         if (desarrolladores.isEmpty()) {
-            System.out.println("**************************************************");
-            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES DISPONIBLES");
-            System.out.println("**************************************************");
+            System.out.println("************************************************");
+            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES ASIGNADOS");
+            System.out.println("************************************************");
         } else {
             presentarListaDeDesarrolladoresAsignados();
 
