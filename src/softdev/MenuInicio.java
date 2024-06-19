@@ -4,32 +4,16 @@ import java.util.Scanner;
 
 public interface MenuInicio extends Menu {
 
-    default String iniciarSesionComo() {
-        String tipoUsuario = "";
+    default String iniciarSesionComo() {     
+        String contorno = "==============================================";
+        String mensaje = "Como que tipo de usuario desea iniciar sesion?";
 
-        while (!tipoUsuarioValido(tipoUsuario)) {
-            if (!tipoUsuario.equals("")) {
-                System.out.println("          ------------------------");
-                System.out.println("          TIPO DE USUARIO INVALIDO");
-                System.out.println("          ------------------------");
-            }
+        System.out.println(contorno);
+        System.out.println(mensaje);
+        System.out.println(contorno);
 
-            System.out.println("===============================================");
-            System.out.println("¿Como que tipo de usuario desea iniciar sesion?");
-            System.out.println("===============================================");
-            System.out.println("(C) Cliente");
-            System.out.println("(G) Gerente");
-            System.out.println("(A) Administrador");
-
-            System.out.printf("-");
-            Scanner entrada = new Scanner(System.in);
-            tipoUsuario = entrada.next();
-            tipoUsuario = tipoUsuario.toUpperCase();
-            tipoUsuario = deLetraInicialATipoDeUsuario(tipoUsuario);
-
-            espaciarPantallas();
-
-        }
+        String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
+        espaciarPantallas();
 
         return tipoUsuario;
 

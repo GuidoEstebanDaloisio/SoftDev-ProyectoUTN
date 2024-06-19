@@ -1,6 +1,8 @@
 package softdev;
 
 import java.util.Scanner;
+import static softdev.Constantes. *;
+
 
 public interface MenuAdministrador extends Menu {
 
@@ -42,7 +44,7 @@ public interface MenuAdministrador extends Menu {
         return tipoUsuarioIdYNombre;
 
     }
-    
+
     default String[] ingresarDatosParaBorrarDesarrollador() {
         Scanner entrada = new Scanner(System.in);
         String contorno = "====================================================";
@@ -82,32 +84,6 @@ public interface MenuAdministrador extends Menu {
         return nombreYHabilidad;
     }
 
-    default String elegirTipoDeUsuario(String contorno, String mensaje) {
-        String tipoUsuario = "";
-
-        while (!tipoUsuarioValido(tipoUsuario)) {
-
-            if (!tipoUsuario.equals("")) {
-                espaciarPantallas();
-                System.out.println("          ------------------------");
-                System.out.println("          TIPO DE USUARIO INVALIDO");
-                System.out.println("          ------------------------");
-
-                //Se repite el primer mensaje para que el usuario sepa que debe poner
-                System.out.println(contorno);
-                System.out.println(mensaje);
-                System.out.println(contorno);
-
-            }
-
-            System.out.printf("Tipo de usuario: ");
-            Scanner entrada = new Scanner(System.in);
-            tipoUsuario = entrada.next().toUpperCase();
-
-        }
-        return tipoUsuario;
-    }
-
     default String[] interfazCrearUsuario(String tipoUsuario) {
         String[] nombreYContraseña = ingresarUsuarioYContraseña();
 
@@ -127,10 +103,22 @@ public interface MenuAdministrador extends Menu {
         System.out.printf("Mail: ");
         String mail = entrada.next();
 
-        System.out.printf("Telefono: ");
-        String telefono = entrada.next();
+        String telefono = "";
+        boolean telefonoValido = false;
 
-        String[] direccionMailTelefono = {direccion, mail, telefono};
+        do {
+            try {
+                System.out.printf("Telefono: ");
+                telefono = entrada.next();
+                Long.parseLong(telefono); // Intentar convertir el teléfono a Long para validar que sea numérico
+                telefonoValido = true;
+            } catch (NumberFormatException e) {
+                System.out.println(ERROR_TELEFONO_INVALIDO);
+                entrada.nextLine(); // Limpiar el buffer de entrada
+            }
+        } while (!telefonoValido);
+
+        String[] direccionMailTelefono = {direccion.toUpperCase(), mail.toUpperCase(), telefono};
 
         espaciarPantallas();
 

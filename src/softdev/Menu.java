@@ -2,32 +2,45 @@ package softdev;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import static softdev.Constantes. *;
+
 
 public interface Menu {
 
-    default boolean tipoUsuarioValido(String tipoUsuario) {
-        return Constantes.TIPOS_USUARIO_VALIDOS.contains(tipoUsuario);
+    private boolean tipoUsuarioValido(String tipoUsuario) {
+        return TIPOS_USUARIO_VALIDOS.contains(tipoUsuario);
     }
 
+    default String elegirTipoDeUsuario(String contorno, String mensaje) {
+        String tipoUsuario = "";
+
+        while (!tipoUsuarioValido(tipoUsuario)) {
+
+            if (!tipoUsuario.equals("")) {
+                espaciarPantallas();
+                System.out.println(ERROR_USUARIO_INVALIDO);
+
+                //Se repite el primer mensaje para que el usuario sepa que debe poner
+                System.out.println(contorno);
+                System.out.println(mensaje);
+                System.out.println(contorno);
+
+            }
+
+            System.out.printf("Tipo de usuario: ");
+            Scanner entrada = new Scanner(System.in);
+            tipoUsuario = entrada.next().toUpperCase();
+
+        }
+        return tipoUsuario;
+    }
+    
     default boolean opcionValida(int canatidadOpciones, int opcionNum) {
         return 1 <= opcionNum && opcionNum <= canatidadOpciones;
     }
 
     default void espaciarPantallas() {
         System.out.println("*\n*\n*\n*\n*\n*\n*\n*\n");
-    }
-
-    default String deLetraInicialATipoDeUsuario(String letraInicial) {
-        String tipoDeUsuario = letraInicial;
-        switch (letraInicial) {
-            case "C" ->
-                tipoDeUsuario = "Cliente";
-            case "G" ->
-                tipoDeUsuario = "Gerente";
-            case "A" ->
-                tipoDeUsuario = "Administrador";
-        }
-        return tipoDeUsuario;
     }
 
     default String[] ingresarUsuarioYContraseña() {
@@ -51,14 +64,10 @@ public interface Menu {
             try {
                 opcion = entrada.nextInt();
                 if (!opcionValida(cantidadOpciones, opcion)) {
-                    System.out.println("     -----------------------------------------------");
-                    System.out.printf("     Opcion no valida, ingrese un numero entre 1 y %d\n", cantidadOpciones);
-                    System.out.println("     -----------------------------------------------\n");
+                    System.out.println(ERROR_OPCION_INVALIDA);
                 }
             } catch (InputMismatchException e) {
-                System.out.println("     -------------------------------------------");
-                System.out.println("     Entrada no valida, debe ingresar un numero.");
-                System.out.println("     -------------------------------------------\n");
+                System.out.println(ERROR_OPCION_INVALIDA_CARACTER);
                 entrada.next(); // Descarta la entrada inválida
             }
         } while (!opcionValida(cantidadOpciones, opcion));
