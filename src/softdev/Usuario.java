@@ -13,11 +13,19 @@ public abstract class Usuario {
         this.cantidadDeOpciones = cantidadDeOpciones;
     }
 
-    public abstract String elegirAccion();
+    protected abstract String elegirAccion();
 
-    public abstract String ejecutarAccion(int accionNum);
+    protected abstract String ejecutarAccion(int accionNum);
 
-    public String getNombre() {
+    public boolean compararIdYNombre(int id, String nombre){
+        return this.id == id && this.nombre.equals(nombre);
+    }
+    
+    public boolean compararNombreYContrasenia(String nombre, String contrasenia){
+        return this.nombre.equals(nombre) && this.contrasenia.equals(contrasenia);
+    }
+    
+    protected String getNombre() {
         return nombre;
     }
 
@@ -25,7 +33,7 @@ public abstract class Usuario {
         this.id = id;
     }
 
-    public int getId() {
+    protected int getId() {
         return id;
     }
 

@@ -7,7 +7,7 @@ public class Sistema implements MenuInicio {
     private ArrayList<Desarrollador> desarrolladores;
 
     private ArrayList<Usuario> usuarios;
-    
+
     private ArrayList<Proyecto> proyectos;
 
     private String usuarioActual;
@@ -16,7 +16,7 @@ public class Sistema implements MenuInicio {
         // Inicializamos los ArrayLists
         usuarios = new ArrayList<>();
         desarrolladores = new ArrayList<>();
-        proyectos = new ArrayList<>(); 
+        proyectos = new ArrayList<>();
 
     }
 
@@ -139,7 +139,7 @@ public class Sistema implements MenuInicio {
     private int obtenerUltimoIdDesarrollador() {
         int maxId = 0;
         for (Desarrollador desarrollador : desarrolladores) {
-            int id = desarrollador.id;
+            int id = desarrollador.getId();
             if (id > maxId) {
                 maxId = id;
             }
@@ -160,9 +160,9 @@ public class Sistema implements MenuInicio {
 
         // Buscar el usuario en la lista de usuarios
         for (Usuario usuario : usuarios) {
-            if (usuario.getNombre().equals(nombre) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo) && usuario.getId() == id) {
+            if (usuario.compararIdYNombre(id, nombre) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo)) {
                 usuarios.remove(usuario); // Eliminar el usuario encontrado
-                System.out.println("El usuario " + usuario.getClass().getSimpleName() +" "+ nombre + " fue borrado exitosamente.");
+                System.out.println("El usuario " + usuario.getClass().getSimpleName() + " " + nombre + " fue borrado exitosamente.");
                 return;
             }
         }
@@ -171,11 +171,11 @@ public class Sistema implements MenuInicio {
 
     private void borrarDesarrollador(String idRecibida, String nombre) {
         int id = Integer.parseInt(idRecibida);
-        
+
         // Buscar el desarrollador en la lista de desarrolladores
         for (Desarrollador desarrollador : desarrolladores) {
-                       
-            if (desarrollador.getNombre().equals(nombre) && desarrollador.getId() == id) {
+
+            if (desarrollador.compararIdYNombre(id, nombre)) {
                 desarrolladores.remove(desarrollador); // Eliminar el desarrollador encontrado
                 System.out.println("El desarrollador " + nombre + " fue borrado exitosamente.");
                 return;
@@ -197,7 +197,7 @@ public class Sistema implements MenuInicio {
     private ArrayList<Desarrollador> obtenerDesarrolladoresDisponibles() {
         ArrayList<Desarrollador> desarrolladoresDisponibles = new ArrayList<>();
         for (Desarrollador desarrollador : desarrolladores) {
-            if (desarrollador.disponible) {
+            if (desarrollador.isDisponible()) {
                 desarrolladoresDisponibles.add(desarrollador);
             }
         }
@@ -207,7 +207,7 @@ public class Sistema implements MenuInicio {
     private ArrayList<Desarrollador> obtenerDesarrolladoresAsignados() {
         ArrayList<Desarrollador> desarrolladoresAsignados = new ArrayList<>();
         for (Desarrollador desarrollador : desarrolladores) {
-            if (!desarrollador.disponible) {
+            if (!desarrollador.isDisponible()) {
                 desarrolladoresAsignados.add(desarrollador);
             }
         }

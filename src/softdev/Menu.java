@@ -3,16 +3,12 @@ package softdev;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-
 public interface Menu {
 
     default boolean tipoUsuarioValido(String tipoUsuario) {
-        return tipoUsuario.equals("CLIENTE") || tipoUsuario.equals("GERENTE") || tipoUsuario.equals("ADMINISTRADOR");
+        return Constantes.TIPOS_USUARIO_VALIDOS.contains(tipoUsuario);
     }
 
-
-    
-    
     default boolean opcionValida(int canatidadOpciones, int opcionNum) {
         return 1 <= opcionNum && opcionNum <= canatidadOpciones;
     }
