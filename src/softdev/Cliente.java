@@ -6,8 +6,8 @@ public class Cliente extends Usuario {
     private String mail;
     private int telefono;
 
-    public Cliente(String direccion, String mail, int telefono, String nombre, String contrasenia) {
-        super(nombre, contrasenia, 3);
+    public Cliente(String direccion, String mail, int telefono, String nombre, String contraseña) {
+        super(nombre, contraseña, 3);
         this.direccion = direccion;
         this.mail = mail;
         this.telefono = telefono;

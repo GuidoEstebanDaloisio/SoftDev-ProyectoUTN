@@ -3,8 +3,8 @@ package softdev;
 public class Administrador extends Usuario implements MenuAdministrador {
     
     
-    public Administrador(String nombre, String contrasenia) {
-        super(nombre, contrasenia, 12);
+    public Administrador(String nombre, String contraseña) {
+        super(nombre, contraseña, 12);
         setAccionDeUsuario(new AdministradorStrategy());
     }
 

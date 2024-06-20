@@ -1,10 +1,11 @@
 package softdev;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import static softdev.Constantes. *;
 
-public class Proyecto {
+public class Proyecto implements Serializable{
    
     private Cliente clienteSolicitante;
     private String tipoDeEncargo;

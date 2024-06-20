@@ -1,6 +1,8 @@
 package softdev;
 
-public class Desarrollador {
+import java.io.Serializable;
+
+public class Desarrollador implements Serializable {
     private int id;
     private String nombre;
     private String habilidad;

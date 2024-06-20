@@ -1,8 +1,9 @@
 package softdev;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public interface IUsuarioStrategy {
+public interface IUsuarioStrategy extends Serializable{
 
     public Usuario crearUsuario();
 

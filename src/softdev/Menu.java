@@ -49,11 +49,11 @@ public interface Menu {
         String nombreUsuario = entrada.next().toUpperCase();
 
         System.out.printf("Contrasenia: ");
-        String contraseniaUsuario = entrada.next();
+        String contraseñaUsuario = entrada.next();
 
-        String[] usuarioYContrasenia = {nombreUsuario, contraseniaUsuario};
-
-        return usuarioYContrasenia;
+        String[] usuarioYContraseña = {nombreUsuario, contraseñaUsuario};
+        espaciarPantallas();
+        return usuarioYContraseña;
     }
 
     default int leerOpcionMenu(int cantidadOpciones) {
