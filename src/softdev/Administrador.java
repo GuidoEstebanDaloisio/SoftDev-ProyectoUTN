@@ -1,11 +1,30 @@
 package softdev;
 
+import java.util.ArrayList;
+
 public class Administrador extends Usuario implements MenuAdministrador {
     
+    private AccionUsuarioStrategy accionCrearUsuario;
+    private AccionUsuarioStrategy accionSolicitarEliminarUsuario;
+    private AccionUsuarioStrategy accionRegistrarDesarrollador;
+    private AccionUsuarioStrategy accionSolicitarEliminarDesarrollador;
+    private AccionUsuarioStrategy accionMostrarClientes;
+    private AccionUsuarioStrategy accionMostrarGerentes;
+    private AccionUsuarioStrategy accionMostrarAdministradores;
+    private AccionUsuarioStrategy accionMostrarDesarrolladoresDisponibles;
+    private AccionUsuarioStrategy accionMostrarDesarrolladoresAsignados;
+            
     
     public Administrador(String nombre, String contraseña) {
         super(nombre, contraseña, 12);
-        setAccionDeUsuario(new AdministradorStrategy());
+        this.accionCrearUsuario = new FuncionCrearUsuario();
+        this.accionSolicitarEliminarUsuario = new FuncionSolicitarEliminarUsuario();
+        this.accionRegistrarDesarrollador = new FuncionRegistrarDesarrollador();
+        this.accionSolicitarEliminarDesarrollador = new FuncionSolicitarEliminarDesarrollador();
+        this.accionMostrarClientes = new FuncionMostrarClientes();
+        this.accionMostrarGerentes = new FuncionMostrarGerentes();
+        this.accionMostrarDesarrolladoresDisponibles = new FuncionMostrarDesarrolladoresDisponbles();
+        this.accionMostrarDesarrolladoresAsignados = new FuncionMostrarDesarrolladoresAsignados();
     }
 
     
@@ -66,4 +85,46 @@ public class Administrador extends Usuario implements MenuAdministrador {
         }
         return opcion;
     }
+    
+    @Override
+    public void mostrarDatos() {
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+    }
+    
+    public Usuario crearUsuario(){
+        return (Usuario) accionCrearUsuario.ejecutarAccion();
+    }
+    
+    public String[] solicitarEliminarUsuario(){
+        return (String[]) accionSolicitarEliminarUsuario.ejecutarAccion();
+    }
+ 
+    public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador) {
+        return (Desarrollador) accionRegistrarDesarrollador.ejecutarAccion(ultimoIdDesarrollador);
+    }
+    
+    public String [] solicitarEliminarDesarrollador(){
+        return (String[]) accionSolicitarEliminarDesarrollador.ejecutarAccion();
+    }
+
+    public void mostrarClientes(ArrayList<Cliente> clientes){
+        accionMostrarClientes.ejecutarAccion(clientes);
+    }
+    
+    public void mostrarGerentes(ArrayList<Gerente> gerentes){
+        accionMostrarGerentes.ejecutarAccion(gerentes);
+    }
+    
+    public void mostrarAdministradores(ArrayList<Administrador> administradores){
+        accionMostrarAdministradores.ejecutarAccion(administradores);
+    }
+    
+    public void mostrarDesarrolladoresDisponibles(ArrayList<Desarrollador> desarrolladores){
+        accionMostrarDesarrolladoresDisponibles.ejecutarAccion(desarrolladores);
+    }    
+
+    public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores){
+        accionMostrarDesarrolladoresAsignados.ejecutarAccion(desarrolladores);
+    }  
 }

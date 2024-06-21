@@ -14,13 +14,14 @@ public interface MenuCliente extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
+        String medioDeSolicitud = ingresarMedioDeSolicitud();
+        
         System.out.printf("Titulo: ");
         String titulo = entrada.nextLine();
         
         System.out.printf("Descripcion: ");
         String descripcion = entrada.nextLine();
         
-        String medioDeSolicitud = ingresarMedioDeSolicitud();
 
         String presupuesto = "";
         boolean presupuestoValido = false;
@@ -37,7 +38,7 @@ public interface MenuCliente extends Menu {
             }
         } while (!presupuestoValido);
 
-        String tituloDescripcionMedioYPresupuesto[] = {titulo, descripcion, medioDeSolicitud, presupuesto};
+        String tituloDescripcionMedioYPresupuesto[] = {titulo.toUpperCase(), descripcion, medioDeSolicitud, presupuesto};
         
         espaciarPantallas();
         return tituloDescripcionMedioYPresupuesto;

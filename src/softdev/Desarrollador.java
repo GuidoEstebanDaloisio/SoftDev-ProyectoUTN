@@ -3,6 +3,7 @@ package softdev;
 import java.io.Serializable;
 
 public class Desarrollador implements Serializable {
+
     private int id;
     private String nombre;
     private String habilidad;
@@ -14,11 +15,17 @@ public class Desarrollador implements Serializable {
         this.habilidad = habilidad;
         this.disponible = true;
     }
-    
-        public boolean compararIdYNombre(int id, String nombre){
+
+    void mostrarDatos() {
+        System.out.println("Id: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Habilidad: " + habilidad);
+    }
+
+    public boolean compararIdYNombre(int id, String nombre) {
         return this.id == id && this.nombre.equals(nombre);
     }
-    
+
     public void setDisponible(boolean disponible) {
         this.disponible = disponible;
     }
@@ -31,8 +38,6 @@ public class Desarrollador implements Serializable {
         return disponible;
     }
 
-    
-    
     public String getNombre() {
         return nombre;
     }
@@ -40,6 +45,5 @@ public class Desarrollador implements Serializable {
     public String getHabilidad() {
         return habilidad;
     }
-        
 
 }

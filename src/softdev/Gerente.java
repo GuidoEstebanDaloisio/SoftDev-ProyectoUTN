@@ -21,6 +21,12 @@ public class Gerente extends Usuario {
         return null;
     }
 
+    @Override
+    public void mostrarDatos() {
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+    }
+    
     public void verProyectos() {
 
     }

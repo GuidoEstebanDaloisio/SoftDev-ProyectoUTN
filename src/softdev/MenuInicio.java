@@ -38,6 +38,7 @@ public interface MenuInicio extends Menu {
     }
 
     default void bienvenida(String nombreUsuario) {
+        espaciarPantallas();
         System.out.println("====================================================================================");
         System.out.println("                    Bienvenido/a " + nombreUsuario + " al sistema de SoftDev");
     }

@@ -3,6 +3,9 @@ package softdev;
 import java.util.ArrayList;
 
 public class Cliente extends Usuario implements MenuCliente {
+    
+    private AccionUsuarioStrategy accionSolicitarProyecto;
+    private AccionUsuarioStrategy accionMostrarDatosDeProyectosDelUsuario;
 
     private String direccion;
     private String mail;
@@ -13,6 +16,8 @@ public class Cliente extends Usuario implements MenuCliente {
         this.direccion = direccion;
         this.mail = mail;
         this.telefono = telefono;
+        this.accionSolicitarProyecto = new FuncionSolicitarProyecto();
+        this.accionMostrarDatosDeProyectosDelUsuario = new FuncionMostrarDatosDeProyectosDelUsuario();
     }
 
     @Override
@@ -40,31 +45,25 @@ public class Cliente extends Usuario implements MenuCliente {
         }
         return opcion;
     }
+    
+    @Override
+    public void mostrarDatos() {
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Direccion: " + direccion);
+        System.out.println("Correo Electronico: " + mail);
+        System.out.println("Telefono: " + telefono);
+    }
 
     public Proyecto solicitarProyecto() {
-        String tituloDescripcionMedioYPresupuesto[] = ingresarDatosParaNuevoProyecto();
-
-        double presupuesto = Double.parseDouble(tituloDescripcionMedioYPresupuesto[3]);
-
-        Proyecto nuevoProyecto = new Proyecto(tituloDescripcionMedioYPresupuesto[0], tituloDescripcionMedioYPresupuesto[1], tituloDescripcionMedioYPresupuesto[2], presupuesto);
-        return nuevoProyecto;
+        return (Proyecto) accionSolicitarProyecto.ejecutarAccion();
     }
 
-    public void mostrarEstadoDeProyectos(ArrayList<Proyecto> proyectos) {
-        if (proyectos.isEmpty()) {
-            System.out.println("*******************************************");
-            System.out.println("EN ESTE MOMENTO NO HAY CLIENTES REGISTRADOS");
-            System.out.println("*******************************************");
-        } else {
-            presentarListaDeProyectos();
-
-            for (Proyecto proyecto : proyectos) {
-                System.out.println("-------------------------------");
-                proyecto.mostrarDatos();
-            }
-            System.out.println("-------------------------------");
-        }
+    public void mostrarDatosDeProyectosDelUsuario(ArrayList<Proyecto> proyectos) {
+        accionMostrarDatosDeProyectosDelUsuario.ejecutarAccion(proyectos);
     }
+    
+    
 
     public String getDireccion() {
         return direccion;

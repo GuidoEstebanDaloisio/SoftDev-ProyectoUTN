@@ -40,7 +40,7 @@ public class Proyecto implements Serializable {
         System.out.println("Descripcion: " + descripcion);
         System.out.println("Cliente: " + clienteSolicitante.getNombre());
         System.out.println("Medio de encargo: " + medioDeEncargo);
-        System.out.println("Presupuesto: " + presupuesto);
+        System.out.println("Presupuesto: $" + presupuesto);
         System.out.println("Progreso: " + progreso);
 
         if (progreso != ESPERANDO_APROVACION && progreso != RECHAZADO) {

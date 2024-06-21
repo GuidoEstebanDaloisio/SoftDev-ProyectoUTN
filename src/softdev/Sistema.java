@@ -2,13 +2,14 @@ package softdev;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Sistema implements MenuInicio, Serializable {
 
     private ArrayList<Desarrollador> desarrolladores;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Proyecto> proyectos;
-    
+
     private Usuario usuarioActual;
 
     private static final String USUARIOS_FILE = "usuarios.bin";
@@ -41,14 +42,14 @@ public class Sistema implements MenuInicio, Serializable {
             crearPrimerUsuario(primerUsuarioYContraseña[0], primerUsuarioYContraseña[1]);
 
             Administrador primerAdmin = (Administrador) usuarios.get(0);
-            
+
             usuarioActual = primerAdmin;
             bienvenidaPrimerUsuario(primerUsuarioYContraseña[0]);
             while (!salir) {
                 String entrada = primerAdmin.elegirAccion();
-                salir = ejecutarAccion(entrada, primerAdmin);
+                salir = ejecutarAccion(entrada);
             }
-            
+
             guardarDatos();
 
         } else {
@@ -62,12 +63,12 @@ public class Sistema implements MenuInicio, Serializable {
                 usuarioYContraseña = inicioDeSesion(tipoDeUsuarioQueInicioSesion);
                 usuarioLogueado = loguearUsuario(usuarioYContraseña[0], usuarioYContraseña[1], tipoDeUsuarioQueInicioSesion);
             } while (usuarioLogueado == null);
-            
+
             usuarioActual = usuarioLogueado;
             bienvenida(usuarioYContraseña[0]);
             while (!salir) {
                 String entrada = usuarioLogueado.elegirAccion();
-                salir = ejecutarAccion(entrada, usuarioLogueado);
+                salir = ejecutarAccion(entrada);
             }
 
             guardarDatos();
@@ -117,7 +118,7 @@ public class Sistema implements MenuInicio, Serializable {
             System.out.println("Error al cargar los datos: " + e.getMessage());
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     private <T> ArrayList<T> cargarListaDeArchivo(String nombreArchivo) throws IOException, ClassNotFoundException {
         ArrayList<T> lista = new ArrayList<>();
@@ -132,29 +133,29 @@ public class Sistema implements MenuInicio, Serializable {
         return lista;
     }
 
-    private boolean ejecutarAccion(String opcion, Usuario usuario) {
+    private boolean ejecutarAccion(String opcion) {
         boolean salir = false;
 
         switch (opcion) {
             case "NUEVO_USUARIO": {
-                Usuario nuevoUsuario = ((Administrador) usuario).crearUsuario();
+                Usuario nuevoUsuario = ((Administrador) usuarioActual).crearUsuario();
                 int id = obtenerUltimoIdUsuario(nuevoUsuario.getClass().getSimpleName()) + 1;
                 nuevoUsuario.setId(id);
                 guardarUsuario(nuevoUsuario);
                 break;
             }
             case "BORRAR_USUARIO": {
-                String tipoUsuarioIdYNombre[] = ((Administrador) usuario).solicitarEliminarUsuario();
+                String tipoUsuarioIdYNombre[] = ((Administrador) usuarioActual).solicitarEliminarUsuario();
                 borrarUsuario(tipoUsuarioIdYNombre[0], tipoUsuarioIdYNombre[1], tipoUsuarioIdYNombre[2]);
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
-                Desarrollador nuevoDesarrollador = ((Administrador) usuario).registrarDesarrollador(obtenerUltimoIdDesarrollador());
+                Desarrollador nuevoDesarrollador = ((Administrador) usuarioActual).registrarDesarrollador(obtenerUltimoIdDesarrollador());
                 guardarDesarrollador(nuevoDesarrollador);
                 break;
             }
             case "BORRAR_DESARROLLADOR": {
-                String desarrolladorIdYNombre[] = ((Administrador) usuario).solicitarEliminarDesarrollador();
+                String desarrolladorIdYNombre[] = ((Administrador) usuarioActual).solicitarEliminarDesarrollador();
                 borrarDesarrollador(desarrolladorIdYNombre[0], desarrolladorIdYNombre[1]);
                 break;
             }
@@ -168,34 +169,34 @@ public class Sistema implements MenuInicio, Serializable {
             }
             case "VER_CLIENTES": {
 
-                ((Administrador) usuario).mostrarClientes(obtenerUsuariosPorTipo(Cliente.class.getSimpleName()));
+                ((Administrador) usuarioActual).mostrarClientes(obtenerUsuariosPorTipo(Cliente.class.getSimpleName()));
                 break;
             }
             case "VER_GERENTES": {
-                ((Administrador) usuario).mostrarGerentes(obtenerUsuariosPorTipo(Gerente.class.getSimpleName()));
+                ((Administrador) usuarioActual).mostrarGerentes(obtenerUsuariosPorTipo(Gerente.class.getSimpleName()));
                 break;
             }
             case "VER_ADMINISTRADORES": {
-                ((Administrador) usuario).mostrarAdministradores(obtenerUsuariosPorTipo(Administrador.class.getSimpleName()));
+                ((Administrador) usuarioActual).mostrarAdministradores(obtenerUsuariosPorTipo(Administrador.class.getSimpleName()));
 
                 break;
             }
             case "VER_DESARROLLADORES_DISPONIBLES": {
-                ((Administrador) usuario).mostrarDesarrolladoresDisponbles(obtenerDesarrolladoresDisponibles());
+                ((Administrador) usuarioActual).mostrarDesarrolladoresDisponibles(obtenerDesarrolladoresDisponibles());
                 break;
             }
             case "VER_DESARROLLADORES_ASIGNADOS": {
-                ((Administrador) usuario).mostrarDesarrolladoresAsignados(obtenerDesarrolladoresAsignados());
+                ((Administrador) usuarioActual).mostrarDesarrolladoresAsignados(obtenerDesarrolladoresAsignados());
                 break;
             }
             case "SOLICITAR_PROYECTO": {
-                Proyecto nuevoProyecto = ((Cliente) usuario).solicitarProyecto();
-                nuevoProyecto.setClienteSolicitante((Cliente)usuarioActual);
+                Proyecto nuevoProyecto = ((Cliente) usuarioActual).solicitarProyecto();
+                nuevoProyecto.setClienteSolicitante((Cliente) usuarioActual);
                 guardarProyecto(nuevoProyecto);
                 break;
             }
             case "CONSULTAR_PROYECTO": {
-                ((Cliente) usuario).mostrarEstadoDeProyectos(proyectos);
+                ((Cliente) usuarioActual).mostrarDatosDeProyectosDelUsuario(obtenerProyectosDelUsuario((Cliente) usuarioActual));
                 break;
             }
             case "SALIR": {
@@ -224,7 +225,7 @@ public class Sistema implements MenuInicio, Serializable {
         Administrador primerUsuario = new Administrador(primerNombreUsuario, primeraContraseña);
 
         usuarios.add(primerUsuario);
-        }
+    }
 
     private int obtenerUltimoIdUsuario(String tipoUsuario) {
         int maxId = 0;
@@ -257,8 +258,8 @@ public class Sistema implements MenuInicio, Serializable {
     private void guardarDesarrollador(Desarrollador desarrollador) {
         desarrolladores.add(desarrollador);
     }
-    
-    private void guardarProyecto (Proyecto proyecto){
+
+    private void guardarProyecto(Proyecto proyecto) {
         proyectos.add(proyecto);
     }
 
@@ -266,35 +267,48 @@ public class Sistema implements MenuInicio, Serializable {
         int id = Integer.parseInt(idRecibida);
         boolean usuarioEncontrado = false;
 
-        for (Usuario usuario : usuarios) {
+        Iterator<Usuario> iter = usuarios.iterator();
+        while (iter.hasNext()) {
+            Usuario usuario = iter.next();
             if (usuario.compararIdYNombre(id, nombre) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo)) {
-                usuarios.remove(usuario);
+                iter.remove(); // Uso seguro del método remove del iterador
                 System.out.println("El usuario " + usuario.getClass().getSimpleName() + " " + nombre + " fue borrado exitosamente.");
                 usuarioEncontrado = true;
             }
         }
-        if (usuarioEncontrado == false) {
-            System.out.println("No se encontro ningun usuario con los datos especificados.");
-        }
 
+        if (!usuarioEncontrado) {
+            System.out.println("No se encontró ningún usuario con los datos especificados.");
+        }
     }
 
     private void borrarDesarrollador(String idRecibida, String nombre) {
         int id = Integer.parseInt(idRecibida);
         boolean desarrolladorEncontrado = false;
 
-        for (Desarrollador desarrollador : desarrolladores) {
-
+        Iterator<Desarrollador> iter = desarrolladores.iterator();
+        while (iter.hasNext()) {
+            Desarrollador desarrollador = iter.next();
             if (desarrollador.compararIdYNombre(id, nombre)) {
-                desarrolladores.remove(desarrollador);
+                iter.remove(); // Uso seguro del método remove del iterador
                 System.out.println("El desarrollador " + nombre + " fue borrado exitosamente.");
                 desarrolladorEncontrado = true;
             }
         }
-        if (desarrolladorEncontrado == false) {
+
+        if (!desarrolladorEncontrado) {
             System.out.println("No se encontró ningún desarrollador con los datos especificados.");
         }
+    }
 
+    private ArrayList<Proyecto> obtenerProyectosDelUsuario(Cliente cliente) {
+        ArrayList<Proyecto> proyectosDelUsuario = new ArrayList<>();
+        for (Proyecto proyecto : proyectos){
+            if(proyecto.compararClientes(cliente)){
+                proyectosDelUsuario.add(proyecto);
+            }
+        }
+        return proyectosDelUsuario;
     }
 
     private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(String tipoUsuario) {
