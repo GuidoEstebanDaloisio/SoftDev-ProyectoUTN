@@ -8,13 +8,15 @@ public class Sistema implements MenuInicio, Serializable {
     private ArrayList<Desarrollador> desarrolladores;
     private ArrayList<Usuario> usuarios;
     private ArrayList<Proyecto> proyectos;
-    private String usuarioActual;
+    
+    private Usuario usuarioActual;
 
     private static final String USUARIOS_FILE = "usuarios.bin";
     private static final String DESARROLLADORES_FILE = "desarrolladores.bin";
     private static final String PROYECTOS_FILE = "proyectos.bin";
 
     public Sistema() {
+        usuarioActual = null;
         // Inicializamos los ArrayLists
         usuarios = new ArrayList<>();
         desarrolladores = new ArrayList<>();
@@ -39,14 +41,14 @@ public class Sistema implements MenuInicio, Serializable {
             crearPrimerUsuario(primerUsuarioYContraseña[0], primerUsuarioYContraseña[1]);
 
             Administrador primerAdmin = (Administrador) usuarios.get(0);
-
-            bienvenida(usuarioActual);
-
+            
+            usuarioActual = primerAdmin;
+            bienvenidaPrimerUsuario(primerUsuarioYContraseña[0]);
             while (!salir) {
                 String entrada = primerAdmin.elegirAccion();
                 salir = ejecutarAccion(entrada, primerAdmin);
             }
-
+            
             guardarDatos();
 
         } else {
@@ -61,6 +63,8 @@ public class Sistema implements MenuInicio, Serializable {
                 usuarioLogueado = loguearUsuario(usuarioYContraseña[0], usuarioYContraseña[1], tipoDeUsuarioQueInicioSesion);
             } while (usuarioLogueado == null);
             
+            usuarioActual = usuarioLogueado;
+            bienvenida(usuarioYContraseña[0]);
             while (!salir) {
                 String entrada = usuarioLogueado.elegirAccion();
                 salir = ejecutarAccion(entrada, usuarioLogueado);
@@ -68,6 +72,7 @@ public class Sistema implements MenuInicio, Serializable {
 
             guardarDatos();
         }
+        usuarioActual = null;
     }
 
     private void verificarYCrearArchivo(String nombreArchivo) {
@@ -107,6 +112,7 @@ public class Sistema implements MenuInicio, Serializable {
             desarrolladores = cargarListaDeArchivo(DESARROLLADORES_FILE);
             proyectos = cargarListaDeArchivo(PROYECTOS_FILE);
             System.out.println("Datos cargados correctamente.");
+            System.out.println("*\n*\n*\n*\n");
         } catch (IOException | ClassNotFoundException e) {
             System.out.println("Error al cargar los datos: " + e.getMessage());
         }
@@ -182,6 +188,16 @@ public class Sistema implements MenuInicio, Serializable {
                 ((Administrador) usuario).mostrarDesarrolladoresAsignados(obtenerDesarrolladoresAsignados());
                 break;
             }
+            case "SOLICITAR_PROYECTO": {
+                Proyecto nuevoProyecto = ((Cliente) usuario).solicitarProyecto();
+                nuevoProyecto.setClienteSolicitante((Cliente)usuarioActual);
+                guardarProyecto(nuevoProyecto);
+                break;
+            }
+            case "CONSULTAR_PROYECTO": {
+                ((Cliente) usuario).mostrarEstadoDeProyectos(proyectos);
+                break;
+            }
             case "SALIR": {
                 saludoDespedida();
                 salir = true;
@@ -208,9 +224,7 @@ public class Sistema implements MenuInicio, Serializable {
         Administrador primerUsuario = new Administrador(primerNombreUsuario, primeraContraseña);
 
         usuarios.add(primerUsuario);
-
-        usuarioActual = primerNombreUsuario;
-    }
+        }
 
     private int obtenerUltimoIdUsuario(String tipoUsuario) {
         int maxId = 0;
@@ -242,6 +256,10 @@ public class Sistema implements MenuInicio, Serializable {
 
     private void guardarDesarrollador(Desarrollador desarrollador) {
         desarrolladores.add(desarrollador);
+    }
+    
+    private void guardarProyecto (Proyecto proyecto){
+        proyectos.add(proyecto);
     }
 
     private void borrarUsuario(String tipo, String idRecibida, String nombre) {

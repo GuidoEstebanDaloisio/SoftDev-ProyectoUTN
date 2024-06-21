@@ -1,12 +1,26 @@
 package softdev;
 
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 import static softdev.Constantes. *;
 
 
 public interface Menu {
 
+
+    
+    default void mostrarOpcionesValidas(List<String> elementos) {
+        System.out.printf("Las opciones validas son:");
+
+        // Imprimir encabezados
+        for (String elemento : elementos) {
+            System.out.printf(" %s", elemento);
+        }
+        System.out.println("\n"); // Salto de línea al final
+    }
+    
+   
     private boolean tipoUsuarioValido(String tipoUsuario) {
         return TIPOS_USUARIO_VALIDOS.contains(tipoUsuario);
     }
@@ -52,7 +66,6 @@ public interface Menu {
         String contraseñaUsuario = entrada.next();
 
         String[] usuarioYContraseña = {nombreUsuario, contraseñaUsuario};
-        espaciarPantallas();
         return usuarioYContraseña;
     }
 

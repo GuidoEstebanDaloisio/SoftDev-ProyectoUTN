@@ -21,9 +21,9 @@ public abstract class Usuario implements Serializable{
         this.accionDeUsuario = accionesDeUsuario;
     }
 
-    protected abstract String elegirAccion();
+    public abstract String elegirAccion();
 
-    protected abstract String ejecutarAccion(int accionNum);
+    public abstract String ejecutarAccion(int accionNum);
 
     public boolean compararIdYNombre(int id, String nombre) {
         return this.id == id && this.nombre.equals(nombre);

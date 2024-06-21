@@ -7,12 +7,19 @@ public class Constantes {
 
     //TIPOS DE USUARIOS
     public static final List<String> TIPOS_USUARIO_VALIDOS = Arrays.asList("CLIENTE", "GERENTE", "ADMINISTRADOR");
+    
+    //MEDIOS PARA LA SOLICITUD DE PROYECTOS
+    public static final List<String> MEDIOS_DE_SOLICITUD = Arrays.asList("PRESENCIAL", "TELEFONO", "CORREO");
 
+        
     //ESTADOS DEL PROYECTO
     static String ESPERANDO_APROVACION = "Esperando aprobacion del proyecto";
     static String ESPERANDO_DESARROLLADOR = "Aguardando que se asigne un desarrollador";
     static String EN_DESARROLLO = "Trabajando en su desarrollo";
     static String FINALIZADO = "Finalizado";
+    static String RECHAZADO = "El proyecto fue rechazado";
+    
+    
 
     //ERRORES
     private static String CONTORNO_USUARIO_INVALIDO = "          -------------------------------\n";
@@ -30,5 +37,9 @@ public class Constantes {
     private static String CONTORNO_OPCION_INVALIDA_CARACTER = "     -------------------------------------------\n";
     private static String TEXTO_OPCION_INVALIDA_CARACTER = "     Entrada no valida, debe ingresar un numero\n";
     static String ERROR_OPCION_INVALIDA_CARACTER = CONTORNO_OPCION_INVALIDA_CARACTER + TEXTO_OPCION_INVALIDA_CARACTER + CONTORNO_OPCION_INVALIDA_CARACTER;
+    
+    private static String CONTORNO_PRESUPUESTO_INVALIDO = "------------------------------------------\n";
+    private static String TEXTO_PRESUPUESTO_INVALIDO = "ERROR: DEBE INGRESAR UN PRESUPUESTO VALIDO\n";
+    static String ERROR_PRESUPUESTO_INVALIDO = CONTORNO_PRESUPUESTO_INVALIDO + TEXTO_PRESUPUESTO_INVALIDO + CONTORNO_PRESUPUESTO_INVALIDO;
 
 }

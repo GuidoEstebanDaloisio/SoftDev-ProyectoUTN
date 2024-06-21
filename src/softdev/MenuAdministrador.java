@@ -3,7 +3,6 @@ package softdev;
 import java.util.Scanner;
 import static softdev.Constantes. *;
 
-
 public interface MenuAdministrador extends Menu {
 
     default String[] ingresarDatosParaNuevoUsuario() {
@@ -13,6 +12,8 @@ public interface MenuAdministrador extends Menu {
         System.out.println(contorno);
         System.out.println(mensaje);
         System.out.println(contorno);
+        
+        mostrarOpcionesValidas(TIPOS_USUARIO_VALIDOS);
 
         String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
         String nombreYContraseña[] = interfazCrearUsuario(tipoUsuario);
