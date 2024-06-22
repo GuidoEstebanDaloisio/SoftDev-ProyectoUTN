@@ -113,16 +113,25 @@ public class Administrador extends Usuario implements MenuAdministrador {
     public String[] solicitarAsignarDesarrollador(){
        String idYTituloProyecto[] = ingresarDatosDeProyecto();
        String idYNombreDesarrollador[] = ingresarDatosDeDesarrolladorParaAsignar();
-       LocalDate fechaDeInicio = ingresarFechaDeInicioDeProyecto();
        
-       String idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador [] ={idYTituloProyecto[0], idYTituloProyecto[1], fechaDeInicio.toString(), idYNombreDesarrollador[0], idYNombreDesarrollador[1]};
+       String idYTituloProyectoEIdYNombreDesarrollador [] ={idYTituloProyecto[0], idYTituloProyecto[1], idYNombreDesarrollador[0], idYNombreDesarrollador[1]};
        
-       return idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador;
+       return idYTituloProyectoEIdYNombreDesarrollador;
     }
     
-    public void solicitarDesasignarDesarrollador(){
-        
+    public String[] solicitarDesasignarDesarrollador(){
+       String idYTituloProyecto[] = ingresarDatosDeProyecto();
+       String idYNombreDesarrollador[] = ingresarDatosDeDesarrolladorParaDesasignar();
+       
+       String idYTituloProyectoEIdYNombreDesarrollador[] = {idYTituloProyecto[0], idYTituloProyecto[1], idYNombreDesarrollador[0], idYNombreDesarrollador[1]};
+       
+       return idYTituloProyectoEIdYNombreDesarrollador;
     }
+    
+    public LocalDate solicitarFechaInicioProyecto(){
+        LocalDate fechaDeInicio = ingresarFechaDeInicioDeProyecto();
+        return fechaDeInicio;
+    } 
 
     public void mostrarClientes(ArrayList<Cliente> clientes){
         accionMostrarClientes.ejecutarAccion(clientes);

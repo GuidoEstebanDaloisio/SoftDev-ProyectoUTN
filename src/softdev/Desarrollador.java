@@ -1,6 +1,7 @@
 package softdev;
 
 import java.io.Serializable;
+import java.util.Objects;
 
 public class Desarrollador implements Serializable {
 
@@ -41,4 +42,18 @@ public class Desarrollador implements Serializable {
     public String getNombre() {
         return nombre;
     }
+
+     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Desarrollador that = (Desarrollador) o;
+        return id == that.id && Objects.equals(nombre, that.nombre);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, nombre);
+    }
+
 }

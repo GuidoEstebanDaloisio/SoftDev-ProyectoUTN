@@ -42,6 +42,15 @@ public class Proyecto implements Serializable {
         desarrolladores.add(desarrollador);
     }
     
+     public void desasignarDesarrollador(Desarrollador desarrollador) {
+        if (desarrolladores.contains(desarrollador)) {
+            desarrolladores.remove(desarrollador);
+            System.out.println("Desarrollador " + desarrollador.getNombre() + " desasignado del proyecto.");
+        } else {
+            System.out.println("El desarrollador " + desarrollador.getNombre() + " no está asignado a este proyecto.");
+        }
+    }
+    
    
     public void setId(int id) {
         this.id = id;
@@ -65,6 +74,10 @@ public class Proyecto implements Serializable {
     
     public String getTitulo() {
         return titulo;
+    }
+
+    public LocalDate getFechaDeInicio() {
+        return fechaDeInicio;
     }
     
     public boolean comprobarSiEstaEsperandoAprobacion(){

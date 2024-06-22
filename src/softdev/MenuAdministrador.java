@@ -79,7 +79,7 @@ public interface MenuAdministrador extends Menu {
         String nombre = entrada.next().toUpperCase();
 
         String idYNombre[] = {id, nombre};
-
+        espaciarPantallas();
         return idYNombre;
     }
 

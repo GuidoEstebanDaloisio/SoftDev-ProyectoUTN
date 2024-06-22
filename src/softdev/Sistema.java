@@ -162,12 +162,12 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "ASIGNAR_DESARROLLADOR": {
-                String idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[] = ((Administrador) usuarioActual).solicitarAsignarDesarrollador();
-                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(), idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[3], idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[4]);
-                boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[0], idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[1], "");
+                String idYTituloProyectoEIdYNombreDesarrollador[] = ((Administrador) usuarioActual).solicitarAsignarDesarrollador();
+                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(), idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
+                boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
 
                 if (administradorValido && proyectoValido) {
-                    AdministrarDesarrolladoresDeProyecto(idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador, "ASIGNAR");
+                    asignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador);
                 } else if (!administradorValido && !proyectoValido) {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto ni desarrollador disponible");
                 } else if (!administradorValido) {
@@ -178,7 +178,20 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "DESASIGNAR_DESARROLLADOR": {
-                salir = true;
+                String idYTituloProyectoEIdYNombreDesarrollador[] = ((Administrador) usuarioActual).solicitarDesasignarDesarrollador();
+                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresAsignados(), idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
+                boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
+
+                if (administradorValido && proyectoValido) {
+                    desasignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador);
+                } else if (!administradorValido && !proyectoValido) {
+                    System.out.println("Los datos proporcionados no corresponden a un proyecto ni desarrollador disponible");
+                } else if (!administradorValido) {
+                    System.out.println("El administrador seleccionado no se encuentra disponible");
+                } else if (!proyectoValido) {
+                    System.out.println("El proyecto seleccionado no se encuentra disponible");
+                }
+
                 break;
             }
             case "VER_CLIENTES": {
@@ -283,7 +296,7 @@ public class Sistema implements MenuInicio, Serializable {
         return existeElProyecto;
     }
 
-    private boolean validarProyectoSolicitadoParaAdministrarDesarrolladores(String idRecibida, String titulo, String nuevoEstado) {
+    private boolean validarProyectoSolicitadoParaAdministrarDesarrolladores(String idRecibida, String titulo) {
         boolean existeElProyecto = false;
         int id = Integer.parseInt(idRecibida);
 
@@ -308,38 +321,45 @@ public class Sistema implements MenuInicio, Serializable {
         return existeDesarrollador;
     }
 
-    private void AdministrarDesarrolladoresDeProyecto(String idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[], String asignarODesasignar) {
+    private void asignarDesarrollador(String idYTituloProyectoEIdYNombreDesarrollador[]) {
 
-        Desarrollador desarrollador = obtenerDesarrollador(idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[3], idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[4]);
-        Proyecto proyecto = obtenerProyecto(idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[0], idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[1]);
-
-        if (asignarODesasignar.equals("ASIGNAR")) {
-            asignarDesarrollador(proyecto, desarrollador, idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador[2]);
-        } else if (asignarODesasignar.equals("DESASIGNAR")) {
-
-        }
-
-    }
-
-    private void asignarDesarrollador(Proyecto proyecto, Desarrollador desarrollador, String fechaDeInicioRecibida) {
+        Desarrollador desarrollador = obtenerDesarrollador(idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
+        Proyecto proyecto = obtenerProyecto(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
 
         //Solo se cambiara el progreso a "en desarrollo" la primera vez que se le asigne un desarrollador, para no sobreescribir el estado cada vez que se añada un desarrollador
         if (!proyecto.hayDesarrolladores()) {
-            LocalDate fechaInicio = LocalDate.parse(fechaDeInicioRecibida);
             
+            //Y solo se guardara la fecha de inicio la primera vez que se guarde un desarrollador
+            if (proyecto.getFechaDeInicio() == null) {
+                LocalDate fechaInicio = ((Administrador) usuarioActual).solicitarFechaInicioProyecto();
+                proyecto.setFechaDeInicio(fechaInicio);
+            }
+
             proyecto.setProgreso(EN_DESARROLLO);
-            proyecto.setFechaDeInicio(fechaInicio);
-           
         }
 
         proyecto.asignarDesarrollador(desarrollador);
         desarrollador.setDisponible(false);
 
-        
         System.out.println("Desarrollador asignado");
-
     }
-    
+
+    private void desasignarDesarrollador(String idYTituloProyectoEIdYNombreDesarrollador[]) {
+        // Obtener el desarrollador y el proyecto
+        Desarrollador desarrollador = obtenerDesarrollador(idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
+        Proyecto proyecto = obtenerProyecto(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
+
+        // Desasignar desarrollador solo si existen y están asignados correctamente
+        proyecto.desasignarDesarrollador(desarrollador);
+        desarrollador.setDisponible(true);
+
+        // Verificar si quedan desarrolladores asignados, y actualizar el estado del proyecto si es necesario
+        if (!proyecto.hayDesarrolladores()) {
+            proyecto.setProgreso(ESPERANDO_DESARROLLADOR);
+            System.out.println("Todos los desarrolladores han sido desasignados. Proyecto ahora en espera de desarrolladores.");
+        }
+    }
+
     private void aprobarProyecto(Proyecto proyecto) {
         proyecto.setProgreso(ESPERANDO_DESARROLLADOR);
     }
