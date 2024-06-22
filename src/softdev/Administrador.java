@@ -23,6 +23,7 @@ public class Administrador extends Usuario implements MenuAdministrador {
         this.accionSolicitarEliminarDesarrollador = new FuncionSolicitarEliminarDesarrollador();
         this.accionMostrarClientes = new FuncionMostrarClientes();
         this.accionMostrarGerentes = new FuncionMostrarGerentes();
+        this.accionMostrarAdministradores = new FuncionMostrarAdministradores();
         this.accionMostrarDesarrolladoresDisponibles = new FuncionMostrarDesarrolladoresDisponbles();
         this.accionMostrarDesarrolladoresAsignados = new FuncionMostrarDesarrolladoresAsignados();
     }

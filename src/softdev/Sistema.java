@@ -3,6 +3,7 @@ package softdev;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
+import static softdev.Constantes.*;
 
 public class Sistema implements MenuInicio, Serializable {
 
@@ -189,14 +190,41 @@ public class Sistema implements MenuInicio, Serializable {
                 ((Administrador) usuarioActual).mostrarDesarrolladoresAsignados(obtenerDesarrolladoresAsignados());
                 break;
             }
-            case "SOLICITAR_PROYECTO": {
+            case "NUEVO_PROYECTO": {
                 Proyecto nuevoProyecto = ((Cliente) usuarioActual).solicitarProyecto();
                 nuevoProyecto.setClienteSolicitante((Cliente) usuarioActual);
+                nuevoProyecto.setId(obtenerUltimoIdProyecto()+1); 
                 guardarProyecto(nuevoProyecto);
                 break;
             }
             case "CONSULTAR_PROYECTO": {
                 ((Cliente) usuarioActual).mostrarDatosDeProyectosDelUsuario(obtenerProyectosDelUsuario((Cliente) usuarioActual));
+                break;
+            }
+            case "VER_PROYECTOS": {
+                ((Gerente) usuarioActual).mostrarProyectos(proyectos);
+                break;
+            }
+            case "APROBAR_PROYECTO": {
+                String IdYTitulo[] = ((Gerente) usuarioActual).solicitarAprobarProyecto();
+                String nuevoEstado = "APROBAR";                
+                
+                if(validarProyectoSolicitado(IdYTitulo[0], IdYTitulo[1], nuevoEstado)){
+                    System.out.println("Proyecto aprobado");
+                }else{
+                    System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
+                }                
+                break;
+            }
+            case "RECHAZAR_PROYECTO": {
+                String IdYTitulo[] = ((Gerente) usuarioActual).solicitarRechazarProyecto();
+                String nuevoEstado = "RECHAZAR";
+                
+                if(validarProyectoSolicitado(IdYTitulo[0], IdYTitulo[1], nuevoEstado)){
+                    System.out.println("Proyecto rechazado");
+                }else{
+                    System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
+                }    
                 break;
             }
             case "SALIR": {
@@ -226,6 +254,33 @@ public class Sistema implements MenuInicio, Serializable {
 
         usuarios.add(primerUsuario);
     }
+    
+    private boolean validarProyectoSolicitado(String idRecibida, String titulo, String nuevoEstado){
+        boolean existeElProyecto = false;
+        int id = Integer.parseInt(idRecibida);
+
+        for(Proyecto proyecto : proyectos){
+            if(proyecto.compararId(id) && proyecto.compararTitulos(titulo) && proyecto.comprobarSiEstaEsperandoAprobacion()){
+                if(nuevoEstado.equals("RECHAZAR")){
+                    rechazarProyecto(proyecto);
+                }else if(nuevoEstado.equals("APROBAR")){
+                    aprobarProyecto(proyecto);
+                }
+                
+                existeElProyecto = true;
+            }
+        }
+        return existeElProyecto;
+    }
+    
+    private void aprobarProyecto(Proyecto proyecto){
+        proyecto.setProgreso(ESPERANDO_DESARROLLADOR);
+    }
+    
+    private void rechazarProyecto(Proyecto proyecto){
+        proyecto.setProgreso(RECHAZADO);
+    }
+
 
     private int obtenerUltimoIdUsuario(String tipoUsuario) {
         int maxId = 0;
@@ -251,6 +306,17 @@ public class Sistema implements MenuInicio, Serializable {
         return maxId;
     }
 
+    private int obtenerUltimoIdProyecto() {
+        int maxId = 0;
+        for (Proyecto proyecto : proyectos) {
+            int id = proyecto.getId();
+            if (id > maxId) {
+                maxId = id;
+            }
+        }
+        return maxId;
+    }
+    
     private void guardarUsuario(Usuario usuario) {
         usuarios.add(usuario);
     }
@@ -278,7 +344,7 @@ public class Sistema implements MenuInicio, Serializable {
         }
 
         if (!usuarioEncontrado) {
-            System.out.println("No se encontró ningún usuario con los datos especificados.");
+            System.out.println("No se encontro ningun usuario con los datos especificados.");
         }
     }
 
@@ -297,17 +363,20 @@ public class Sistema implements MenuInicio, Serializable {
         }
 
         if (!desarrolladorEncontrado) {
-            System.out.println("No se encontró ningún desarrollador con los datos especificados.");
+            System.out.println("No se encontro ningun desarrollador con los datos especificados.");
         }
     }
 
+
+
     private ArrayList<Proyecto> obtenerProyectosDelUsuario(Cliente cliente) {
         ArrayList<Proyecto> proyectosDelUsuario = new ArrayList<>();
-        for (Proyecto proyecto : proyectos){
-            if(proyecto.compararClientes(cliente)){
+        for (Proyecto proyecto : proyectos) {
+            if (proyecto.compararClientes(cliente)) {
                 proyectosDelUsuario.add(proyecto);
             }
         }
+
         return proyectosDelUsuario;
     }
 

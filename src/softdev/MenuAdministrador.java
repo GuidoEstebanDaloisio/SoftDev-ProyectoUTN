@@ -34,8 +34,7 @@ public interface MenuAdministrador extends Menu {
 
         String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
 
-        System.out.printf("Id: ");
-        String id = entrada.next();
+        String id = ingresarId();
 
         System.out.printf("Nombre: ");
         String nombre = entrada.next().toUpperCase();
@@ -55,8 +54,7 @@ public interface MenuAdministrador extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        System.out.printf("Id: ");
-        String id = entrada.next();
+        String id = ingresarId();
 
         System.out.printf("Nombre: ");
         String nombre = entrada.next().toUpperCase();

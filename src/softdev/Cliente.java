@@ -1,9 +1,10 @@
 package softdev;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Cliente extends Usuario implements MenuCliente {
-    
+
     private AccionUsuarioStrategy accionSolicitarProyecto;
     private AccionUsuarioStrategy accionMostrarDatosDeProyectosDelUsuario;
 
@@ -34,7 +35,7 @@ public class Cliente extends Usuario implements MenuCliente {
         String opcion = null;
         switch (accionNum) {
             case 1 -> {
-                opcion = "SOLICITAR_PROYECTO";
+                opcion = "NUEVO_PROYECTO";
             }
             case 2 -> {
                 opcion = "CONSULTAR_PROYECTO";
@@ -45,7 +46,7 @@ public class Cliente extends Usuario implements MenuCliente {
         }
         return opcion;
     }
-    
+
     @Override
     public void mostrarDatos() {
         System.out.println("ID: " + id);
@@ -63,17 +64,21 @@ public class Cliente extends Usuario implements MenuCliente {
         accionMostrarDatosDeProyectosDelUsuario.ejecutarAccion(proyectos);
     }
     
-    
-
-    public String getDireccion() {
-        return direccion;
+    // Sobrescribimos equals y hashCode para evitar problemas al volver a ejecutar el programa
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return telefono == cliente.telefono &&
+                Objects.equals(direccion, cliente.direccion) &&
+                Objects.equals(mail, cliente.mail) &&
+                Objects.equals(nombre, cliente.nombre) &&
+                Objects.equals(id, cliente.id);  // assuming id is a unique identifier
     }
 
-    public String getMail() {
-        return mail;
-    }
-
-    public int getTelefono() {
-        return telefono;
+    @Override
+    public int hashCode() {
+        return Objects.hash(direccion, mail, telefono, nombre, id);
     }
 }

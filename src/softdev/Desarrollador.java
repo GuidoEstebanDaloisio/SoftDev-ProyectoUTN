@@ -41,9 +41,4 @@ public class Desarrollador implements Serializable {
     public String getNombre() {
         return nombre;
     }
-
-    public String getHabilidad() {
-        return habilidad;
-    }
-
 }

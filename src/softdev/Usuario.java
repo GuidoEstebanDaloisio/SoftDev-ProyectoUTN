@@ -38,7 +38,11 @@ public abstract class Usuario implements Serializable {
         this.id = id;
     }
 
-    protected int getId() {
+    public int getId() {
         return id;
+    }
+
+    void verProyectos() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -8,7 +8,22 @@ import static softdev.Constantes. *;
 
 public interface Menu {
 
+    default String ingresarId(){
+        int id = 0;
+        boolean idValido = false;
+        Scanner entrada = new Scanner(System.in);
 
+        while (!idValido) {
+            try {
+                System.out.printf("Id: ");
+                id = Integer.parseInt(entrada.nextLine());
+                idValido = true;
+            } catch (NumberFormatException e) {
+                System.out.println(ERROR_ID_INVALIDO);
+            }
+        }
+        return String.valueOf(id);
+    }
     
     default void mostrarOpcionesValidas(List<String> elementos) {
         System.out.printf("Las opciones validas son:");

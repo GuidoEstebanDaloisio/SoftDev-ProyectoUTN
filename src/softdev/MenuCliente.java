@@ -15,13 +15,12 @@ public interface MenuCliente extends Menu {
         System.out.println(contorno);
 
         String medioDeSolicitud = ingresarMedioDeSolicitud();
-        
+
         System.out.printf("Titulo: ");
         String titulo = entrada.nextLine();
-        
+
         System.out.printf("Descripcion: ");
         String descripcion = entrada.nextLine();
-        
 
         String presupuesto = "";
         boolean presupuestoValido = false;
@@ -39,10 +38,11 @@ public interface MenuCliente extends Menu {
         } while (!presupuestoValido);
 
         String tituloDescripcionMedioYPresupuesto[] = {titulo.toUpperCase(), descripcion, medioDeSolicitud, presupuesto};
-        
+
         espaciarPantallas();
         return tituloDescripcionMedioYPresupuesto;
     }
+
     private String ingresarMedioDeSolicitud() {
         Scanner entrada = new Scanner(System.in);
         String medio;
@@ -54,8 +54,8 @@ public interface MenuCliente extends Menu {
 
         return medio;
     }
-    
-        default void presentarListaDeProyectos() {
+
+    default void presentarListaDeProyectos() {
         espaciarPantallas();
         System.out.println("-------------------------------");
         System.out.println("Lista de proyectos del cliente:");
