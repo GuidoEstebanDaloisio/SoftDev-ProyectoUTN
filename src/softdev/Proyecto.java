@@ -1,7 +1,8 @@
 package softdev;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import static softdev.Constantes.*;
 
@@ -13,8 +14,10 @@ public class Proyecto implements Serializable {
     private Cliente clienteSolicitante;
     private String medioDeEncargo;
     private ArrayList<Desarrollador> desarrolladores;
-    private LocalDateTime fechaDeInicio;
-    private LocalDateTime fechaDeFinalizacion;
+    private LocalDate fechaDeInicio;
+    private LocalDate fechaDeFinalizacion;
+
+
     private double presupuesto;
     private String progreso;
     private boolean proyectoFinalizado;
@@ -35,9 +38,26 @@ public class Proyecto implements Serializable {
         this.clienteSolicitante = clienteSolicitante;
     }
 
+    public  void asignarDesarrollador(Desarrollador desarrollador){
+        desarrolladores.add(desarrollador);
+    }
+    
+   
     public void setId(int id) {
         this.id = id;
     }
+   
+    public void setFechaDeInicio(LocalDate fechaDeInicio) {
+        this.fechaDeInicio = fechaDeInicio;
+    }
+
+    public void setFechaDeFinalizacion(LocalDate fechaDeFinalizacion) {
+        this.fechaDeFinalizacion = fechaDeFinalizacion;
+    }
+    
+    public boolean hayDesarrolladores() {
+    return !desarrolladores.isEmpty();
+}
 
     public int getId() {
         return id;
@@ -50,7 +70,11 @@ public class Proyecto implements Serializable {
     public boolean comprobarSiEstaEsperandoAprobacion(){
         return progreso.equals(ESPERANDO_APROVACION);
     }
-
+   
+    public boolean comprobarSiFueRechazado(){
+        return progreso.equals(RECHAZADO);
+    }
+    
     public void setProgreso(String progreso) {
         this.progreso = progreso;
     }
@@ -68,6 +92,8 @@ public class Proyecto implements Serializable {
     }
 
     public void mostrarDatos() {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+
         System.out.println("Id: "+id);
         System.out.println("Titulo: " + titulo);
         System.out.println("Descripcion: " + descripcion);
@@ -79,8 +105,11 @@ public class Proyecto implements Serializable {
         if (!progreso.equals(ESPERANDO_APROVACION)  && !progreso.equals(RECHAZADO)) {
             if (!desarrolladores.isEmpty()) {
                 mostrarListaDeDesarrolladores();
-                System.out.println("Fecha inicio: " + fechaDeInicio);
-                System.out.println("Fecha fin: " + fechaDeFinalizacion);
+                System.out.println("Fecha inicio: " + fechaDeInicio.format(formatter));
+                if(proyectoFinalizado){
+                   System.out.println("Fecha fin: " + fechaDeFinalizacion.format(formatter));                    
+                }
+
             }
                 
         }

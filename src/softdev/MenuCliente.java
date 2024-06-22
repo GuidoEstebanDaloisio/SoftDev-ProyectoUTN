@@ -37,7 +37,7 @@ public interface MenuCliente extends Menu {
             }
         } while (!presupuestoValido);
 
-        String tituloDescripcionMedioYPresupuesto[] = {titulo.toUpperCase(), descripcion, medioDeSolicitud, presupuesto};
+        String tituloDescripcionMedioYPresupuesto[] = {titulo.toUpperCase(), descripcion, medioDeSolicitud.toUpperCase(), presupuesto};
 
         espaciarPantallas();
         return tituloDescripcionMedioYPresupuesto;

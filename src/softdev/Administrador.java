@@ -1,5 +1,6 @@
 package softdev;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Administrador extends Usuario implements MenuAdministrador {
@@ -37,8 +38,8 @@ public class Administrador extends Usuario implements MenuAdministrador {
         System.out.println("(2)Eliminar usuario                     | (8)Ver gerentes");
         System.out.println("(3)Registrar desarrollador              | (9)Ver administradores");
         System.out.println("(4)Eliminar desarrolador                | (10)Ver desarrolladores diponibles");
-        System.out.println("(5)Asignar desarrolador a un proyecto   | (11)Ver desarrolladores asignados");
-        System.out.println("(6)Quitar desarrolador de un proyecto   | (12)Salir");
+        System.out.println("(5)Asignar desarrollador a un proyecto  | (11)Ver desarrolladores asignados");
+        System.out.println("(6)Quitar desarrollador de un proyecto  | (12)Salir");
 
         return ejecutarAccion(leerOpcionMenu(cantidadDeOpciones));
     }
@@ -107,6 +108,20 @@ public class Administrador extends Usuario implements MenuAdministrador {
     
     public String [] solicitarEliminarDesarrollador(){
         return (String[]) accionSolicitarEliminarDesarrollador.ejecutarAccion();
+    }
+    
+    public String[] solicitarAsignarDesarrollador(){
+       String idYTituloProyecto[] = ingresarDatosDeProyecto();
+       String idYNombreDesarrollador[] = ingresarDatosDeDesarrolladorParaAsignar();
+       LocalDate fechaDeInicio = ingresarFechaDeInicioDeProyecto();
+       
+       String idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador [] ={idYTituloProyecto[0], idYTituloProyecto[1], fechaDeInicio.toString(), idYNombreDesarrollador[0], idYNombreDesarrollador[1]};
+       
+       return idTituloYFechaDeInicioProyectoEIdYNombreDesarrollador;
+    }
+    
+    public void solicitarDesasignarDesarrollador(){
+        
     }
 
     public void mostrarClientes(ArrayList<Cliente> clientes){

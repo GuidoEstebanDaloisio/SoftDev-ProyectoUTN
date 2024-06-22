@@ -1,7 +1,10 @@
 package softdev;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
-import static softdev.Constantes. *;
+import static softdev.Constantes.*;
 
 public interface MenuAdministrador extends Menu {
 
@@ -12,7 +15,7 @@ public interface MenuAdministrador extends Menu {
         System.out.println(contorno);
         System.out.println(mensaje);
         System.out.println(contorno);
-        
+
         mostrarOpcionesValidas(TIPOS_USUARIO_VALIDOS);
 
         String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
@@ -21,6 +24,83 @@ public interface MenuAdministrador extends Menu {
         String tipoUsuarioNombreYContraseña[] = {tipoUsuario, nombreYContraseña[0], nombreYContraseña[1]};
 
         return tipoUsuarioNombreYContraseña;
+    }
+
+    default String[] ingresarDatosDeProyecto() {
+        Scanner entrada = new Scanner(System.in);
+        String contorno = "==============================";
+        String mensaje = "Ingrese los datos del proyecto";
+
+        System.out.println(contorno);
+        System.out.println(mensaje);
+        System.out.println(contorno);
+
+        String id = ingresarId();
+
+        System.out.printf("Titulo: ");
+        String titulo = entrada.next().toUpperCase();
+
+        String idYTitulo[] = {id, titulo};
+
+        return idYTitulo;
+    }
+
+    default String[] ingresarDatosDeDesarrolladorParaAsignar() {
+        Scanner entrada = new Scanner(System.in);
+        String contorno = "=====================================================";
+        String mensaje = "Ingrese los datos del desarrollador que desea asignar";
+
+        System.out.println(contorno);
+        System.out.println(mensaje);
+        System.out.println(contorno);
+
+        String id = ingresarId();
+
+        System.out.printf("Nombre: ");
+        String nombre = entrada.next().toUpperCase();
+
+        String idYNombre[] = {id, nombre};
+
+        return idYNombre;
+    }
+
+    default String[] ingresarDatosDeDesarrolladorParaDesasignar() {
+        Scanner entrada = new Scanner(System.in);
+        String contorno = "========================================================";
+        String mensaje = "Ingrese los datos del desarrollador que desea desasignar";
+
+        System.out.println(contorno);
+        System.out.println(mensaje);
+        System.out.println(contorno);
+
+        String id = ingresarId();
+
+        System.out.printf("Nombre: ");
+        String nombre = entrada.next().toUpperCase();
+
+        String idYNombre[] = {id, nombre};
+
+        return idYNombre;
+    }
+
+    default LocalDate ingresarFechaDeInicioDeProyecto() {
+        Scanner scanner = new Scanner(System.in);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate fechaDeInicio = null;
+
+        while (fechaDeInicio == null) {
+            System.out.print("Ingrese la fecha de inicio del proyecto (formato: dd-MM-yyyy): ");
+            String input = scanner.nextLine();
+
+            try {
+                fechaDeInicio = LocalDate.parse(input, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha incorrecto. Por favor, intente de nuevo.");
+            }
+        }
+        
+        espaciarPantallas();
+        return fechaDeInicio;
     }
 
     default String[] ingresarDatosParaBorrarUsuario() {
