@@ -233,7 +233,7 @@ public class Sistema implements MenuInicio, Serializable {
             case "APROBAR_PROYECTO": {
                 String IdYTitulo[] = ((Gerente) usuarioActual).solicitarAprobarProyecto();
 
-                if (validarProyectoSolicitadoParaDeterminarAprovacion(IdYTitulo[0], IdYTitulo[1], "APROBAR")) {
+                if (validarProyectoSolicitadoParaDeterminarAprobacion(IdYTitulo[0], IdYTitulo[1], "APROBAR")) {
                     System.out.println("Proyecto aprobado");
                 } else {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
@@ -243,15 +243,24 @@ public class Sistema implements MenuInicio, Serializable {
             case "RECHAZAR_PROYECTO": {
                 String IdYTitulo[] = ((Gerente) usuarioActual).solicitarRechazarProyecto();
 
-                if (validarProyectoSolicitadoParaDeterminarAprovacion(IdYTitulo[0], IdYTitulo[1], "RECHAZAR")) {
+                if (validarProyectoSolicitadoParaDeterminarAprobacion(IdYTitulo[0], IdYTitulo[1], "RECHAZAR")) {
                     System.out.println("Proyecto rechazado");
                 } else {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
                 }
                 break;
             }
-            case "FINALIZAR_PROYECTO":{
+            case "FINALIZAR_PROYECTO": {
+                String IdYTitulo[] = ((Gerente) usuarioActual).solicitarFinalizarProyecto();
+
+                if (validarProyectoSolicitadoParaFinalizar(IdYTitulo[0], IdYTitulo[1])) {
+
+                    System.out.println("Proyecto Finalizado");
+                } else {
+                    System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
+                }
                 break;
+
             }
             case "ACTUALIZAR_PROGRESO_PROYECTO": {
                 String nuevoEstadoIdYTitulo[] = ((Gerente) usuarioActual).nuevoEstadoDelProyecto();
@@ -289,16 +298,20 @@ public class Sistema implements MenuInicio, Serializable {
     }
 
     private void cambiarEstadoDeProyecto(Proyecto proyecto, String nuevoEstado) {
-        try {
-            proyecto.setProgreso(nuevoEstado);
-            System.out.println("El estado del proyecto se ha cambiado a: " + nuevoEstado);
-        } catch (Exception e) {
-            System.out.println("Error al cambiar el estado del proyecto: " + e.getMessage());
-            e.printStackTrace(); // Opcional: para ver la traza completa del error
+        if (proyecto.comprobarSiEstaDisponibleParaActualizarProgreso()) {
+            try {
+                proyecto.setProgreso(nuevoEstado);
+                System.out.println("El estado del proyecto se ha cambiado a: " + nuevoEstado);
+            } catch (Exception e) {
+                System.out.println("Error al cambiar el estado del proyecto: " + e.getMessage());
+                e.printStackTrace(); // Opcional: para ver la traza completa del error
+            }
+        } else {
+            System.out.println("El estado del proyecto no se puede actualizar en este momento.");
         }
     }
 
-    private boolean validarProyectoSolicitadoParaDeterminarAprovacion(String idRecibida, String titulo, String nuevoEstado) {
+    private boolean validarProyectoSolicitadoParaDeterminarAprobacion(String idRecibida, String titulo, String nuevoEstado) {
         boolean existeElProyecto = false;
         int id = Integer.parseInt(idRecibida);
 
@@ -314,6 +327,26 @@ public class Sistema implements MenuInicio, Serializable {
             }
         }
         return existeElProyecto;
+    }
+
+    private boolean validarProyectoSolicitadoParaFinalizar(String idRecibida, String titulo) {
+        boolean existeElProyecto = false;
+        int id = Integer.parseInt(idRecibida);
+
+        for (Proyecto proyecto : proyectos) {
+            if (proyecto.compararId(id) && proyecto.compararTitulos(titulo) && proyecto.comprobarSiEstaDisponibleParaFinalizar()) {
+                finalizarProyecto(proyecto);
+                existeElProyecto = true;
+            }
+        }
+        return existeElProyecto;
+    }
+
+    private void finalizarProyecto(Proyecto proyecto) {
+        proyecto.setProgreso(FINALIZADO);
+        LocalDate fechaFin = ((Gerente) usuarioActual).ingresarFechaFin();
+        proyecto.setFechaDeFinalizacion(fechaFin);
+        proyecto.setProyectoFinalizado(true);
     }
 
     private boolean validarProyectoSolicitadoParaAdministrarDesarrolladores(String idRecibida, String titulo) {

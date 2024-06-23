@@ -1,5 +1,6 @@
 package softdev;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 public class Gerente extends Usuario implements MenuGerente {
@@ -7,14 +8,18 @@ public class Gerente extends Usuario implements MenuGerente {
     private AccionUsuarioStrategy accionMostrarProyectos;
     private AccionUsuarioStrategy accionSolicitarAprobarProyecto;
     private AccionUsuarioStrategy accionSolicitarRechazarProyecto;
-        private AccionUsuarioStrategy accionNuevoEstadoDelProyecto;
+    private AccionUsuarioStrategy accionNuevoEstadoDelProyecto;
+    private AccionUsuarioStrategy accionSolicitarFinalizarProyecto;
+    private AccionUsuarioStrategy accionIngresarFechaFinDeProyecto;
 
     public Gerente(String nombre, String contraseña) {
-        super(nombre, contraseña, 5);
+        super(nombre, contraseña, 6);
         this.accionMostrarProyectos = new FuncionMostrarProyectos();
         this.accionSolicitarAprobarProyecto = new FuncionSolicitarAprobarProyecto();
         this.accionSolicitarRechazarProyecto = new FuncionSolicitarRechazarProyecto();
         this.accionNuevoEstadoDelProyecto = new FuncionNuevoEstadoDelProyecto();
+        this.accionSolicitarFinalizarProyecto = new FuncionSolicitarFinalizarProyecto();
+        this.accionIngresarFechaFinDeProyecto = new FuncionIngresarFechaFinDeProyecto();
     }
 
     @Override
@@ -74,7 +79,11 @@ public class Gerente extends Usuario implements MenuGerente {
     }
 
     public String[] solicitarFinalizarProyecto(){
-        return null;//Falta implementar
+        return (String[]) accionSolicitarFinalizarProyecto.ejecutarAccion();
+    }
+    
+    public LocalDate ingresarFechaFinDeProyecto(){
+        return (LocalDate) accionIngresarFechaFinDeProyecto.ejecutarAccion();
     }
     
     public String[] nuevoEstadoDelProyecto() {

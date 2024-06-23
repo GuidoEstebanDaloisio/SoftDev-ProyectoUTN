@@ -4,8 +4,9 @@ public class FuncionNuevoEstadoDelProyecto implements AccionUsuarioStrategy, Men
 
     @Override
     public String[] ejecutarAccion(Object... params) {
+
+        String idYTitulo[] = ingresarDatosDeProyecto();        
         String nuevoEstado = ingresarNuevoEstadoDeProyecto();
-        String idYTitulo[] = ingresarDatosDeProyecto();
 
         String nuevoEstadoIdYTitulo[] = {nuevoEstado, idYTitulo[0], idYTitulo[1]};
         return nuevoEstadoIdYTitulo;

@@ -1,7 +1,6 @@
 package softdev;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 public abstract class Usuario implements Serializable {
 
@@ -40,9 +39,5 @@ public abstract class Usuario implements Serializable {
 
     public int getId() {
         return id;
-    }
-
-    void verProyectos() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

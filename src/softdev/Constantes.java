@@ -12,11 +12,11 @@ public class Constantes {
     public static final List<String> MEDIOS_DE_SOLICITUD = Arrays.asList("PRESENCIAL", "TELEFONO", "CORREO");
 
     //ESTADOS DEL PROYECTO
-    static String ESPERANDO_APROVACION = "Esperando aprobacion del proyecto";
+    static String ESPERANDO_APROBACION = "Esperando aprobacion del proyecto";
     static String ESPERANDO_DESARROLLADOR = "Aguardando que se asigne un desarrollador";
     static String EN_DESARROLLO = "Trabajando en su desarrollo";
     static String PRUEBAS = "En fase de pruebas";
-    static String IMPLEMENTACION = "En implementación o despliegue";
+    static String IMPLEMENTACION = "En implementacion o despliegue";
     static String MANTENIMIENTO = "En mantenimiento";
     static String CIERRE = "En fase de cierre del proyecto";
     static String FINALIZADO = "Finalizado";
