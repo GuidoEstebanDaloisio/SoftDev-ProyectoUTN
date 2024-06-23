@@ -7,12 +7,14 @@ public class Gerente extends Usuario implements MenuGerente {
     private AccionUsuarioStrategy accionMostrarProyectos;
     private AccionUsuarioStrategy accionSolicitarAprobarProyecto;
     private AccionUsuarioStrategy accionSolicitarRechazarProyecto;
-    
+        private AccionUsuarioStrategy accionNuevoEstadoDelProyecto;
+
     public Gerente(String nombre, String contraseña) {
-        super(nombre, contraseña, 4);
+        super(nombre, contraseña, 5);
         this.accionMostrarProyectos = new FuncionMostrarProyectos();
         this.accionSolicitarAprobarProyecto = new FuncionSolicitarAprobarProyecto();
         this.accionSolicitarRechazarProyecto = new FuncionSolicitarRechazarProyecto();
+        this.accionNuevoEstadoDelProyecto = new FuncionNuevoEstadoDelProyecto();
     }
 
     @Override
@@ -21,7 +23,9 @@ public class Gerente extends Usuario implements MenuGerente {
         System.out.println("(1)Ver proyectos solicitados");
         System.out.println("(2)Aprobar proyecto");
         System.out.println("(3)Rechazar proyecto");
-        System.out.println("(4)Salir");
+        System.out.println("(4)Finalizar proyecto");
+        System.out.println("(5)Actualizar estado del proyecto");
+        System.out.println("(6)Salir");
         return ejecutarAccion(leerOpcionMenu(cantidadDeOpciones));
     }
 
@@ -39,6 +43,12 @@ public class Gerente extends Usuario implements MenuGerente {
                 opcion = "RECHAZAR_PROYECTO";
             }
             case 4 -> {
+                opcion = "FINALIZAR_PROYECTO";
+            }
+            case 5 -> {
+                opcion = "ACTUALIZAR_PROGRESO_PROYECTO";
+            }
+            case 6 -> {
                 opcion = "SALIR";
             }
         }
@@ -56,10 +66,18 @@ public class Gerente extends Usuario implements MenuGerente {
     }
 
     public String[] solicitarAprobarProyecto() {
-       return (String[]) accionSolicitarAprobarProyecto.ejecutarAccion();
+        return (String[]) accionSolicitarAprobarProyecto.ejecutarAccion();
+    }
+
+    public String[] solicitarRechazarProyecto() {
+        return (String[]) accionSolicitarRechazarProyecto.ejecutarAccion();
+    }
+
+    public String[] solicitarFinalizarProyecto(){
+        return null;//Falta implementar
     }
     
-    public String[] solicitarRechazarProyecto() {
-       return (String[]) accionSolicitarRechazarProyecto.ejecutarAccion();
+    public String[] nuevoEstadoDelProyecto() {
+        return (String[]) accionNuevoEstadoDelProyecto.ejecutarAccion();
     }
 }

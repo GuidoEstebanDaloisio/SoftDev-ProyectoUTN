@@ -35,6 +35,17 @@ public interface Menu {
         System.out.println("\n"); // Salto de línea al final
     }
     
+    default void mostrarOpcionesValidaseEnVertical(List<String> elementos) {
+        System.out.printf("Las opciones validas son:\n");
+        int numOpcion = 0;
+
+        for (String elemento : elementos) {
+            numOpcion++;
+            System.out.printf(numOpcion + ")");
+            System.out.println(" " + elemento);
+        }
+        System.out.println("\n"); // Salto de línea al final
+    }
    
     private boolean tipoUsuarioValido(String tipoUsuario) {
         return TIPOS_USUARIO_VALIDOS.contains(tipoUsuario);

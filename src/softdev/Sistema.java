@@ -250,6 +250,16 @@ public class Sistema implements MenuInicio, Serializable {
                 }
                 break;
             }
+            case "FINALIZAR_PROYECTO":{
+                break;
+            }
+            case "ACTUALIZAR_PROGRESO_PROYECTO": {
+                String nuevoEstadoIdYTitulo[] = ((Gerente) usuarioActual).nuevoEstadoDelProyecto();
+
+                cambiarEstadoDeProyecto(obtenerProyecto(nuevoEstadoIdYTitulo[1], nuevoEstadoIdYTitulo[2]), nuevoEstadoIdYTitulo[0]);
+                break;
+            }
+
             case "SALIR": {
                 saludoDespedida();
                 salir = true;
@@ -276,6 +286,16 @@ public class Sistema implements MenuInicio, Serializable {
         Administrador primerUsuario = new Administrador(primerNombreUsuario, primeraContraseña);
 
         usuarios.add(primerUsuario);
+    }
+
+    private void cambiarEstadoDeProyecto(Proyecto proyecto, String nuevoEstado) {
+        try {
+            proyecto.setProgreso(nuevoEstado);
+            System.out.println("El estado del proyecto se ha cambiado a: " + nuevoEstado);
+        } catch (Exception e) {
+            System.out.println("Error al cambiar el estado del proyecto: " + e.getMessage());
+            e.printStackTrace(); // Opcional: para ver la traza completa del error
+        }
     }
 
     private boolean validarProyectoSolicitadoParaDeterminarAprovacion(String idRecibida, String titulo, String nuevoEstado) {
@@ -328,7 +348,7 @@ public class Sistema implements MenuInicio, Serializable {
 
         //Solo se cambiara el progreso a "en desarrollo" la primera vez que se le asigne un desarrollador, para no sobreescribir el estado cada vez que se añada un desarrollador
         if (!proyecto.hayDesarrolladores()) {
-            
+
             //Y solo se guardara la fecha de inicio la primera vez que se guarde un desarrollador
             if (proyecto.getFechaDeInicio() == null) {
                 LocalDate fechaInicio = ((Administrador) usuarioActual).solicitarFechaInicioProyecto();

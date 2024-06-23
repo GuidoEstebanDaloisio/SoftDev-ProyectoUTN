@@ -15,8 +15,13 @@ public class Constantes {
     static String ESPERANDO_APROVACION = "Esperando aprobacion del proyecto";
     static String ESPERANDO_DESARROLLADOR = "Aguardando que se asigne un desarrollador";
     static String EN_DESARROLLO = "Trabajando en su desarrollo";
+    static String PRUEBAS = "En fase de pruebas";
+    static String IMPLEMENTACION = "En implementación o despliegue";
+    static String MANTENIMIENTO = "En mantenimiento";
+    static String CIERRE = "En fase de cierre del proyecto";
     static String FINALIZADO = "Finalizado";
     static String RECHAZADO = "El proyecto fue rechazado";
+    public static final List<String> ESTADOS_PROYECTO = Arrays.asList(EN_DESARROLLO, PRUEBAS, IMPLEMENTACION, MANTENIMIENTO, CIERRE);
 
     //ERRORES
     private static String CONTORNO_USUARIO_INVALIDO = "          -------------------------------\n";
@@ -39,9 +44,12 @@ public class Constantes {
     private static String TEXTO_PRESUPUESTO_INVALIDO = "ERROR: DEBE INGRESAR UN PRESUPUESTO VALIDO\n";
     static String ERROR_PRESUPUESTO_INVALIDO = CONTORNO_PRESUPUESTO_INVALIDO + TEXTO_PRESUPUESTO_INVALIDO + CONTORNO_PRESUPUESTO_INVALIDO;
 
-    
     private static String CONTORNO_ID_INVALIDO = "---------------------------------------------------\n";
     private static String TEXTO_ID_INVALIDO = "ERROR: DEBE INGRESAR UN ID QUE SEA UN NUMERO ENTERO\n";
     static String ERROR_ID_INVALIDO = CONTORNO_ID_INVALIDO + TEXTO_ID_INVALIDO + CONTORNO_ID_INVALIDO;
+
+    private static String CONTORNO_ESTADO_PROYECTO_INVALIDO = "------------------------------------------------------------------\n";
+    private static String TEXTO_ESTADO_PROYECTO_INVALIDO = "ERROR: DEBE INGRESAR UNA OPCION QUE CORRESPONDA A UN ESTADO VALIDO\n";
+    static String ERROR_ESTADO_PROYECTO_INVALIDO = CONTORNO_ESTADO_PROYECTO_INVALIDO + TEXTO_ESTADO_PROYECTO_INVALIDO + CONTORNO_ESTADO_PROYECTO_INVALIDO;
 
 }
