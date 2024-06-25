@@ -36,7 +36,7 @@ public class Sistema implements MenuInicio, Serializable {
 
         cargarDatos();
 
-        if (usuarios.isEmpty()) {
+        if (!contieneAdministrador()) {
             //Primero creamos el primer usuario que va a ser un Administrador
             String primerUsuarioYContraseña[];
             primerUsuarioYContraseña = primerInicioDeSesion();
@@ -571,4 +571,13 @@ public class Sistema implements MenuInicio, Serializable {
         }
         return desarrolladoresAsignados;
     }
+    
+    private boolean contieneAdministrador() {
+    for (Usuario usuario : usuarios) {
+        if (usuario.getClass().getSimpleName().equals(Administrador.class.getSimpleName())) {
+            return true;
+        }
+    }
+    return false;
+}
 }
