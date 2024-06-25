@@ -1,6 +1,5 @@
 package softdev;
 
-import java.util.Scanner;
 import static softdev.Constantes.TIPOS_USUARIO_VALIDOS;
 
 public interface MenuInicio extends Menu {

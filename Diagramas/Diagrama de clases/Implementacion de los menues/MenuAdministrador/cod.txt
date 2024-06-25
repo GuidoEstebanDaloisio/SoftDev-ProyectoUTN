@@ -1,0 +1,121 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+interface MenuAdministrador{
+  +ingresarDatosParaNuevoUsuario()
+  +ingresarDatosDeProyecto()
+  +ingresarDatosDeDesarrolladorParaAsignar()
+  +ingresarDatosDeDesarrolladorParaDesasignar()
+  +ingresarFechaDeInicioDeProyecto()
+  +ingresarDatosParaBorrarUsuario()
+  +ingresarDatosParaBorrarDesarrollador()
+  +ingresarDatosParaNuevoDesarrollador()
+  +interfazCrearUsuario(tipoUsuario: String)
+  +ingresarDatosDelCliente()
+  +presentarListaDeClientes()
+  +presentarListaDeGerentes()
+  +presentarListaDeAdministradores()
+  +presentarListaDeDesarrolladoresDisponibles()
+  +presentarListaDeDesarrolladoresAsignados()
+}
+
+class Administrador {
+  -accionCrearUsuario: AccionUsuarioStrategy
+  -accionSolicitarEliminarUsuario: AccionUsuarioStrategy
+  -accionRegistrarDesarrollador: AccionUsuarioStrategy
+  -accionSolicitarAsignarDesarrollador: AccionUsuarioStrategy
+  -accionSolicitarDesasignarDesarrollador: AccionUsuarioStrategy
+  -accionSolicitarFechaInicioProyecto: AccionUsuarioStrategy
+  -accionSolicitarEliminarDesarrollador: AccionUsuarioStrategy
+  -accionMostrarClientes: AccionUsuarioStrategy
+  -accionMostrarGerentes: AccionUsuarioStrategy
+  -accionMostrarAdministradores: AccionUsuarioStrategy
+  -accionMostrarDesarrolladoresDisponibles: AccionUsuarioStrategy
+  -accionMostrarDesarrolladoresAsignados: AccionUsuarioStrategy
+
+  +Administrador(nombre: String, contraseña: String)
+  +crearUsuario()
+  +solicitarEliminarUsuario()
+  +registrarDesarrollador(ultimoIdDesarrollador: int)
+  +solicitarEliminarDesarrollador()
+  +solicitarAsignarDesarrollador()
+  +solicitarDesasignarDesarrollador()
+  +solicitarFechaInicioProyecto()
+  +mostrarClientes(clientes: ArrayList<Cliente>)
+  +mostrarGerentes(gerentes: ArrayList<Gerente>)
+  +mostrarAdministradores(administradores: ArrayList<Administrador>)
+  +mostrarDesarrolladoresDisponibles(desarrolladores: ArrayList<Desarrollador>)
+  +mostrarDesarrolladoresAsignados(desarrolladores: ArrayList<Desarrollador>)
+}
+
+
+class FuncionCrearUsuario{
+	+ejecutarAccion(Object... params) 
+}
+
+
+class FuncionMostrarAdministradores{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarClientes{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarDesarrolladoresAsignados{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarDesarrolladoresDisponibles{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarGerentes{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionRegistrarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarDesasignarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarAsignarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarEliminarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarEliminarUsuario{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarFechaInicioProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+
+MenuAdministrador <|..  Administrador 
+MenuAdministrador <|..  FuncionCrearUsuario
+MenuAdministrador <|..  FuncionMostrarAdministradores
+MenuAdministrador <|..  FuncionMostrarClientes
+MenuAdministrador <|..  FuncionMostrarDesarrolladoresAsignados
+MenuAdministrador <|..  FuncionMostrarDesarrolladoresDisponibles
+MenuAdministrador <|..  FuncionMostrarGerentes
+MenuAdministrador <|..  FuncionRegistrarDesarrollador
+MenuAdministrador <|..  FuncionSolicitarDesasignarDesarrollador
+MenuAdministrador <|..  FuncionSolicitarAsignarDesarrollador
+MenuAdministrador <|..  FuncionSolicitarEliminarDesarrollador
+MenuAdministrador <|..  FuncionSolicitarEliminarUsuario
+MenuAdministrador <|..  FuncionSolicitarFechaInicioProyecto
+
+@enduml

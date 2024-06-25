@@ -12,17 +12,11 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Cliente.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Constantes.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Gerente.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Administrador.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Usuario.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Sistema.java</file>
+            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/MenuCliente.java</file>
             <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/MenuAdministrador.java</file>
             <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Menu.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/AdministradorStrategy.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Proyecto.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/IUsuarioStrategy.java</file>
+            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/MenuInicio.java</file>
+            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/MenuGerente.java</file>
         </group>
     </open-files>
 </project-private>

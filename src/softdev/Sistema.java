@@ -216,7 +216,7 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "NUEVO_PROYECTO": {
-                Proyecto nuevoProyecto = ((Cliente) usuarioActual).solicitarProyecto();
+                Proyecto nuevoProyecto = ((Cliente) usuarioActual).solicitarNuevoProyecto();
                 nuevoProyecto.setClienteSolicitante((Cliente) usuarioActual);
                 nuevoProyecto.setId(obtenerUltimoIdProyecto() + 1);
                 guardarProyecto(nuevoProyecto);

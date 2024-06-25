@@ -1,0 +1,57 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+class Cliente {
+    - direccion: String
+    - mail: String
+    - telefono: Integer
+
+    +Cliente(String direccion, String mail, int telefono, String nombre, String contraseña)
+    +mostrarDatosDeProyectosDelUsuario()
+    +solicitarProyecto()
+    +mostrarDatosDeProyectosDelUsuario(proyectos: ArrayList<Proyecto>)
+}
+
+
+class Administrador {
+  
+  +Administrador(nombre: String, contraseña: String)
+  +crearUsuario()
+  +solicitarEliminarUsuario()
+  +registrarDesarrollador(ultimoIdDesarrollador: int)
+  +solicitarEliminarDesarrollador()
+  +solicitarAsignarDesarrollador()
+  +solicitarDesasignarDesarrollador()
+  +solicitarFechaInicioProyecto()
+  +mostrarClientes(clientes: ArrayList<Cliente>)
+  +mostrarGerentes(gerentes: ArrayList<Gerente>)
+  +mostrarAdministradores(administradores: ArrayList<Administrador>)
+  +mostrarDesarrolladoresDisponibles(desarrolladores: ArrayList<Desarrollador>)
+  +mostrarDesarrolladoresAsignados(desarrolladores: ArrayList<Desarrollador>)
+}
+
+class Gerente {
+  
+  +Gerente (nombre: String, contraseña: String)
+  +mostrarProyectos(proyectos: ArrayList<Proyecto>)
+  +solicitarAprobarProyecto()
+  +solicitarRechazarProyecto()
+  +solicitarFinalizarProyecto()
+  +ingresarFechaFinDeProyecto()
+  +nuevoEstadoDelProyecto()
+}
+
+interface AccionUsuarioStrategy{
+  +ejecutarAccion()
+}
+
+AccionUsuarioStrategy --o Cliente
+AccionUsuarioStrategy --o Gerente
+AccionUsuarioStrategy --o Administrador
+
+@enduml

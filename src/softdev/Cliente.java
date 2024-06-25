@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Cliente extends Usuario implements MenuCliente {
 
-    private AccionUsuarioStrategy accionSolicitarProyecto;
+    private AccionUsuarioStrategy accionSolicitarNuevoProyecto;
     private AccionUsuarioStrategy accionMostrarDatosDeProyectosDelUsuario;
 
     private String direccion;
@@ -17,7 +17,7 @@ public class Cliente extends Usuario implements MenuCliente {
         this.direccion = direccion;
         this.mail = mail;
         this.telefono = telefono;
-        this.accionSolicitarProyecto = new FuncionSolicitarProyecto();
+        this.accionSolicitarNuevoProyecto = new FuncionSolicitarNuevoProyecto();
         this.accionMostrarDatosDeProyectosDelUsuario = new FuncionMostrarDatosDeProyectosDelUsuario();
     }
 
@@ -56,8 +56,8 @@ public class Cliente extends Usuario implements MenuCliente {
         System.out.println("Telefono: " + telefono);
     }
 
-    public Proyecto solicitarProyecto() {
-        return (Proyecto) accionSolicitarProyecto.ejecutarAccion();
+    public Proyecto solicitarNuevoProyecto() {
+        return (Proyecto) accionSolicitarNuevoProyecto.ejecutarAccion();
     }
 
     public void mostrarDatosDeProyectosDelUsuario(ArrayList<Proyecto> proyectos) {

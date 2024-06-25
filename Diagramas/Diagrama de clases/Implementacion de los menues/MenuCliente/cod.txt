@@ -1,0 +1,43 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+interface MenuCliente{
+  +ingresarDatosParaNuevoProyecto()
+  +ingresarMedioDeSolicitud()
+  +presentarListaDeProyectos()
+}
+
+class Cliente {
+    - direccion: String
+    - mail: String
+    - telefono: Integer
+    -accionSolicitarProyecto: AccionUsuarioStrategy
+    -accionMostrarDatosDeProyectosDelUsuario : AccionUsuarioStrategy
+
+    +Cliente(String direccion, String mail, int telefono, String nombre, String contraseña)
+    +mostrarDatosDeProyectosDelUsuario()
+    +solicitarProyecto()
+    +mostrarDatosDeProyectosDelUsuario(proyectos: ArrayList<Proyecto>)
+}
+
+class FuncionMostrarDatosDeProyectoDelUsuario{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarNuevoProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+
+
+
+MenuCliente <|..  Cliente 
+MenuCliente <|..  FuncionMostrarDatosDeProyectoDelUsuario
+MenuCliente <|..  FuncionSolicitarNuevoProyecto
+
+@enduml

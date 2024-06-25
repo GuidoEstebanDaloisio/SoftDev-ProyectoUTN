@@ -1,0 +1,116 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+interface AccionUsuarioStrategy{
+  +ejecutarAccion()
+}
+
+class FuncionCrearUsuario{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionIngresarFechaFinDeProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarAdministradores{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarClientes{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarDatosDeProyectoDelUsuario{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarDesarrolladoresAsignados{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarDesarrolladoresDisponibles{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarGerentes{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarProyectos{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionNuevoEstadoDelProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionRegistrarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarAprobarProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarDesasignarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarAsignarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarEliminarDesarrollador{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarEliminarUsuario{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarFechaInicioProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarFinalizarProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarNuevoProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarRechazarProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+
+
+AccionUsuarioStrategy <|.. FuncionCrearUsuario
+AccionUsuarioStrategy <|.. FuncionIngresarFechaFinDeProyecto
+AccionUsuarioStrategy <|.. FuncionMostrarAdministradores
+AccionUsuarioStrategy <|.. FuncionMostrarClientes
+AccionUsuarioStrategy <|.. FuncionMostrarDatosDeProyectoDelUsuario
+AccionUsuarioStrategy <|.. FuncionMostrarDesarrolladoresAsignados
+AccionUsuarioStrategy <|.. FuncionMostrarDesarrolladoresDisponibles
+AccionUsuarioStrategy <|.. FuncionMostrarGerentes
+AccionUsuarioStrategy <|.. FuncionMostrarProyectos
+AccionUsuarioStrategy <|.. FuncionNuevoEstadoDelProyecto
+AccionUsuarioStrategy <|.. FuncionRegistrarDesarrollador
+AccionUsuarioStrategy <|.. FuncionSolicitarAprobarProyecto
+AccionUsuarioStrategy <|.. FuncionSolicitarDesasignarDesarrollador
+AccionUsuarioStrategy <|.. FuncionSolicitarAsignarDesarrollador
+AccionUsuarioStrategy <|.. FuncionSolicitarEliminarDesarrollador
+AccionUsuarioStrategy <|.. FuncionSolicitarEliminarUsuario
+AccionUsuarioStrategy <|.. FuncionSolicitarFechaInicioProyecto
+AccionUsuarioStrategy <|.. FuncionSolicitarFinalizarProyecto
+AccionUsuarioStrategy <|.. FuncionSolicitarNuevoProyecto
+AccionUsuarioStrategy <|.. FuncionSolicitarRechazarProyecto
+
+@enduml

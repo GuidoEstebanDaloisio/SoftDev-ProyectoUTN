@@ -1,0 +1,47 @@
+@startuml
+actor Administrador as admin
+actor Cliente as cli
+actor Gerente as ger
+
+package Sistema-SoftDev{
+  usecase "Nuevo usuario"
+  usecase "Borrar usuario"
+  usecase "Nuevo desarrollador"
+  usecase "Borrar desarrollador"
+  usecase "Asignar desarrollador"
+  usecase "Desasignar desarrollador"
+  usecase "Ver clientes"
+  usecase "Ver gerentes"
+  usecase "Ver administradores"
+  usecase "Ver desarrolladores disponibles"
+  usecase "Ver desarrolladores asignados"
+  usecase "Consultar proyectos"
+  usecase "Solicitar proyecto"
+  usecase "Ver proyectos solicitados"
+  usecase "Aprobar proyecto"
+  usecase "Rechazar proyecto"
+  usecase "Salir"
+}
+
+cli --> (Consultar proyectos)
+cli --> (Solicitar proyecto)
+cli --> (Salir)
+
+admin --> (Nuevo usuario)
+admin --> (Borrar usuario)
+admin --> (Nuevo desarrollador)
+admin --> (Borrar desarrollador)
+admin --> (Asignar desarrollador)
+admin --> (Desasignar desarrollador)
+admin --> (Ver gerentes)
+admin --> (Ver administradores)
+admin --> (Ver clientes)
+admin --> (Ver desarrolladores disponibles)
+admin --> (Ver desarrolladores asignados)
+admin --> (Salir)
+
+ger --> (Ver proyectos solicitados)
+ger --> (Aprobar proyecto)
+ger --> (Rechazar proyecto)
+ger --> (Salir)
+@enduml
