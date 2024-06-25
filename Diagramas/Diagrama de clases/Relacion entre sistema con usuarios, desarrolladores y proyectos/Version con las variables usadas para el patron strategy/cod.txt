@@ -1,0 +1,203 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+class Cliente {
+    - direccion: String
+    - mail: String
+    - telefono: Integer
+    -accionSolicitarProyecto: AccionUsuarioStrategy
+    -accionMostrarDatosDeProyectosDelUsuario : AccionUsuarioStrategy
+
+    +Cliente(String direccion, String mail, int telefono, String nombre, String contraseña)
+    +mostrarDatosDeProyectosDelUsuario()
+    +solicitarProyecto()
+    +mostrarDatosDeProyectosDelUsuario(proyectos: ArrayList<Proyecto>)
+}
+
+
+class Administrador {
+  -accionCrearUsuario: AccionUsuarioStrategy
+  -accionSolicitarEliminarUsuario: AccionUsuarioStrategy
+  -accionRegistrarDesarrollador: AccionUsuarioStrategy
+  -accionSolicitarAsignarDesarrollador: AccionUsuarioStrategy
+  -accionSolicitarDesasignarDesarrollador: AccionUsuarioStrategy
+  -accionSolicitarFechaInicioProyecto: AccionUsuarioStrategy
+  -accionSolicitarEliminarDesarrollador: AccionUsuarioStrategy
+  -accionMostrarClientes: AccionUsuarioStrategy
+  -accionMostrarGerentes: AccionUsuarioStrategy
+  -accionMostrarAdministradores: AccionUsuarioStrategy
+  -accionMostrarDesarrolladoresDisponibles: AccionUsuarioStrategy
+  -accionMostrarDesarrolladoresAsignados: AccionUsuarioStrategy
+
+  +Administrador(nombre: String, contraseña: String)
+  +crearUsuario()
+  +solicitarEliminarUsuario()
+  +registrarDesarrollador(ultimoIdDesarrollador: int)
+  +solicitarEliminarDesarrollador()
+  +solicitarAsignarDesarrollador()
+  +solicitarDesasignarDesarrollador()
+  +solicitarFechaInicioProyecto()
+  +mostrarClientes(clientes: ArrayList<Cliente>)
+  +mostrarGerentes(gerentes: ArrayList<Gerente>)
+  +mostrarAdministradores(administradores: ArrayList<Administrador>)
+  +mostrarDesarrolladoresDisponibles(desarrolladores: ArrayList<Desarrollador>)
+  +mostrarDesarrolladoresAsignados(desarrolladores: ArrayList<Desarrollador>)
+}
+
+
+class Desarrollador {
+  - id: Integer
+  - nombre: String
+  - habilidad: String
+  - disponible: Boolean
+    
+  +Desarrollador(int id, String nombre, String habilidad)
+  +mostrarDatos()
+  +compararIdYNombre(id: int, nombre: String)
+  +isDisponible()
+  +getId()
+  +setDisponible(disponible: boolean)
+  +getNombre()
+}
+
+
+class Gerente {
+  -accionMostrarProyectos: AccionUsuarioStrategy
+  -accionSolicitarAprobarProyecto: AccionUsuarioStrategy
+  -accionSolicitarRechazarProyecto: AccionUsuarioStrategy
+  -accionNuevoEstadoDelProyecto: AccionUsuarioStrategy
+  -accionSolicitarFinalizarProyecto: AccionUsuarioStrategy
+  -accionIngresarFechaFinDeProyecto: AccionUsuarioStrategy
+
+  +Gerente (nombre: String, contraseña: String)
+  +mostrarProyectos(proyectos: ArrayList<Proyecto>)
+  +solicitarAprobarProyecto()
+  +solicitarRechazarProyecto()
+  +solicitarFinalizarProyecto()
+  +ingresarFechaFinDeProyecto()
+  +nuevoEstadoDelProyecto()
+}
+
+
+Class Main {
+}
+
+
+class Proyecto {
+  -id: int
+  -titulo: String
+  -descripcion: String
+  -medioDeEncargo: String
+  -fechaDeInicio: LocalDate
+  -fechaDeFinalizacion: LocalDate
+  -presupuesto: double
+  -progreso: String
+  -proyectoFinalizado: boolean
+
+
+  +Proyecto(titulo: String, descripcion: String, medioDeEncargo: String, presupuesto: double)
+  +setClienteSolicitante(clienteSolicitante: Cliente)
+  +asignarDesarrollador(desarrollador: Desarrollador)
+  +desasignarDesarrollador(desarrollador: Desarrollador)
+  +setId(id: int)
+  +setFechaDeInicio(fechaDeInicio: LocalDate)
+  +setFechaDeFinalizacion(fechaDeFinalizacion: LocalDate)
+  +hayDesarrolladores()
+  +getId()
+  +getTitulo()
+  +getFechaDeInicio()
+  +comprobarSiEstaEsperandoAprobacion()
+  +comprobarSiFueRechazado()
+  +comprobarSiEstaDisponibleParaActualizarProgreso()
+  +comprobarSiEstaDisponibleParaFinalizar()
+  +setProgreso(progreso: String)
+  +compararClientes(cliente: Cliente)
+  +compararTitulos(titulo: String)
+  +compararId(id: int)
+  +mostrarDatos()
+  +setProyectoFinalizado(proyectoFinalizado: boolean)
+  +mostrarListaDeDesarrolladores()
+}
+
+
+Class Sistema {
+  -usuarioActual: Usuario
+  -USUARIOS_FILE: String
+  -DESARROLLADORES_FILE: String
+  -PROYECTOS_FILE: String
+
+  +iniciar()
+  -verificarYCrearArchivo(nombreArchivo: String)
+  -guardarDatos()
+  -guardarListaEnArchivo(fileName: String, lista: ArrayList<?>)
+  -cargarDatos()
+  -cargarListaDeArchivo(nombreArchivo: String)
+  -ejecutarAccion(opcion: String)
+  -loguearUsuario(nombre: String, contraseña: String, tipo: String)
+  -crearPrimerUsuario(primerNombreUsuario: String, primeraContraseña: String)
+  -cambiarEstadoDeProyecto(proyecto: Proyecto, nuevoEstado: String)
+  -validarProyectoSolicitadoParaDeterminarAprobacion(idRecibida: String, titulo: String, nuevoEstado: String)
+  -validarProyectoSolicitadoParaFinalizar(idRecibida: String, titulo: String)
+  -finalizarProyecto(proyecto: Proyecto)
+  -validarProyectoSolicitadoParaAdministrarDesarrolladores(idRecibida: String, titulo: String)
+  -validarAdministradorSolicitado(desarrolladores: ArrayList<Desarrollador>, idRecibida: String, nombre: String)
+  -asignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador: String[])
+  -desasignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador: String[])
+  -aprobarProyecto(proyecto: Proyecto)
+  -rechazarProyecto(proyecto: Proyecto)
+  -obtenerDesarrollador(idRecibida: String, nombre: String)
+  -obtenerProyecto(idRecibida: String, titulo: String)
+  -obtenerUltimoIdUsuario(tipoUsuario: String)
+  -obtenerUltimoIdDesarrollador()
+  -obtenerUltimoIdProyecto()
+  -guardarUsuario(usuario: Usuario)
+  -guardarDesarrollador(desarrollador: Desarrollador)
+  -guardarProyecto(proyecto: Proyecto)
+  -borrarUsuario(tipo: String, idRecibida: String, nombre: String)
+  -borrarDesarrollador(idRecibida: String, nombre: String)
+  -obtenerProyectosDelUsuario(cliente: Cliente)
+  -obtenerUsuariosPorTipo(tipoUsuario: String)
+  -obtenerDesarrolladoresDisponibles()
+  -obtenerDesarrolladoresAsignados()
+}
+
+abstract class Usuario {
+  # id: int
+  # nombre: String
+  # contraseña: String
+  # cantidadDeOpciones: int
+
+  +Usuario(nombre: String, contraseña: String, cantidadDeOpciones: int)
+  +elegirAccion()
+  +ejecutarAccion(accionNum: int)
+  +mostrarDatos()
+  +compararIdYNombre(id: int, nombre: String)
+  +compararNombreYContraseña(nombre: String, contraseña: String)
+  #getNombre()
+  +setId(id: int)
+  +getId()
+}
+
+Usuario <|-- Cliente
+Usuario <|-- Gerente
+Usuario <|-- Administrador
+
+Main ..> Sistema: Usa
+
+Sistema "1" o--"*" Usuario: usuarios
+Sistema "1" o--"*" Proyecto: proyectos
+Sistema "1" o--"*" Desarrollador: desarrolladores
+
+Proyecto "1"-->"*" Desarrollador
+Proyecto "*"-->"1" Cliente
+
+Administrador ..> Sistema: crear nuevo usuario, eliminar usuario, registrar desarrollador, eliminar desarrollador, asignar desarrollador, desasignar desarrollador y mostrar usuarios y desarrolladores
+Gerente ..> Sistema: ver proyectos, aprobarlos, rechazarlos, finalizarlos y cambiar su estado de progreso
+Cliente ..> Sistema: solicitar y consultar proyectos
+
+@enduml

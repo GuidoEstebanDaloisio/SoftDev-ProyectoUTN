@@ -1,95 +1,150 @@
 package softdev;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import static softdev.EntradaSalida.*;
 
-public class Administrador extends Usuario {
+public class Administrador extends Usuario implements MenuAdministrador {
+    
+    private AccionUsuarioStrategy accionCrearUsuario;
+    private AccionUsuarioStrategy accionSolicitarEliminarUsuario;
+    private AccionUsuarioStrategy accionRegistrarDesarrollador;
+    private AccionUsuarioStrategy accionSolicitarAsignarDesarrollador;
+    private AccionUsuarioStrategy accionSolicitarDesasignarDesarrollador;
+    private AccionUsuarioStrategy accionSolicitarFechaInicioProyecto;
+    private AccionUsuarioStrategy accionSolicitarEliminarDesarrollador;
+    private AccionUsuarioStrategy accionMostrarClientes;
+    private AccionUsuarioStrategy accionMostrarGerentes;
+    private AccionUsuarioStrategy accionMostrarAdministradores;
+    private AccionUsuarioStrategy accionMostrarDesarrolladoresDisponibles;
+    private AccionUsuarioStrategy accionMostrarDesarrolladoresAsignados;
+            
+    
+    public Administrador(String nombre, String contraseña) {
+        super(nombre, contraseña, 12);
+        this.accionCrearUsuario = new FuncionCrearUsuario();
+        this.accionSolicitarEliminarUsuario = new FuncionSolicitarEliminarUsuario();
+        this.accionRegistrarDesarrollador = new FuncionRegistrarDesarrollador();
+        this.accionSolicitarAsignarDesarrollador = new FuncionSolicitarAsignarDesarrollador();
+        this.accionSolicitarDesasignarDesarrollador = new FuncionSolicitarDesasignarDesarrollador();
+        this.accionSolicitarFechaInicioProyecto = new FuncionSolicitarFechaInicioProyecto();
+        this.accionSolicitarEliminarDesarrollador = new FuncionSolicitarEliminarDesarrollador();
+        this.accionMostrarClientes = new FuncionMostrarClientes();
+        this.accionMostrarGerentes = new FuncionMostrarGerentes();
+        this.accionMostrarAdministradores = new FuncionMostrarAdministradores();
+        this.accionMostrarDesarrolladoresDisponibles = new FuncionMostrarDesarrolladoresDisponbles();
+        this.accionMostrarDesarrolladoresAsignados = new FuncionMostrarDesarrolladoresAsignados();
+    }
 
-    public Administrador(String nombre, String contrasenia) {
-        super(nombre, contrasenia);
+    
+    
+    @Override
+    public String elegirAccion() {
+        System.out.println("==================================================================================");
+        System.out.println("(1)Crear usuario                        | (7)Ver clientes");
+        System.out.println("(2)Eliminar usuario                     | (8)Ver gerentes");
+        System.out.println("(3)Registrar desarrollador              | (9)Ver administradores");
+        System.out.println("(4)Eliminar desarrolador                | (10)Ver desarrolladores diponibles");
+        System.out.println("(5)Asignar desarrollador a un proyecto  | (11)Ver desarrolladores asignados");
+        System.out.println("(6)Quitar desarrollador de un proyecto  | (12)Salir");
+
+        return ejecutarAccion(leerOpcionMenu(cantidadDeOpciones));
     }
 
     @Override
-    public void mostrarAcciones() {
-        System.out.println("(1)Crear usuario                        | (5)Ver clientes");
-        System.out.println("(2)Eliminar usuario                     | (6)Ver gerentes");
-        System.out.println("(3)Registrar desarrolador               | (7)Ver administradores");
-        System.out.println("(4)Eliminar desarrolador                | (8)Ver desarrolladores dipobles");
-        System.out.println("(5)Asignar desarrolador a un proyecto   | (9)Ver desarrolladores asignados");
-        System.out.println("(6)Quitar desarrolador de un proyecto   | (10)Salir");
-    }
-
-    public Usuario crearUsuario(int ultimoIdCliente) {
-        Usuario nuevoUsuario = null;
-
-        String tipoNombreContraseña[] = interfazCrearUsuario();
-
-        if (tipoNombreContraseña[0].equals("CLIENTE")) {
-            String direccionMailTelefono[] = ingresarDatosDelCliente();
-
-            nuevoUsuario = new Cliente(ultimoIdCliente + 1, direccionMailTelefono[0], direccionMailTelefono[1], Integer.parseInt(direccionMailTelefono[2]), tipoNombreContraseña[1], tipoNombreContraseña[2]);
-
-            if (nuevoUsuario != null) {
-                System.out.println("Cliente generado exitosamente");
-            } else {
-                System.out.println("Error al crear el cliente");
+    public String ejecutarAccion(int accionNum) {
+        String opcion = null;
+        switch (accionNum) {
+            case 1 -> {
+                opcion = "NUEVO_USUARIO";
+            }
+            case 2 -> {
+                opcion = "BORRAR_USUARIO";
+            }
+            case 3 -> {
+                opcion = "NUEVO_DESARROLLADOR";
+            }
+            case 4 -> {
+                opcion = "BORRAR_DESARROLLADOR";
+            }
+            case 5 -> {
+                opcion = "ASIGNAR_DESARROLLADOR";
+            }
+            case 6 -> {
+                opcion = "DESASIGNAR_DESARROLLADOR";
+            }
+            case 7 -> {
+                opcion = "VER_CLIENTES";
+            }
+            case 8 -> {
+                opcion = "VER_GERENTES";
+            }
+            case 9 -> {
+                opcion = "VER_ADMINISTRADORES";
+            }
+            case 10 -> {
+                opcion = "VER_DESARROLLADORES_DISPONIBLES";
+            }
+            case 11 -> {
+                opcion = "VER_DESARROLLADORES_ASIGNADOS";
+            }
+            case 12 -> {
+                opcion = "SALIR";
             }
         }
-
-        return nuevoUsuario;
+        return opcion;
     }
-
-    public void eliminarUsuario() {
-
+    
+    @Override
+    public void mostrarDatos() {
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
     }
-
-    public void registrarDesarrollador() {
-
+    
+    public Usuario crearUsuario(){
+        return (Usuario) accionCrearUsuario.ejecutarAccion();
     }
-
-    public void eliminarDesarrollador() {
-
+    
+    public String[] solicitarEliminarUsuario(){
+        return (String[]) accionSolicitarEliminarUsuario.ejecutarAccion();
     }
-
-    public void asignarDesarrollador() {
-
+ 
+    public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador) {
+        return (Desarrollador) accionRegistrarDesarrollador.ejecutarAccion(ultimoIdDesarrollador);
     }
-
-    public void liberarDesarrollador() {
-
+    
+    public String [] solicitarEliminarDesarrollador(){
+        return (String[]) accionSolicitarEliminarDesarrollador.ejecutarAccion();
     }
-
-    public void verClientes(ArrayList<Cliente> clientes) {
-
-        presentarListaDeClientes();
-
-        for (Cliente cliente : clientes) {
-            System.out.println("-----------------------");
-            System.out.println("ID: " + cliente.getId());
-            System.out.println("Nombre: " + cliente.getNombre());
-            System.out.println("Direccion: " + cliente.getDireccion());
-            System.out.println("Correo Electronico: " + cliente.getMail());
-            System.out.println("Telefono: " + cliente.getTelefono());
-            System.out.println(); // Salto de línea entre cada cliente
-        }
-        System.out.println("-----------------------");
-
+    
+    public String[] solicitarAsignarDesarrollador(){
+       return (String[]) accionSolicitarAsignarDesarrollador.ejecutarAccion();
     }
-
-    public void verGerentes() {
-
+    
+    public String[] solicitarDesasignarDesarrollador(){
+       return (String[]) accionSolicitarDesasignarDesarrollador.ejecutarAccion();
     }
+    
+    public LocalDate solicitarFechaInicioProyecto(){
+        return (LocalDate) accionSolicitarFechaInicioProyecto.ejecutarAccion();
+    } 
 
-    public void verAdministradores() {
-
+    public void mostrarClientes(ArrayList<Cliente> clientes){
+        accionMostrarClientes.ejecutarAccion(clientes);
     }
-
-    public void verDesarrolladoresDisponbles() {
-
+    
+    public void mostrarGerentes(ArrayList<Gerente> gerentes){
+        accionMostrarGerentes.ejecutarAccion(gerentes);
     }
-
-    public void verDesarrolladoresAsignados() {
-
+    
+    public void mostrarAdministradores(ArrayList<Administrador> administradores){
+        accionMostrarAdministradores.ejecutarAccion(administradores);
     }
+    
+    public void mostrarDesarrolladoresDisponibles(ArrayList<Desarrollador> desarrolladores){
+        accionMostrarDesarrolladoresDisponibles.ejecutarAccion(desarrolladores);
+    }    
 
+    public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores){
+        accionMostrarDesarrolladoresAsignados.ejecutarAccion(desarrolladores);
+    }  
 }

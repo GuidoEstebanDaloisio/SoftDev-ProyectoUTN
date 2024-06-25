@@ -1,58 +1,84 @@
 package softdev;
 
-public class Cliente extends Usuario {
+import java.util.ArrayList;
+import java.util.Objects;
 
-    private int id;
+public class Cliente extends Usuario implements MenuCliente {
+
+    private AccionUsuarioStrategy accionSolicitarNuevoProyecto;
+    private AccionUsuarioStrategy accionMostrarDatosDeProyectosDelUsuario;
+
     private String direccion;
     private String mail;
     private int telefono;
 
-    public Cliente(int id, String direccion, String mail, int telefono, String nombre, String contrasenia) {
-        super(nombre, contrasenia);
-        this.id = id;
+    public Cliente(String direccion, String mail, int telefono, String nombre, String contraseña) {
+        super(nombre, contraseña, 3);
         this.direccion = direccion;
         this.mail = mail;
         this.telefono = telefono;
+        this.accionSolicitarNuevoProyecto = new FuncionSolicitarNuevoProyecto();
+        this.accionMostrarDatosDeProyectosDelUsuario = new FuncionMostrarDatosDeProyectosDelUsuario();
     }
 
     @Override
-    public void mostrarAcciones() {
+    public String elegirAccion() {
+        System.out.println("=================================");
         System.out.println("(1)Solicitar proyecto");
         System.out.println("(2)Consultar por proyecto");
         System.out.println("(3)Salir");
-
+        return ejecutarAccion(leerOpcionMenu(cantidadDeOpciones));
     }
 
-    public void solicitarProyecto() {
-
+    @Override
+    public String ejecutarAccion(int accionNum) {
+        String opcion = null;
+        switch (accionNum) {
+            case 1 -> {
+                opcion = "NUEVO_PROYECTO";
+            }
+            case 2 -> {
+                opcion = "CONSULTAR_PROYECTO";
+            }
+            case 3 -> {
+                opcion = "SALIR";
+            }
+        }
+        return opcion;
     }
 
-    public void consultarProyecto() {
-
+    @Override
+    public void mostrarDatos() {
+        System.out.println("ID: " + id);
+        System.out.println("Nombre: " + nombre);
+        System.out.println("Direccion: " + direccion);
+        System.out.println("Correo Electronico: " + mail);
+        System.out.println("Telefono: " + telefono);
     }
 
-    public int getId() {
-        return id;
+    public Proyecto solicitarNuevoProyecto() {
+        return (Proyecto) accionSolicitarNuevoProyecto.ejecutarAccion();
     }
 
-    public String getDireccion() {
-        return direccion;
+    public void mostrarDatosDeProyectosDelUsuario(ArrayList<Proyecto> proyectos) {
+        accionMostrarDatosDeProyectosDelUsuario.ejecutarAccion(proyectos);
+    }
+    
+    // Sobrescribimos equals y hashCode para evitar problemas al volver a ejecutar el programa
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Cliente cliente = (Cliente) o;
+        return telefono == cliente.telefono &&
+                Objects.equals(direccion, cliente.direccion) &&
+                Objects.equals(mail, cliente.mail) &&
+                Objects.equals(nombre, cliente.nombre) &&
+                Objects.equals(id, cliente.id);  // assuming id is a unique identifier
     }
 
-    public String getMail() {
-        return mail;
+    @Override
+    public int hashCode() {
+        return Objects.hash(direccion, mail, telefono, nombre, id);
     }
-
-    public int getTelefono() {
-        return telefono;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getContrasenia() {
-        return contrasenia;
-    }
-
 }

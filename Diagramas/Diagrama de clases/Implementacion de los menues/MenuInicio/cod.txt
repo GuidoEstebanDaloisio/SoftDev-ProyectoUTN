@@ -1,0 +1,67 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+
+interface MenuInicio{
+  +iniciarSesionComo()
+  +inicioDeSesion(tipoUsuario: String)
+  +saludoDespedida()
+  +bienvenida(nombreUsuario: String)
+  +primerInicioDeSesion()
+  +bienvenidaPrimerUsuario(nombreUsuario: String)
+}
+
+Class Sistema {
+  -desarrolladores: ArrayList<Desarrollador>
+  -usuarios: ArrayList<Usuario>
+  -proyectos: ArrayList<Proyecto>
+  -usuarioActual: Usuario
+  -USUARIOS_FILE: String
+  -DESARROLLADORES_FILE: String
+  -PROYECTOS_FILE: String
+
+  +iniciar()
+  -verificarYCrearArchivo(nombreArchivo: String)
+  -guardarDatos()
+  -guardarListaEnArchivo(fileName: String, lista: ArrayList<?>)
+  -cargarDatos()
+  -cargarListaDeArchivo(nombreArchivo: String)
+  -ejecutarAccion(opcion: String)
+  -loguearUsuario(nombre: String, contraseña: String, tipo: String)
+  -crearPrimerUsuario(primerNombreUsuario: String, primeraContraseña: String)
+  -cambiarEstadoDeProyecto(proyecto: Proyecto, nuevoEstado: String)
+  -validarProyectoSolicitadoParaDeterminarAprobacion(idRecibida: String, titulo: String, nuevoEstado: String)
+  -validarProyectoSolicitadoParaFinalizar(idRecibida: String, titulo: String)
+  -finalizarProyecto(proyecto: Proyecto)
+  -validarProyectoSolicitadoParaAdministrarDesarrolladores(idRecibida: String, titulo: String)
+  -validarAdministradorSolicitado(desarrolladores: ArrayList<Desarrollador>, idRecibida: String, nombre: String)
+  -asignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador: String[])
+  -desasignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador: String[])
+  -aprobarProyecto(proyecto: Proyecto)
+  -rechazarProyecto(proyecto: Proyecto)
+  -obtenerDesarrollador(idRecibida: String, nombre: String)
+  -obtenerProyecto(idRecibida: String, titulo: String)
+  -obtenerUltimoIdUsuario(tipoUsuario: String)
+  -obtenerUltimoIdDesarrollador()
+  -obtenerUltimoIdProyecto()
+  -guardarUsuario(usuario: Usuario)
+  -guardarDesarrollador(desarrollador: Desarrollador)
+  -guardarProyecto(proyecto: Proyecto)
+  -borrarUsuario(tipo: String, idRecibida: String, nombre: String)
+  -borrarDesarrollador(idRecibida: String, nombre: String)
+  -obtenerProyectosDelUsuario(cliente: Cliente)
+  -obtenerUsuariosPorTipo(tipoUsuario: String)
+  -obtenerDesarrolladoresDisponibles()
+  -obtenerDesarrolladoresAsignados()
+}
+
+
+
+MenuInicio <|..   Sistema 
+
+@enduml

@@ -1,15 +1,43 @@
 package softdev;
 
-public abstract class Usuario {
+import java.io.Serializable;
 
+public abstract class Usuario implements Serializable {
+
+    protected int id;
     protected String nombre;
-    protected String contrasenia;
+    protected String contraseña;
+    protected int cantidadDeOpciones;
 
-    public Usuario(String nombre, String contrasenia) {
+    public Usuario(String nombre, String contraseña, int cantidadDeOpciones) {
         this.nombre = nombre;
-        this.contrasenia = contrasenia;
+        this.contraseña = contraseña;
+        this.cantidadDeOpciones = cantidadDeOpciones;
     }
 
-    public abstract void mostrarAcciones();
+    public abstract String elegirAccion();
 
+    public abstract String ejecutarAccion(int accionNum);
+
+    public abstract void mostrarDatos();
+
+    public boolean compararIdYNombre(int id, String nombre) {
+        return this.id == id && this.nombre.equals(nombre);
+    }
+
+    public boolean compararNombreYContraseña(String nombre, String contraseña) {
+        return this.nombre.equals(nombre) && this.contraseña.equals(contraseña);
+    }
+
+    protected String getNombre() {
+        return nombre;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

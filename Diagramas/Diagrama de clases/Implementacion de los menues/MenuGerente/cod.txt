@@ -1,0 +1,73 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+interface MenuGerente{
+  +ingresarDatosDeProyectoAAprobar()
+  +ingresarDatosDeProyectoARechazar()
+  +ingresarDatosDeProyectoAFinalizar()
+  +ingresarFechaFin()
+  +ingresarNuevoEstadoDeProyecto()
+  +ingresarDatosDeProyecto()
+  +ingresarEstado()
+  +mostrarOpcionesValidaseEnVertical(elementos: List<String>)
+  +ingresarIdYTitulo()
+  +presentarListaDeProyectos()
+}
+
+class Gerente {
+  -accionMostrarProyectos: AccionUsuarioStrategy
+  -accionSolicitarAprobarProyecto: AccionUsuarioStrategy
+  -accionSolicitarRechazarProyecto: AccionUsuarioStrategy
+  -accionNuevoEstadoDelProyecto: AccionUsuarioStrategy
+  -accionSolicitarFinalizarProyecto: AccionUsuarioStrategy
+  -accionIngresarFechaFinDeProyecto: AccionUsuarioStrategy
+
+  +Gerente (nombre: String, contraseña: String)
+  +mostrarProyectos(proyectos: ArrayList<Proyecto>)
+  +solicitarAprobarProyecto()
+  +solicitarRechazarProyecto()
+  +solicitarFinalizarProyecto()
+  +ingresarFechaFinDeProyecto()
+  +nuevoEstadoDelProyecto()
+}
+
+class FuncionIngresarFechaFinDeProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionMostrarProyectos{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionNuevoEstadoDelProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarAprobarProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+
+class FuncionSolicitarFinalizarProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+class FuncionSolicitarRechazarProyecto{
+	+ejecutarAccion(Object... params) 
+}
+
+
+MenuGerente <|..   Gerente 
+MenuGerente <|..   FuncionIngresarFechaFinDeProyecto
+MenuGerente <|..   FuncionMostrarProyectos
+MenuGerente <|..   FuncionNuevoEstadoDelProyecto
+MenuGerente <|..   FuncionSolicitarAprobarProyecto
+MenuGerente <|..   FuncionSolicitarFinalizarProyecto
+MenuGerente <|..   FuncionSolicitarRechazarProyecto
+
+@enduml

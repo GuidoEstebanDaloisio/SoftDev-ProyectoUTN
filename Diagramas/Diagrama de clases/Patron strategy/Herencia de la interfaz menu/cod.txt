@@ -1,0 +1,78 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+
+
+interface Menu{
+  +ingresarId()
+  +mostrarOpcionesValidas(elementos: List<String>)
+  +mostrarOpcionesValidaseEnVertical(elementos: List<String>)
+  +elegirTipoDeUsuario(contorno: String, mensaje: String)
+  +opcionValida(canatidadOpciones: int, opcionNum: int)
+  +espaciarPantallas()
+  +ingresarUsuarioYContraseña()
+  +leerOpcionMenu(cantidadOpciones: int)
+  -tipoUsuarioValido(tipoUsuario: String)
+}
+
+
+interface MenuAdministrador{
+  +ingresarDatosParaNuevoUsuario()
+  +ingresarDatosDeProyecto()
+  +ingresarDatosDeDesarrolladorParaAsignar()
+  +ingresarDatosDeDesarrolladorParaDesasignar()
+  +ingresarFechaDeInicioDeProyecto()
+  +ingresarDatosParaBorrarUsuario()
+  +ingresarDatosParaBorrarDesarrollador()
+  +ingresarDatosParaNuevoDesarrollador()
+  +interfazCrearUsuario(tipoUsuario: String)
+  +ingresarDatosDelCliente()
+  +presentarListaDeClientes()
+  +presentarListaDeGerentes()
+  +presentarListaDeAdministradores()
+  +presentarListaDeDesarrolladoresDisponibles()
+  +presentarListaDeDesarrolladoresAsignados()
+}
+
+
+interface MenuCliente{
+  +ingresarDatosParaNuevoProyecto()
+  +ingresarMedioDeSolicitud()
+  +presentarListaDeProyectos()
+}
+
+
+interface MenuGerente{
+  +ingresarDatosDeProyectoAAprobar()
+  +ingresarDatosDeProyectoARechazar()
+  +ingresarDatosDeProyectoAFinalizar()
+  +ingresarFechaFin()
+  +ingresarNuevoEstadoDeProyecto()
+  +ingresarDatosDeProyecto()
+  +ingresarEstado()
+  +mostrarOpcionesValidaseEnVertical(elementos: List<String>)
+  +ingresarIdYTitulo()
+  +presentarListaDeProyectos()
+}
+
+
+interface MenuInicio{
+  +iniciarSesionComo()
+  +inicioDeSesion(tipoUsuario: String)
+  +saludoDespedida()
+  +bienvenida(nombreUsuario: String)
+  +primerInicioDeSesion()
+  +bienvenidaPrimerUsuario(nombreUsuario: String)
+}
+
+Menu <|-- MenuInicio
+Menu <|-- MenuCliente
+Menu <|-- MenuGerente
+Menu <|-- MenuAdministrador
+
+@enduml
