@@ -27,7 +27,7 @@ public interface MenuCliente extends Menu {
         do {
             try {
                 System.out.printf("Presupuesto: $");
-                presupuesto = entrada.next();
+                presupuesto = entrada.nextLine();
                 // Intentar parsear como double
                 Double.parseDouble(presupuesto);
                 presupuestoValido = true;
@@ -49,7 +49,7 @@ public interface MenuCliente extends Menu {
         do {
             mostrarOpcionesValidas(MEDIOS_DE_SOLICITUD);
             System.out.printf("Medio por el que hace la solicitud: ");
-            medio = entrada.next();
+            medio = entrada.nextLine();
         } while (!MEDIOS_DE_SOLICITUD.contains(medio.toUpperCase()));
 
         return medio;

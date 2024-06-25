@@ -69,7 +69,7 @@ public interface Menu {
 
             System.out.printf("Tipo de usuario: ");
             Scanner entrada = new Scanner(System.in);
-            tipoUsuario = entrada.next().toUpperCase();
+            tipoUsuario = entrada.nextLine().toUpperCase();
 
         }
         return tipoUsuario;
@@ -86,10 +86,10 @@ public interface Menu {
     default String[] ingresarUsuarioYContraseña() {
         System.out.printf("Nombre de usuario: ");
         Scanner entrada = new Scanner(System.in);
-        String nombreUsuario = entrada.next().toUpperCase();
+        String nombreUsuario = entrada.nextLine().toUpperCase();
 
         System.out.printf("Contrasenia: ");
-        String contraseñaUsuario = entrada.next();
+        String contraseñaUsuario = entrada.nextLine();
 
         String[] usuarioYContraseña = {nombreUsuario, contraseñaUsuario};
         return usuarioYContraseña;
@@ -107,7 +107,7 @@ public interface Menu {
                 }
             } catch (InputMismatchException e) {
                 System.out.println(ERROR_OPCION_INVALIDA_CARACTER);
-                entrada.next(); // Descarta la entrada inválida
+                entrada.nextLine(); // Descarta la entrada inválida
             }
         } while (!opcionValida(cantidadOpciones, opcion));
         espaciarPantallas();

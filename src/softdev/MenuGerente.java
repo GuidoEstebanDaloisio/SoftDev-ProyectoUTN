@@ -132,7 +132,7 @@ public interface MenuGerente extends Menu {
         String id = ingresarId();
 
         System.out.printf("Titulo: ");
-        String titulo = entrada.next().toUpperCase();
+        String titulo = entrada.nextLine().toUpperCase();
 
         String idYTitulo[] = {id, titulo};
 

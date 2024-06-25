@@ -38,7 +38,7 @@ public interface MenuAdministrador extends Menu {
         String id = ingresarId();
 
         System.out.printf("Titulo: ");
-        String titulo = entrada.next().toUpperCase();
+        String titulo = entrada.nextLine().toUpperCase();
 
         String idYTitulo[] = {id, titulo};
 
@@ -57,7 +57,7 @@ public interface MenuAdministrador extends Menu {
         String id = ingresarId();
 
         System.out.printf("Nombre: ");
-        String nombre = entrada.next().toUpperCase();
+        String nombre = entrada.nextLine().toUpperCase();
 
         String idYNombre[] = {id, nombre};
 
@@ -76,7 +76,7 @@ public interface MenuAdministrador extends Menu {
         String id = ingresarId();
 
         System.out.printf("Nombre: ");
-        String nombre = entrada.next().toUpperCase();
+        String nombre = entrada.nextLine().toUpperCase();
 
         String idYNombre[] = {id, nombre};
         espaciarPantallas();
@@ -117,7 +117,7 @@ public interface MenuAdministrador extends Menu {
         String id = ingresarId();
 
         System.out.printf("Nombre: ");
-        String nombre = entrada.next().toUpperCase();
+        String nombre = entrada.nextLine().toUpperCase();
 
         String tipoUsuarioIdYNombre[] = {tipoUsuario, id, nombre};
         espaciarPantallas();
@@ -137,7 +137,7 @@ public interface MenuAdministrador extends Menu {
         String id = ingresarId();
 
         System.out.printf("Nombre: ");
-        String nombre = entrada.next().toUpperCase();
+        String nombre = entrada.nextLine().toUpperCase();
 
         String idYNombre[] = {id, nombre.toUpperCase()};
         espaciarPantallas();
@@ -152,10 +152,10 @@ public interface MenuAdministrador extends Menu {
         System.out.println("=======================================================");
 
         System.out.printf("Nombre: ");
-        String nombre = entrada.next();
+        String nombre = entrada.nextLine();
 
         System.out.printf("Habilidad: ");
-        String habilidad = entrada.next();
+        String habilidad = entrada.nextLine();
 
         String nombreYHabilidad[] = {nombre.toUpperCase(), habilidad.toUpperCase()};
 
@@ -177,10 +177,10 @@ public interface MenuAdministrador extends Menu {
 
         System.out.printf("Direccion: ");
         Scanner entrada = new Scanner(System.in);
-        String direccion = entrada.next();
+        String direccion = entrada.nextLine();
 
         System.out.printf("Mail: ");
-        String mail = entrada.next();
+        String mail = entrada.nextLine();
 
         String telefono = "";
         boolean telefonoValido = false;
@@ -188,7 +188,7 @@ public interface MenuAdministrador extends Menu {
         do {
             try {
                 System.out.printf("Telefono: ");
-                telefono = entrada.next();
+                telefono = entrada.nextLine();
                 Long.parseLong(telefono); // Intentar convertir el teléfono a Long para validar que sea numérico
                 telefonoValido = true;
             } catch (NumberFormatException e) {
