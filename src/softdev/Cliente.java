@@ -5,8 +5,7 @@ import java.util.Objects;
 
 public class Cliente extends Usuario implements MenuCliente {
 
-    private AccionUsuarioStrategy accionSolicitarNuevoProyecto;
-    private AccionUsuarioStrategy accionMostrarDatosDeProyectosDelUsuario;
+    private ISolicitanteStrategy accionSolicitante;
 
     private String direccion;
     private String mail;
@@ -17,8 +16,7 @@ public class Cliente extends Usuario implements MenuCliente {
         this.direccion = direccion;
         this.mail = mail;
         this.telefono = telefono;
-        this.accionSolicitarNuevoProyecto = new FuncionSolicitarNuevoProyecto();
-        this.accionMostrarDatosDeProyectosDelUsuario = new FuncionMostrarDatosDeProyectosDelUsuario();
+        this.accionSolicitante = new FuncionSolicitanteStrategy();
     }
 
     @Override
@@ -57,11 +55,11 @@ public class Cliente extends Usuario implements MenuCliente {
     }
 
     public Proyecto solicitarNuevoProyecto() {
-        return (Proyecto) accionSolicitarNuevoProyecto.ejecutarAccion();
+        return accionSolicitante.solicitarNuevoProyecto();
     }
 
     public void mostrarDatosDeProyectosDelUsuario(ArrayList<Proyecto> proyectos) {
-        accionMostrarDatosDeProyectosDelUsuario.ejecutarAccion(proyectos);
+        accionSolicitante.mostrarDatosDeProyectosDelUsuario(proyectos);
     }
     
     // Sobrescribimos equals y hashCode para evitar problemas al volver a ejecutar el programa

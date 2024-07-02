@@ -5,34 +5,13 @@ import java.util.ArrayList;
 
 public class Administrador extends Usuario implements MenuAdministrador {
     
-    private AccionUsuarioStrategy accionCrearUsuario;
-    private AccionUsuarioStrategy accionSolicitarEliminarUsuario;
-    private AccionUsuarioStrategy accionRegistrarDesarrollador;
-    private AccionUsuarioStrategy accionSolicitarAsignarDesarrollador;
-    private AccionUsuarioStrategy accionSolicitarDesasignarDesarrollador;
-    private AccionUsuarioStrategy accionSolicitarFechaInicioProyecto;
-    private AccionUsuarioStrategy accionSolicitarEliminarDesarrollador;
-    private AccionUsuarioStrategy accionMostrarClientes;
-    private AccionUsuarioStrategy accionMostrarGerentes;
-    private AccionUsuarioStrategy accionMostrarAdministradores;
-    private AccionUsuarioStrategy accionMostrarDesarrolladoresDisponibles;
-    private AccionUsuarioStrategy accionMostrarDesarrolladoresAsignados;
+    private IAdministradorStrategy accionAdministrador;
             
     
     public Administrador(String nombre, String contraseña) {
         super(nombre, contraseña, 12);
-        this.accionCrearUsuario = new FuncionCrearUsuario();
-        this.accionSolicitarEliminarUsuario = new FuncionSolicitarEliminarUsuario();
-        this.accionRegistrarDesarrollador = new FuncionRegistrarDesarrollador();
-        this.accionSolicitarAsignarDesarrollador = new FuncionSolicitarAsignarDesarrollador();
-        this.accionSolicitarDesasignarDesarrollador = new FuncionSolicitarDesasignarDesarrollador();
-        this.accionSolicitarFechaInicioProyecto = new FuncionSolicitarFechaInicioProyecto();
-        this.accionSolicitarEliminarDesarrollador = new FuncionSolicitarEliminarDesarrollador();
-        this.accionMostrarClientes = new FuncionMostrarClientes();
-        this.accionMostrarGerentes = new FuncionMostrarGerentes();
-        this.accionMostrarAdministradores = new FuncionMostrarAdministradores();
-        this.accionMostrarDesarrolladoresDisponibles = new FuncionMostrarDesarrolladoresDisponbles();
-        this.accionMostrarDesarrolladoresAsignados = new FuncionMostrarDesarrolladoresAsignados();
+        this.accionAdministrador = new FuncionAdministradorStrategy();
+        
     }
 
     
@@ -101,50 +80,50 @@ public class Administrador extends Usuario implements MenuAdministrador {
     }
     
     public Usuario crearUsuario(){
-        return (Usuario) accionCrearUsuario.ejecutarAccion();
+        return accionAdministrador.crearUsuario();
     }
     
     public String[] solicitarEliminarUsuario(){
-        return (String[]) accionSolicitarEliminarUsuario.ejecutarAccion();
+        return accionAdministrador.solicitarEliminarUsuario();
     }
  
     public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador) {
-        return (Desarrollador) accionRegistrarDesarrollador.ejecutarAccion(ultimoIdDesarrollador);
+        return accionAdministrador.registrarDesarrollador(ultimoIdDesarrollador);
     }
     
     public String [] solicitarEliminarDesarrollador(){
-        return (String[]) accionSolicitarEliminarDesarrollador.ejecutarAccion();
+        return accionAdministrador.solicitarEliminarDesarrollador();
     }
     
     public String[] solicitarAsignarDesarrollador(){
-       return (String[]) accionSolicitarAsignarDesarrollador.ejecutarAccion();
+       return accionAdministrador.solicitarAsignarDesarrollador();
     }
     
     public String[] solicitarDesasignarDesarrollador(){
-       return (String[]) accionSolicitarDesasignarDesarrollador.ejecutarAccion();
+       return accionAdministrador.solicitarDesasignarDesarrollador();
     }
     
     public LocalDate solicitarFechaInicioProyecto(){
-        return (LocalDate) accionSolicitarFechaInicioProyecto.ejecutarAccion();
+        return accionAdministrador.solicitarFechaInicioProyecto();
     } 
 
     public void mostrarClientes(ArrayList<Cliente> clientes){
-        accionMostrarClientes.ejecutarAccion(clientes);
+        accionAdministrador.mostrarClientes(clientes);
     }
     
     public void mostrarGerentes(ArrayList<Gerente> gerentes){
-        accionMostrarGerentes.ejecutarAccion(gerentes);
+        accionAdministrador.mostrarGerentes(gerentes);
     }
     
     public void mostrarAdministradores(ArrayList<Administrador> administradores){
-        accionMostrarAdministradores.ejecutarAccion(administradores);
+        accionAdministrador.mostrarAdministradores(administradores);
     }
     
     public void mostrarDesarrolladoresDisponibles(ArrayList<Desarrollador> desarrolladores){
-        accionMostrarDesarrolladoresDisponibles.ejecutarAccion(desarrolladores);
+        accionAdministrador.mostrarDesarrolladoresDisponibles(desarrolladores);
     }    
 
     public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores){
-        accionMostrarDesarrolladoresAsignados.ejecutarAccion(desarrolladores);
+         accionAdministrador.mostrarDesarrolladoresAsignados(desarrolladores);
     }  
 }

@@ -5,21 +5,11 @@ import java.util.ArrayList;
 
 public class Gerente extends Usuario implements MenuGerente {
 
-    private AccionUsuarioStrategy accionMostrarProyectos;
-    private AccionUsuarioStrategy accionSolicitarAprobarProyecto;
-    private AccionUsuarioStrategy accionSolicitarRechazarProyecto;
-    private AccionUsuarioStrategy accionNuevoEstadoDelProyecto;
-    private AccionUsuarioStrategy accionSolicitarFinalizarProyecto;
-    private AccionUsuarioStrategy accionIngresarFechaFinDeProyecto;
+    private ISupervisorStrategy accionSupervisor;
 
     public Gerente(String nombre, String contraseña) {
         super(nombre, contraseña, 6);
-        this.accionMostrarProyectos = new FuncionMostrarProyectos();
-        this.accionSolicitarAprobarProyecto = new FuncionSolicitarAprobarProyecto();
-        this.accionSolicitarRechazarProyecto = new FuncionSolicitarRechazarProyecto();
-        this.accionNuevoEstadoDelProyecto = new FuncionNuevoEstadoDelProyecto();
-        this.accionSolicitarFinalizarProyecto = new FuncionSolicitarFinalizarProyecto();
-        this.accionIngresarFechaFinDeProyecto = new FuncionIngresarFechaFinDeProyecto();
+        this.accionSupervisor = new FuncionSupervisorStrategy();
     }
 
     @Override
@@ -67,26 +57,26 @@ public class Gerente extends Usuario implements MenuGerente {
     }
 
     public void mostrarProyectos(ArrayList<Proyecto> proyectos) {
-        accionMostrarProyectos.ejecutarAccion(proyectos);
+        accionSupervisor.mostrarProyectos(proyectos);
     }
 
     public String[] solicitarAprobarProyecto() {
-        return (String[]) accionSolicitarAprobarProyecto.ejecutarAccion();
+        return accionSupervisor.solicitarAprobarProyecto();
     }
 
     public String[] solicitarRechazarProyecto() {
-        return (String[]) accionSolicitarRechazarProyecto.ejecutarAccion();
+        return accionSupervisor.solicitarRechazarProyecto();
     }
 
     public String[] solicitarFinalizarProyecto(){
-        return (String[]) accionSolicitarFinalizarProyecto.ejecutarAccion();
+        return accionSupervisor.solicitarFinalizarProyecto();
     }
     
     public LocalDate ingresarFechaFinDeProyecto(){
-        return (LocalDate) accionIngresarFechaFinDeProyecto.ejecutarAccion();
+        return accionSupervisor.ingresarFechaFinDeProyecto();
     }
     
     public String[] nuevoEstadoDelProyecto() {
-        return (String[]) accionNuevoEstadoDelProyecto.ejecutarAccion();
+        return accionSupervisor.nuevoEstadoDelProyecto();
     }
 }
