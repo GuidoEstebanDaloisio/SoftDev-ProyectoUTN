@@ -147,8 +147,8 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "BORRAR_USUARIO": {
-                String tipoUsuarioIdYNombre[] = ((Administrador) usuarioActual).solicitarEliminarUsuario();
-                borrarUsuario(tipoUsuarioIdYNombre[0], tipoUsuarioIdYNombre[1], tipoUsuarioIdYNombre[2]);
+                String tipoUsuarioEId[] = ((Administrador) usuarioActual).solicitarEliminarUsuario();
+                borrarUsuario(tipoUsuarioEId[0], tipoUsuarioEId[1]);
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
@@ -157,37 +157,37 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "BORRAR_DESARROLLADOR": {
-                String desarrolladorIdYNombre[] = ((Administrador) usuarioActual).solicitarEliminarDesarrollador();
-                borrarDesarrollador(desarrolladorIdYNombre[0], desarrolladorIdYNombre[1]);
+                String idDesarrollador = ((Administrador) usuarioActual).solicitarEliminarDesarrollador();
+                borrarDesarrollador(idDesarrollador);
                 break;
             }
             case "ASIGNAR_DESARROLLADOR": {
-                String idYTituloProyectoEIdYNombreDesarrollador[] = ((Administrador) usuarioActual).solicitarAsignarDesarrollador();
-                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(), idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
-                boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
+                String idProyectoEIdDesarrollador[] = ((Administrador) usuarioActual).solicitarAsignarDesarrollador();
+                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(),idProyectoEIdDesarrollador[1]);
+                boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idProyectoEIdDesarrollador[0]);
 
                 if (administradorValido && proyectoValido) {
-                    asignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador);
+                    asignarDesarrollador(idProyectoEIdDesarrollador);
                 } else if (!administradorValido && !proyectoValido) {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto ni desarrollador disponible");
                 } else if (!administradorValido) {
-                    System.out.println("El administrador seleccionado no se encuentra disponible");
+                    System.out.println("El desarrollador seleccionado no se encuentra disponible");
                 } else if (!proyectoValido) {
                     System.out.println("El proyecto seleccionado no se encuentra disponible");
                 }
                 break;
             }
             case "DESASIGNAR_DESARROLLADOR": {
-                String idYTituloProyectoEIdYNombreDesarrollador[] = ((Administrador) usuarioActual).solicitarDesasignarDesarrollador();
-                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresAsignados(), idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
-                boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
+                String idProyectoEIdDesarrollador[] = ((Administrador) usuarioActual).solicitarDesasignarDesarrollador();
+                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresAsignados(), idProyectoEIdDesarrollador[1]);
+                boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idProyectoEIdDesarrollador[0]);
 
                 if (administradorValido && proyectoValido) {
-                    desasignarDesarrollador(idYTituloProyectoEIdYNombreDesarrollador);
+                    desasignarDesarrollador(idProyectoEIdDesarrollador);
                 } else if (!administradorValido && !proyectoValido) {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto ni desarrollador disponible");
                 } else if (!administradorValido) {
-                    System.out.println("El administrador seleccionado no se encuentra disponible");
+                    System.out.println("El desarrollador seleccionado no se encuentra disponible");
                 } else if (!proyectoValido) {
                     System.out.println("El proyecto seleccionado no se encuentra disponible");
                 }
@@ -231,9 +231,9 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "APROBAR_PROYECTO": {
-                String IdYTitulo[] = ((Gerente) usuarioActual).solicitarAprobarProyecto();
+                String id = ((Gerente) usuarioActual).solicitarAprobarProyecto();
 
-                if (validarProyectoSolicitadoParaDeterminarAprobacion(IdYTitulo[0], IdYTitulo[1], "APROBAR")) {
+                if (validarProyectoSolicitadoParaDeterminarAprobacion(id,"APROBAR")) {
                     System.out.println("Proyecto aprobado");
                 } else {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
@@ -241,9 +241,9 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "RECHAZAR_PROYECTO": {
-                String IdYTitulo[] = ((Gerente) usuarioActual).solicitarRechazarProyecto();
+                String id = ((Gerente) usuarioActual).solicitarRechazarProyecto();
 
-                if (validarProyectoSolicitadoParaDeterminarAprobacion(IdYTitulo[0], IdYTitulo[1], "RECHAZAR")) {
+                if (validarProyectoSolicitadoParaDeterminarAprobacion(id, "RECHAZAR")) {
                     System.out.println("Proyecto rechazado");
                 } else {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
@@ -251,9 +251,9 @@ public class Sistema implements MenuInicio, Serializable {
                 break;
             }
             case "FINALIZAR_PROYECTO": {
-                String IdYTitulo[] = ((Gerente) usuarioActual).solicitarFinalizarProyecto();
+                String id = ((Gerente) usuarioActual).solicitarFinalizarProyecto();
 
-                if (validarProyectoSolicitadoParaFinalizar(IdYTitulo[0], IdYTitulo[1])) {
+                if (validarProyectoSolicitadoParaFinalizar(id)) {
 
                     System.out.println("Proyecto Finalizado");
                 } else {
@@ -263,9 +263,9 @@ public class Sistema implements MenuInicio, Serializable {
 
             }
             case "ACTUALIZAR_PROGRESO_PROYECTO": {
-                String nuevoEstadoIdYTitulo[] = ((Gerente) usuarioActual).nuevoEstadoDelProyecto();
+                String nuevoEstadoYId[] = ((Gerente) usuarioActual).nuevoEstadoDelProyecto();
 
-                cambiarEstadoDeProyecto(obtenerProyecto(nuevoEstadoIdYTitulo[1], nuevoEstadoIdYTitulo[2]), nuevoEstadoIdYTitulo[0]);
+                cambiarEstadoDeProyecto(obtenerProyecto(nuevoEstadoYId[1]), nuevoEstadoYId[0]);
                 break;
             }
 
@@ -311,12 +311,12 @@ public class Sistema implements MenuInicio, Serializable {
         }
     }
 
-    private boolean validarProyectoSolicitadoParaDeterminarAprobacion(String idRecibida, String titulo, String nuevoEstado) {
+    private boolean validarProyectoSolicitadoParaDeterminarAprobacion(String idRecibida, String nuevoEstado) {
         boolean existeElProyecto = false;
         int id = Integer.parseInt(idRecibida);
 
         for (Proyecto proyecto : proyectos) {
-            if (proyecto.compararId(id) && proyecto.compararTitulos(titulo) && proyecto.comprobarSiEstaEsperandoAprobacion()) {
+            if (proyecto.compararId(id) && proyecto.comprobarSiEstaEsperandoAprobacion()) {
                 if (nuevoEstado.equals("RECHAZAR")) {
                     rechazarProyecto(proyecto);
                 } else if (nuevoEstado.equals("APROBAR")) {
@@ -329,12 +329,12 @@ public class Sistema implements MenuInicio, Serializable {
         return existeElProyecto;
     }
 
-    private boolean validarProyectoSolicitadoParaFinalizar(String idRecibida, String titulo) {
+    private boolean validarProyectoSolicitadoParaFinalizar(String idRecibida) {
         boolean existeElProyecto = false;
         int id = Integer.parseInt(idRecibida);
 
         for (Proyecto proyecto : proyectos) {
-            if (proyecto.compararId(id) && proyecto.compararTitulos(titulo) && proyecto.comprobarSiEstaDisponibleParaFinalizar()) {
+            if (proyecto.compararId(id) && proyecto.comprobarSiEstaDisponibleParaFinalizar()) {
                 finalizarProyecto(proyecto);
                 existeElProyecto = true;
             }
@@ -349,35 +349,34 @@ public class Sistema implements MenuInicio, Serializable {
         proyecto.setProyectoFinalizado(true);
     }
 
-    private boolean validarProyectoSolicitadoParaAdministrarDesarrolladores(String idRecibida, String titulo) {
+    private boolean validarProyectoSolicitadoParaAdministrarDesarrolladores(String idRecibida) {
         boolean existeElProyecto = false;
         int id = Integer.parseInt(idRecibida);
 
         for (Proyecto proyecto : proyectos) {
-            if (proyecto.compararId(id) && proyecto.compararTitulos(titulo) && !proyecto.comprobarSiEstaEsperandoAprobacion() && !proyecto.comprobarSiFueRechazado()) {
+            if (proyecto.compararId(id) && !proyecto.comprobarSiEstaEsperandoAprobacion() && !proyecto.comprobarSiFueRechazado()) {
                 existeElProyecto = true;
             }
         }
         return existeElProyecto;
     }
 
-    private boolean validarAdministradorSolicitado(ArrayList<Desarrollador> desarrolladores, String idRecibida, String nombre) {
+    private boolean validarAdministradorSolicitado(ArrayList<Desarrollador> desarrolladores, String idRecibida) {
         boolean existeDesarrollador = false;
         int id = Integer.parseInt(idRecibida);
 
         for (Desarrollador desarrollador : desarrolladores) {
-            if (desarrollador.compararIdYNombre(id, nombre)) {
+            if (desarrollador.compararId(id)) {
                 existeDesarrollador = true;
             }
         }
-
         return existeDesarrollador;
     }
 
-    private void asignarDesarrollador(String idYTituloProyectoEIdYNombreDesarrollador[]) {
+    private void asignarDesarrollador(String idProyectoEIdDesarrollador[]) {
 
-        Desarrollador desarrollador = obtenerDesarrollador(idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
-        Proyecto proyecto = obtenerProyecto(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
+        Desarrollador desarrollador = obtenerDesarrollador(idProyectoEIdDesarrollador[1]);
+        Proyecto proyecto = obtenerProyecto(idProyectoEIdDesarrollador[0]);
 
         //Solo se cambiara el progreso a "en desarrollo" la primera vez que se le asigne un desarrollador, para no sobreescribir el estado cada vez que se añada un desarrollador
         if (!proyecto.hayDesarrolladores()) {
@@ -397,10 +396,10 @@ public class Sistema implements MenuInicio, Serializable {
         System.out.println("Desarrollador asignado");
     }
 
-    private void desasignarDesarrollador(String idYTituloProyectoEIdYNombreDesarrollador[]) {
+    private void desasignarDesarrollador(String idProyectoEIdDesarrollador[]) {
         // Obtener el desarrollador y el proyecto
-        Desarrollador desarrollador = obtenerDesarrollador(idYTituloProyectoEIdYNombreDesarrollador[2], idYTituloProyectoEIdYNombreDesarrollador[3]);
-        Proyecto proyecto = obtenerProyecto(idYTituloProyectoEIdYNombreDesarrollador[0], idYTituloProyectoEIdYNombreDesarrollador[1]);
+        Desarrollador desarrollador = obtenerDesarrollador(idProyectoEIdDesarrollador[1]);
+        Proyecto proyecto = obtenerProyecto(idProyectoEIdDesarrollador[0]);
 
         // Desasignar desarrollador solo si existen y están asignados correctamente
         proyecto.desasignarDesarrollador(desarrollador);
@@ -421,24 +420,24 @@ public class Sistema implements MenuInicio, Serializable {
         proyecto.setProgreso(RECHAZADO);
     }
 
-    private Desarrollador obtenerDesarrollador(String idRecibida, String nombre) {
+    private Desarrollador obtenerDesarrollador(String idRecibida) {
         Desarrollador desarrolladorEncontrado = null;
         int id = Integer.parseInt(idRecibida);
 
         for (Desarrollador desarrollador : desarrolladores) {
-            if (desarrollador.compararIdYNombre(id, nombre)) {
+            if (desarrollador.compararId(id)) {
                 desarrolladorEncontrado = desarrollador;
             }
         }
         return desarrolladorEncontrado;
     }
 
-    private Proyecto obtenerProyecto(String idRecibida, String titulo) {
+    private Proyecto obtenerProyecto(String idRecibida) {
         Proyecto proyectoEncontrado = null;
         int id = Integer.parseInt(idRecibida);
 
         for (Proyecto proyecto : proyectos) {
-            if (proyecto.compararId(id) && proyecto.compararTitulos(titulo)) {
+            if (proyecto.compararId(id)) {
                 proyectoEncontrado = proyecto;
             }
         }
@@ -493,16 +492,16 @@ public class Sistema implements MenuInicio, Serializable {
         proyectos.add(proyecto);
     }
 
-    private void borrarUsuario(String tipo, String idRecibida, String nombre) {
+    private void borrarUsuario(String tipo, String idRecibida) {
         int id = Integer.parseInt(idRecibida);
         boolean usuarioEncontrado = false;
 
         Iterator<Usuario> iter = usuarios.iterator();
         while (iter.hasNext()) {
             Usuario usuario = iter.next();
-            if (usuario.compararIdYNombre(id, nombre) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo)) {
+            if (usuario.compararId(id) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo)) {
                 iter.remove(); // Uso seguro del método remove del iterador
-                System.out.println("El usuario " + usuario.getClass().getSimpleName() + " " + nombre + " fue borrado exitosamente.");
+                System.out.println("El usuario " + usuario.getClass().getSimpleName() + " " + usuario.getNombre() + " fue borrado exitosamente.");
                 usuarioEncontrado = true;
             }
         }
@@ -512,16 +511,16 @@ public class Sistema implements MenuInicio, Serializable {
         }
     }
 
-    private void borrarDesarrollador(String idRecibida, String nombre) {
+    private void borrarDesarrollador(String idRecibida) {
         int id = Integer.parseInt(idRecibida);
         boolean desarrolladorEncontrado = false;
 
         Iterator<Desarrollador> iter = desarrolladores.iterator();
         while (iter.hasNext()) {
             Desarrollador desarrollador = iter.next();
-            if (desarrollador.compararIdYNombre(id, nombre)) {
+            if (desarrollador.compararId(id)) {
                 iter.remove(); // Uso seguro del método remove del iterador
-                System.out.println("El desarrollador " + nombre + " fue borrado exitosamente.");
+                System.out.println("El desarrollador " + desarrollador.getNombre() + " fue borrado exitosamente.");
                 desarrolladorEncontrado = true;
             }
         }

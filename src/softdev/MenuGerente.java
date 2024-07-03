@@ -9,7 +9,7 @@ import static softdev.Constantes.*;
 
 public interface MenuGerente extends Menu {
 
-    default String[] ingresarDatosDeProyectoAAprobar() {
+    default String ingresarDatosDeProyectoAAprobar() {
         String contorno = "=================================================";
         String mensaje = "Ingrese los datos del proyecto que quiere aprobar";
 
@@ -17,10 +17,10 @@ public interface MenuGerente extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        return ingresarIdYTitulo();
+        return ingresarId();
     }
 
-    default String[] ingresarDatosDeProyectoARechazar() {
+    default String ingresarDatosDeProyectoARechazar() {
         String contorno = "=================================================";
         String mensaje = "Ingrese los datos del proyecto que quiere rechazar";
 
@@ -28,10 +28,10 @@ public interface MenuGerente extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        return ingresarIdYTitulo();
+        return ingresarId();
     }
 
-    default String[] ingresarDatosDeProyectoAFinalizar() {
+    default String ingresarDatosDeProyectoAFinalizar() {
         String contorno = "===================================================";
         String mensaje = "Ingrese los datos del proyecto que quiere finalizar";
 
@@ -39,9 +39,8 @@ public interface MenuGerente extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        String idYTitulo[] = ingresarIdYTitulo();
         
-        return idYTitulo;
+        return ingresarId();
         }
     
     default LocalDate ingresarFechaFin(){
@@ -76,7 +75,7 @@ public interface MenuGerente extends Menu {
 
     }
 
-    default String[] ingresarDatosDeProyecto() {
+    default String ingresarDatosDeProyecto() {
         String contorno = "==============================";
         String mensaje = "Ingrese los datos del proyecto";
 
@@ -84,7 +83,7 @@ public interface MenuGerente extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        return ingresarIdYTitulo();
+        return ingresarId();
     }
 
     private String ingresarEstado() {
@@ -125,19 +124,6 @@ public interface MenuGerente extends Menu {
             System.out.println(" " + elemento);
         }
         System.out.println("\n"); // Salto de línea al final
-    }
-
-    default String[] ingresarIdYTitulo() {
-        Scanner entrada = new Scanner(System.in);
-        String id = ingresarId();
-
-        System.out.printf("Titulo: ");
-        String titulo = entrada.nextLine().toUpperCase();
-
-        String idYTitulo[] = {id, titulo};
-
-        espaciarPantallas();
-        return idYTitulo;
     }
 
     default void presentarListaDeProyectos() {

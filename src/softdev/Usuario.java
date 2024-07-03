@@ -21,8 +21,8 @@ public abstract class Usuario implements Serializable {
 
     public abstract void mostrarDatos();
 
-    public boolean compararIdYNombre(int id, String nombre) {
-        return this.id == id && this.nombre.equals(nombre);
+    public boolean compararId(int id) {
+        return this.id == id ;
     }
 
     public boolean compararNombreYContraseña(String nombre, String contraseña) {

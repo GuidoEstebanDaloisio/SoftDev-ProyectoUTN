@@ -11,7 +11,7 @@ public interface IAdministradorStrategy extends Serializable{
 	
     public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador);
     
-    public String [] solicitarEliminarDesarrollador();
+    public String  solicitarEliminarDesarrollador();
     
     public String[] solicitarAsignarDesarrollador();
     

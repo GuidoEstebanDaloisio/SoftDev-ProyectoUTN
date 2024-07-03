@@ -26,8 +26,8 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
 
     @Override
     public String[] solicitarEliminarUsuario() {
-        String tipoUsuarioIdYNombre[] = ingresarDatosParaBorrarUsuario();
-        return tipoUsuarioIdYNombre;
+        String tipoUsuarioEId[] = ingresarDatosParaBorrarUsuario();
+        return tipoUsuarioEId;
     }
 
     @Override
@@ -41,28 +41,28 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public String[] solicitarEliminarDesarrollador() {
+    public String solicitarEliminarDesarrollador() {
         return ingresarDatosParaBorrarDesarrollador();
     }
 
     @Override
     public String[] solicitarAsignarDesarrollador() {
-        String idYTituloProyecto[] = ingresarDatosDeProyecto();
-        String idYNombreDesarrollador[] = ingresarDatosDeDesarrolladorParaAsignar();
+        String idProyecto = ingresarDatosDeProyecto();
+        String idDesarrollador = ingresarDatosDeDesarrolladorParaAsignar();
 
-        String idYTituloProyectoEIdYNombreDesarrollador[] = {idYTituloProyecto[0], idYTituloProyecto[1], idYNombreDesarrollador[0], idYNombreDesarrollador[1]};
+        String idProyectoEIdDesarrollador[] = {idProyecto, idDesarrollador};
 
-        return idYTituloProyectoEIdYNombreDesarrollador;
+        return idProyectoEIdDesarrollador;
     }
 
     @Override
     public String[] solicitarDesasignarDesarrollador() {
-        String idYTituloProyecto[] = ingresarDatosDeProyecto();
-        String idYNombreDesarrollador[] = ingresarDatosDeDesarrolladorParaDesasignar();
+        String idProyecto= ingresarDatosDeProyecto();
+        String idDesarrollador = ingresarDatosDeDesarrolladorParaDesasignar();
 
-        String idYTituloProyectoEIdYNombreDesarrollador[] = {idYTituloProyecto[0], idYTituloProyecto[1], idYNombreDesarrollador[0], idYNombreDesarrollador[1]};
+        String idProyectoEIdDesarrollador[] = {idProyecto, idDesarrollador};
 
-        return idYTituloProyectoEIdYNombreDesarrollador;
+        return idProyectoEIdDesarrollador;
     }
 
     @Override
@@ -137,9 +137,9 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     @Override
     public void mostrarDesarrolladoresDisponibles(ArrayList<Desarrollador> desarrolladores) {
         if (desarrolladores.isEmpty()) {
-            System.out.println("************************************************");
-            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES ASIGNADOS");
-            System.out.println("************************************************");
+            System.out.println("**************************************************");
+            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES DISPONIBLES");
+            System.out.println("**************************************************");
         } else {
             mostrarDatosDesarrolladores(desarrolladores);
         }

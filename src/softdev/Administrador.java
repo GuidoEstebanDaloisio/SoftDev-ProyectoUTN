@@ -22,7 +22,7 @@ public class Administrador extends Usuario implements MenuAdministrador {
         System.out.println("(1)Crear usuario                        | (7)Ver clientes");
         System.out.println("(2)Eliminar usuario                     | (8)Ver gerentes");
         System.out.println("(3)Registrar desarrollador              | (9)Ver administradores");
-        System.out.println("(4)Eliminar desarrolador                | (10)Ver desarrolladores diponibles");
+        System.out.println("(4)Eliminar desarrollador               | (10)Ver desarrolladores diponibles");
         System.out.println("(5)Asignar desarrollador a un proyecto  | (11)Ver desarrolladores asignados");
         System.out.println("(6)Quitar desarrollador de un proyecto  | (12)Salir");
 
@@ -91,7 +91,7 @@ public class Administrador extends Usuario implements MenuAdministrador {
         return accionAdministrador.registrarDesarrollador(ultimoIdDesarrollador);
     }
     
-    public String [] solicitarEliminarDesarrollador(){
+    public String  solicitarEliminarDesarrollador(){
         return accionAdministrador.solicitarEliminarDesarrollador();
     }
     

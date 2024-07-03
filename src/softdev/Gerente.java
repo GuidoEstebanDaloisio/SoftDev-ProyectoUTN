@@ -60,15 +60,15 @@ public class Gerente extends Usuario implements MenuGerente {
         accionSupervisor.mostrarProyectos(proyectos);
     }
 
-    public String[] solicitarAprobarProyecto() {
+    public String solicitarAprobarProyecto() {
         return accionSupervisor.solicitarAprobarProyecto();
     }
 
-    public String[] solicitarRechazarProyecto() {
+    public String solicitarRechazarProyecto() {
         return accionSupervisor.solicitarRechazarProyecto();
     }
 
-    public String[] solicitarFinalizarProyecto(){
+    public String solicitarFinalizarProyecto(){
         return accionSupervisor.solicitarFinalizarProyecto();
     }
     

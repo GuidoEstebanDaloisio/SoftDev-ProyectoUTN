@@ -26,8 +26,7 @@ public interface MenuAdministrador extends Menu {
         return tipoUsuarioNombreYContraseña;
     }
 
-    default String[] ingresarDatosDeProyecto() {
-        Scanner entrada = new Scanner(System.in);
+    default String ingresarDatosDeProyecto() {
         String contorno = "==============================";
         String mensaje = "Ingrese los datos del proyecto";
 
@@ -35,18 +34,11 @@ public interface MenuAdministrador extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        String id = ingresarId();
 
-        System.out.printf("Titulo: ");
-        String titulo = entrada.nextLine().toUpperCase();
-
-        String idYTitulo[] = {id, titulo};
-
-        return idYTitulo;
+        return ingresarId();
     }
 
-    default String[] ingresarDatosDeDesarrolladorParaAsignar() {
-        Scanner entrada = new Scanner(System.in);
+    default String ingresarDatosDeDesarrolladorParaAsignar() {
         String contorno = "=====================================================";
         String mensaje = "Ingrese los datos del desarrollador que desea asignar";
 
@@ -54,18 +46,10 @@ public interface MenuAdministrador extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        String id = ingresarId();
-
-        System.out.printf("Nombre: ");
-        String nombre = entrada.nextLine().toUpperCase();
-
-        String idYNombre[] = {id, nombre};
-
-        return idYNombre;
+        return ingresarId();
     }
 
-    default String[] ingresarDatosDeDesarrolladorParaDesasignar() {
-        Scanner entrada = new Scanner(System.in);
+    default String ingresarDatosDeDesarrolladorParaDesasignar() {
         String contorno = "========================================================";
         String mensaje = "Ingrese los datos del desarrollador que desea desasignar";
 
@@ -73,14 +57,7 @@ public interface MenuAdministrador extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        String id = ingresarId();
-
-        System.out.printf("Nombre: ");
-        String nombre = entrada.nextLine().toUpperCase();
-
-        String idYNombre[] = {id, nombre};
-        espaciarPantallas();
-        return idYNombre;
+        return ingresarId();
     }
 
     default LocalDate ingresarFechaDeInicioDeProyecto() {
@@ -104,7 +81,6 @@ public interface MenuAdministrador extends Menu {
     }
 
     default String[] ingresarDatosParaBorrarUsuario() {
-        Scanner entrada = new Scanner(System.in);
         String contorno = "==============================================";
         String mensaje = "Ingrese los datos del usuario que desea borrar";
 
@@ -116,17 +92,14 @@ public interface MenuAdministrador extends Menu {
 
         String id = ingresarId();
 
-        System.out.printf("Nombre: ");
-        String nombre = entrada.nextLine().toUpperCase();
 
-        String tipoUsuarioIdYNombre[] = {tipoUsuario, id, nombre};
+        String tipoUsuarioEId[] = {tipoUsuario, id};
         espaciarPantallas();
-        return tipoUsuarioIdYNombre;
+        return tipoUsuarioEId;
 
     }
 
-    default String[] ingresarDatosParaBorrarDesarrollador() {
-        Scanner entrada = new Scanner(System.in);
+    default String ingresarDatosParaBorrarDesarrollador() {
         String contorno = "====================================================";
         String mensaje = "Ingrese los datos del desarrollador que desea borrar";
 
@@ -134,14 +107,7 @@ public interface MenuAdministrador extends Menu {
         System.out.println(mensaje);
         System.out.println(contorno);
 
-        String id = ingresarId();
-
-        System.out.printf("Nombre: ");
-        String nombre = entrada.nextLine().toUpperCase();
-
-        String idYNombre[] = {id, nombre.toUpperCase()};
-        espaciarPantallas();
-        return idYNombre;
+        return ingresarId();
     }
 
     default String[] ingresarDatosParaNuevoDesarrollador() {

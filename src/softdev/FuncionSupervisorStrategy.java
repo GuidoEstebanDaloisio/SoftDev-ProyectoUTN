@@ -17,24 +17,24 @@ public class FuncionSupervisorStrategy implements ISupervisorStrategy, MenuGeren
     }
 
     @Override
-    public String[] solicitarAprobarProyecto() {
-        String IdYTitulo[] = ingresarDatosDeProyectoAAprobar();
+    public String solicitarAprobarProyecto() {
+        String id = ingresarDatosDeProyectoAAprobar();
 
-        return IdYTitulo;
+        return id;
     }
 
     @Override
-    public String[] solicitarRechazarProyecto() {
-        String IdYTitulo[] = ingresarDatosDeProyectoARechazar();
+    public String solicitarRechazarProyecto() {
+        String id = ingresarDatosDeProyectoARechazar();
 
-        return IdYTitulo;
+        return id;
     }
 
     @Override
-    public String[] solicitarFinalizarProyecto() {
-        String idYTitulo[] = ingresarDatosDeProyectoAFinalizar();
+    public String solicitarFinalizarProyecto() {
+        String id = ingresarDatosDeProyectoAFinalizar();
 
-        return idYTitulo;
+        return id;
     }
 
     @Override
@@ -45,11 +45,11 @@ public class FuncionSupervisorStrategy implements ISupervisorStrategy, MenuGeren
     @Override
     public String[] nuevoEstadoDelProyecto() {
 
-        String idYTitulo[] = ingresarDatosDeProyecto();
+        String id = ingresarDatosDeProyecto();
         String nuevoEstado = ingresarNuevoEstadoDeProyecto();
 
-        String nuevoEstadoIdYTitulo[] = {nuevoEstado, idYTitulo[0], idYTitulo[1]};
-        return nuevoEstadoIdYTitulo;
+        String nuevoEstadoYId[] = {nuevoEstado, id};
+        return nuevoEstadoYId;
     }
 
         private void mostrarDatos(ArrayList<Proyecto> proyectos) {

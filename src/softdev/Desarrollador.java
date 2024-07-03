@@ -23,8 +23,8 @@ public class Desarrollador implements Serializable {
         System.out.println("Habilidad: " + habilidad);
     }
 
-    public boolean compararIdYNombre(int id, String nombre) {
-        return this.id == id && this.nombre.equals(nombre);
+    public boolean compararId(int id) {
+        return this.id == id;
     }
 
     public void setDisponible(boolean disponible) {
