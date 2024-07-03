@@ -159,7 +159,6 @@ public interface MenuAdministrador extends Menu {
                 telefonoValido = true;
             } catch (NumberFormatException e) {
                 System.out.println(ERROR_TELEFONO_INVALIDO);
-                entrada.nextLine(); // Limpiar el buffer de entrada
             }
         } while (!telefonoValido);
 

@@ -33,7 +33,6 @@ public interface MenuCliente extends Menu {
                 presupuestoValido = true;
             } catch (NumberFormatException e) {
                 System.out.println(ERROR_PRESUPUESTO_INVALIDO);
-                entrada.nextLine();
             }
         } while (!presupuestoValido);
 
