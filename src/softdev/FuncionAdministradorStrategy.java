@@ -3,17 +3,17 @@ package softdev;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class FuncionAdministradorStrategy implements IAdministradorStrategy, MenuAdministrador {
+public class FuncionAdministradorStrategy implements IAdministradorStrategy{
 
     @Override
-    public Usuario crearUsuario() {
+    public Usuario crearUsuario(MenuAdministrador menu) {
         Usuario nuevoUsuario = null;
 
-        String tipoUsuarioNombreYContraseña[] = ingresarDatosParaNuevoUsuario();
+        String tipoUsuarioNombreYContraseña[] = menu.ingresarDatosParaNuevoUsuario();
 
         switch (tipoUsuarioNombreYContraseña[0]) {
             case "CLIENTE" -> {
-                String direccionMailTelefono[] = ingresarDatosDelCliente();
+                String direccionMailTelefono[] = menu.ingresarDatosDelCliente();
                 nuevoUsuario = new Cliente(direccionMailTelefono[0], direccionMailTelefono[1], Integer.parseInt(direccionMailTelefono[2]), tipoUsuarioNombreYContraseña[1], tipoUsuarioNombreYContraseña[2]);
             }
             case "GERENTE" ->
@@ -25,15 +25,15 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public String[] solicitarEliminarUsuario() {
-        String tipoUsuarioEId[] = ingresarDatosParaBorrarUsuario();
+    public String[] solicitarEliminarUsuario(MenuAdministrador menu) {
+        String tipoUsuarioEId[] = menu.ingresarDatosParaBorrarUsuario();
         return tipoUsuarioEId;
     }
 
     @Override
-    public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador) {
+    public Desarrollador registrarDesarrollador(MenuAdministrador menu, int ultimoIdDesarrollador) {
 
-        String nombreYHabilidad[] = ingresarDatosParaNuevoDesarrollador();
+        String nombreYHabilidad[] = menu.ingresarDatosParaNuevoDesarrollador();
 
         Desarrollador nuevoDesarrollador = new Desarrollador(ultimoIdDesarrollador + 1, nombreYHabilidad[0], nombreYHabilidad[1]);
 
@@ -41,14 +41,14 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public String solicitarEliminarDesarrollador() {
-        return ingresarDatosParaBorrarDesarrollador();
+    public String solicitarEliminarDesarrollador(MenuAdministrador menu) {
+        return menu.ingresarDatosParaBorrarDesarrollador();
     }
 
     @Override
-    public String[] solicitarAsignarDesarrollador() {
-        String idProyecto = ingresarDatosDeProyecto();
-        String idDesarrollador = ingresarDatosDeDesarrolladorParaAsignar();
+    public String[] solicitarAsignarDesarrollador(MenuAdministrador menu) {
+        String idProyecto = menu.ingresarDatosDeProyecto();
+        String idDesarrollador = menu.ingresarDatosDeDesarrolladorParaAsignar();
 
         String idProyectoEIdDesarrollador[] = {idProyecto, idDesarrollador};
 
@@ -56,9 +56,9 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public String[] solicitarDesasignarDesarrollador() {
-        String idProyecto= ingresarDatosDeProyecto();
-        String idDesarrollador = ingresarDatosDeDesarrolladorParaDesasignar();
+    public String[] solicitarDesasignarDesarrollador(MenuAdministrador menu) {
+        String idProyecto= menu.ingresarDatosDeProyecto();
+        String idDesarrollador = menu.ingresarDatosDeDesarrolladorParaDesasignar();
 
         String idProyectoEIdDesarrollador[] = {idProyecto, idDesarrollador};
 
@@ -66,24 +66,24 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public LocalDate solicitarFechaInicioProyecto() {
-        LocalDate fechaDeInicio = ingresarFechaDeInicioDeProyecto();
+    public LocalDate solicitarFechaInicioProyecto(MenuAdministrador menu) {
+        LocalDate fechaDeInicio = menu.ingresarFechaDeInicioDeProyecto();
         return fechaDeInicio;
     }
 
     @Override
-    public void mostrarClientes(ArrayList<Cliente> clientes) {
+    public void mostrarClientes(MenuAdministrador menu, ArrayList<Cliente> clientes) {
         if (clientes.isEmpty()) {
             System.out.println("*******************************************");
             System.out.println("EN ESTE MOMENTO NO HAY CLIENTES REGISTRADOS");
             System.out.println("*******************************************");
         } else {
-            mostrarDatosClientes(clientes);
+            mostrarDatosClientes(menu, clientes);
         }
     }
 
-    private void mostrarDatosClientes(ArrayList<Cliente> clientes) {
-        presentarListaDeClientes();
+    private void mostrarDatosClientes(MenuAdministrador menu, ArrayList<Cliente> clientes) {
+        menu.presentarListaDeClientes();
 
         for (Cliente cliente : clientes) {
             System.out.println("------------------");
@@ -93,18 +93,18 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public void mostrarGerentes(ArrayList<Gerente> gerentes) {
+    public void mostrarGerentes(MenuAdministrador menu, ArrayList<Gerente> gerentes) {
         if (gerentes.isEmpty()) {
             System.out.println("*******************************************");
             System.out.println("EN ESTE MOMENTO NO HAY GERENTES REGISTRADOS");
             System.out.println("*******************************************");
         } else {
-            mostrarDatosGerentes(gerentes);
+            mostrarDatosGerentes(menu, gerentes);
         }
     }
 
-    private void mostrarDatosGerentes(ArrayList<Gerente> gerentes) {
-        presentarListaDeGerentes();
+    private void mostrarDatosGerentes(MenuAdministrador menu, ArrayList<Gerente> gerentes) {
+        menu.presentarListaDeGerentes();
 
         for (Gerente gerente : gerentes) {
             System.out.println("------------------");
@@ -114,18 +114,18 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public void mostrarAdministradores(ArrayList<Administrador> administradores) {
+    public void mostrarAdministradores(MenuAdministrador menu, ArrayList<Administrador> administradores) {
         if (administradores.isEmpty()) {
             System.out.println("**************************************************");
             System.out.println("EN ESTE MOMENTO NO HAY ADMINISTRADORES REGISTRADOS");
             System.out.println("**************************************************");
         } else {
-            mostrarDatosAdministradores(administradores);
+            mostrarDatosAdministradores(menu, administradores);
         }
     }
 
-    private void mostrarDatosAdministradores(ArrayList<Administrador> administradores) {
-        presentarListaDeAdministradores();
+    private void mostrarDatosAdministradores(MenuAdministrador menu, ArrayList<Administrador> administradores) {
+        menu.presentarListaDeAdministradores();
 
         for (Administrador administrador : administradores) {
             System.out.println("-------------------------");
@@ -135,18 +135,29 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
     }
 
     @Override
-    public void mostrarDesarrolladoresDisponibles(ArrayList<Desarrollador> desarrolladores) {
+    public void mostrarDesarrolladoresDisponibles(MenuAdministrador menu, ArrayList<Desarrollador> desarrolladores) {
         if (desarrolladores.isEmpty()) {
             System.out.println("**************************************************");
             System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES DISPONIBLES");
             System.out.println("**************************************************");
         } else {
-            mostrarDatosDesarrolladores(desarrolladores);
+            mostrarDatosDesarrolladores(menu, desarrolladores);
         }
     }
 
-    private void mostrarDatosDesarrolladores(ArrayList<Desarrollador> desarrolladores) {
-        presentarListaDeDesarrolladoresAsignados();
+        @Override
+    public void mostrarDesarrolladoresAsignados(MenuAdministrador menu, ArrayList<Desarrollador> desarrolladores) {
+        if (desarrolladores.isEmpty()) {
+            System.out.println("************************************************");
+            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES ASIGNADOS");
+            System.out.println("************************************************");
+        } else {
+            mostrarDatosDesarrolladores(menu, desarrolladores);
+        }
+    }
+    
+    private void mostrarDatosDesarrolladores(MenuAdministrador menu, ArrayList<Desarrollador> desarrolladores) {
+        menu.presentarListaDeDesarrolladoresAsignados();
 
         for (Desarrollador desarrollador : desarrolladores) {
             System.out.println("-------------------------------------");
@@ -155,15 +166,6 @@ public class FuncionAdministradorStrategy implements IAdministradorStrategy, Men
         System.out.println("-------------------------------------");
     }
 
-    @Override
-    public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores) {
-        if (desarrolladores.isEmpty()) {
-            System.out.println("************************************************");
-            System.out.println("EN ESTE MOMENTO NO HAY DESARROLLADORES ASIGNADOS");
-            System.out.println("************************************************");
-        } else {
-            mostrarDatosDesarrolladores(desarrolladores);
-        }
-    }
+
 
 }

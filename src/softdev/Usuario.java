@@ -8,11 +8,13 @@ public abstract class Usuario implements Serializable {
     protected String nombre;
     protected String contraseña;
     protected int cantidadDeOpciones;
+    protected Menu menu;
 
-    public Usuario(String nombre, String contraseña, int cantidadDeOpciones) {
+    public Usuario(String nombre, String contraseña, int cantidadDeOpciones, Menu menu) {
         this.nombre = nombre;
         this.contraseña = contraseña;
         this.cantidadDeOpciones = cantidadDeOpciones;
+        this.menu = menu;
     }
 
     public abstract String elegirAccion();

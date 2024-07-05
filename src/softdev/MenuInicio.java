@@ -1,10 +1,9 @@
 package softdev;
 
-import static softdev.Constantes.TIPOS_USUARIO_VALIDOS;
+import static softdev.Constantes.*;
 
-public interface MenuInicio extends Menu {
-
-    default String iniciarSesionComo() {
+public class MenuInicio extends Menu{
+    public String iniciarSesionComo() {
         String contorno = "==============================================";
         String mensaje = "Como que tipo de usuario desea iniciar sesion?";
 
@@ -21,7 +20,7 @@ public interface MenuInicio extends Menu {
 
     }
 
-    default String[] inicioDeSesion(String tipoUsuario) {
+    public String[] inicioDeSesion(String tipoUsuario) {
         System.out.println("=================================");
         System.out.println("Inicio de sesion de " + tipoUsuario);
         System.out.println("=================================");
@@ -29,21 +28,21 @@ public interface MenuInicio extends Menu {
         return ingresarUsuarioYContraseña();
     }
 
-    default void saludoDespedida() {
+    public void saludoDespedida() {
         System.out.println("===================================");
         System.out.println("Gracias por usar el sistema SoftDev");
         System.out.println("         Vuelva pronto!");
         System.out.println("===================================");
     }
 
-    default void bienvenida(String nombreUsuario) {
+    public void bienvenida(String nombreUsuario) {
         espaciarPantallas();
         System.out.println("====================================================================================");
         System.out.println("                    Bienvenido/a " + nombreUsuario + " al sistema de SoftDev");
     }
 
     //----------------------EXCLUSIVO DEL PRIMER USUARIO----------------------
-    default String[] primerInicioDeSesion() {
+    public String[] primerInicioDeSesion() {
         System.out.println("========================================================");
         System.out.println("Ingrese los datos para registrar el primer administrador");
         System.out.println("========================================================");
@@ -51,7 +50,7 @@ public interface MenuInicio extends Menu {
         return ingresarUsuarioYContraseña();
     }
 
-    default void bienvenidaPrimerUsuario(String nombreUsuario) {
+    public void bienvenidaPrimerUsuario(String nombreUsuario) {
         bienvenida(nombreUsuario);
         System.out.println("====================================================================================");
         System.out.println("Al ser el primer usuario en nuestro sistema te asignamos el rol de Administrador.");

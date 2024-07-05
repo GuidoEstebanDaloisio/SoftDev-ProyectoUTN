@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import static softdev.Constantes.*;
 
-public class Sistema implements MenuInicio, Serializable {
+public class Sistema implements Serializable {
+
+    private final MenuInicio menu;
 
     private ArrayList<Desarrollador> desarrolladores;
     private ArrayList<Usuario> usuarios;
@@ -20,7 +22,9 @@ public class Sistema implements MenuInicio, Serializable {
 
     public Sistema() {
         usuarioActual = null;
-        // Inicializamos los ArrayLists
+
+        menu = new MenuInicio();
+        
         usuarios = new ArrayList<>();
         desarrolladores = new ArrayList<>();
         proyectos = new ArrayList<>();
@@ -39,14 +43,14 @@ public class Sistema implements MenuInicio, Serializable {
         if (!contieneAdministrador()) {
             //Primero creamos el primer usuario que va a ser un Administrador
             String primerUsuarioYContraseña[];
-            primerUsuarioYContraseña = primerInicioDeSesion();
+            primerUsuarioYContraseña = menu.primerInicioDeSesion();
 
             crearPrimerUsuario(primerUsuarioYContraseña[0], primerUsuarioYContraseña[1]);
 
             Administrador primerAdmin = (Administrador) usuarios.get(0);
 
             usuarioActual = primerAdmin;
-            bienvenidaPrimerUsuario(primerUsuarioYContraseña[0]);
+            menu.bienvenidaPrimerUsuario(primerUsuarioYContraseña[0]);
             while (!salir) {
                 String entrada = primerAdmin.elegirAccion();
                 salir = ejecutarAccion(entrada);
@@ -61,13 +65,13 @@ public class Sistema implements MenuInicio, Serializable {
             Usuario usuarioLogueado;
 
             do {
-                tipoDeUsuarioQueInicioSesion = iniciarSesionComo();
-                usuarioYContraseña = inicioDeSesion(tipoDeUsuarioQueInicioSesion);
+                tipoDeUsuarioQueInicioSesion = menu.iniciarSesionComo();
+                usuarioYContraseña = menu.inicioDeSesion(tipoDeUsuarioQueInicioSesion);
                 usuarioLogueado = loguearUsuario(usuarioYContraseña[0], usuarioYContraseña[1], tipoDeUsuarioQueInicioSesion);
             } while (usuarioLogueado == null);
 
             usuarioActual = usuarioLogueado;
-            bienvenida(usuarioYContraseña[0]);
+            menu.bienvenida(usuarioYContraseña[0]);
             while (!salir) {
                 String entrada = usuarioLogueado.elegirAccion();
                 salir = ejecutarAccion(entrada);
@@ -163,7 +167,7 @@ public class Sistema implements MenuInicio, Serializable {
             }
             case "ASIGNAR_DESARROLLADOR": {
                 String idProyectoEIdDesarrollador[] = ((Administrador) usuarioActual).solicitarAsignarDesarrollador();
-                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(),idProyectoEIdDesarrollador[1]);
+                boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(), idProyectoEIdDesarrollador[1]);
                 boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idProyectoEIdDesarrollador[0]);
 
                 if (administradorValido && proyectoValido) {
@@ -233,7 +237,7 @@ public class Sistema implements MenuInicio, Serializable {
             case "APROBAR_PROYECTO": {
                 String id = ((Gerente) usuarioActual).solicitarAprobarProyecto();
 
-                if (validarProyectoSolicitadoParaDeterminarAprobacion(id,"APROBAR")) {
+                if (validarProyectoSolicitadoParaDeterminarAprobacion(id, "APROBAR")) {
                     System.out.println("Proyecto aprobado");
                 } else {
                     System.out.println("Los datos proporcionados no corresponden a un proyecto disponible");
@@ -270,7 +274,7 @@ public class Sistema implements MenuInicio, Serializable {
             }
 
             case "SALIR": {
-                saludoDespedida();
+                menu.saludoDespedida();
                 salir = true;
                 break;
             }
@@ -344,7 +348,7 @@ public class Sistema implements MenuInicio, Serializable {
 
     private void finalizarProyecto(Proyecto proyecto) {
         proyecto.setProgreso(FINALIZADO);
-        LocalDate fechaFin = ((Gerente) usuarioActual).ingresarFechaFin();
+        LocalDate fechaFin = ((Gerente) usuarioActual).ingresarFechaFinDeProyecto();
         proyecto.setFechaDeFinalizacion(fechaFin);
         proyecto.setProyectoFinalizado(true);
     }
@@ -570,13 +574,13 @@ public class Sistema implements MenuInicio, Serializable {
         }
         return desarrolladoresAsignados;
     }
-    
+
     private boolean contieneAdministrador() {
-    for (Usuario usuario : usuarios) {
-        if (usuario.getClass().getSimpleName().equals(Administrador.class.getSimpleName())) {
-            return true;
+        for (Usuario usuario : usuarios) {
+            if (usuario.getClass().getSimpleName().equals(Administrador.class.getSimpleName())) {
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
 }

@@ -3,12 +3,12 @@ package softdev;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Gerente extends Usuario implements MenuGerente {
+public class Gerente extends Usuario{
 
     private ISupervisorStrategy accionSupervisor;
 
     public Gerente(String nombre, String contraseña) {
-        super(nombre, contraseña, 6);
+        super(nombre, contraseña, 6, new MenuSupervisor());
         this.accionSupervisor = new FuncionSupervisorStrategy();
     }
 
@@ -21,7 +21,7 @@ public class Gerente extends Usuario implements MenuGerente {
         System.out.println("(4)Finalizar proyecto");
         System.out.println("(5)Actualizar estado del proyecto");
         System.out.println("(6)Salir");
-        return ejecutarAccion(leerOpcionMenu(cantidadDeOpciones));
+        return ejecutarAccion(menu.leerOpcionMenu(cantidadDeOpciones));
     }
 
     @Override
@@ -57,26 +57,26 @@ public class Gerente extends Usuario implements MenuGerente {
     }
 
     public void mostrarProyectos(ArrayList<Proyecto> proyectos) {
-        accionSupervisor.mostrarProyectos(proyectos);
+        accionSupervisor.mostrarProyectos((MenuSupervisor) menu, proyectos);
     }
 
     public String solicitarAprobarProyecto() {
-        return accionSupervisor.solicitarAprobarProyecto();
+        return accionSupervisor.solicitarAprobarProyecto((MenuSupervisor) menu);
     }
 
     public String solicitarRechazarProyecto() {
-        return accionSupervisor.solicitarRechazarProyecto();
+        return accionSupervisor.solicitarRechazarProyecto((MenuSupervisor) menu);
     }
 
     public String solicitarFinalizarProyecto(){
-        return accionSupervisor.solicitarFinalizarProyecto();
+        return accionSupervisor.solicitarFinalizarProyecto((MenuSupervisor) menu);
     }
     
     public LocalDate ingresarFechaFinDeProyecto(){
-        return accionSupervisor.ingresarFechaFinDeProyecto();
+        return accionSupervisor.ingresarFechaFinDeProyecto((MenuSupervisor) menu);
     }
     
     public String[] nuevoEstadoDelProyecto() {
-        return accionSupervisor.nuevoEstadoDelProyecto();
+        return accionSupervisor.nuevoEstadoDelProyecto((MenuSupervisor) menu);
     }
 }

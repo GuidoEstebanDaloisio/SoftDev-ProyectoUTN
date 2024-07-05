@@ -1,14 +1,14 @@
 package softdev;
 
+import java.io.Serializable;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
-import static softdev.Constantes. *;
+import static softdev.Constantes.*;
 
+public class Menu implements Serializable {
 
-public interface Menu {
-
-    default String ingresarId(){
+protected String ingresarId(){
         int id = 0;
         boolean idValido = false;
         Scanner entrada = new Scanner(System.in);
@@ -25,7 +25,7 @@ public interface Menu {
         return String.valueOf(id);
     }
     
-    default void mostrarOpcionesValidas(List<String> elementos) {
+    protected void mostrarOpcionesValidas(List<String> elementos) {
         System.out.printf("Las opciones validas son:");
 
         // Imprimir encabezados
@@ -35,7 +35,7 @@ public interface Menu {
         System.out.println("\n"); // Salto de línea al final
     }
     
-    default void mostrarOpcionesValidaseEnVertical(List<String> elementos) {
+    protected void mostrarOpcionesValidaseEnVertical(List<String> elementos) {
         System.out.printf("Las opciones validas son:\n");
         int numOpcion = 0;
 
@@ -51,7 +51,7 @@ public interface Menu {
         return TIPOS_USUARIO_VALIDOS.contains(tipoUsuario);
     }
 
-    default String elegirTipoDeUsuario(String contorno, String mensaje) {
+    protected String elegirTipoDeUsuario(String contorno, String mensaje) {
         String tipoUsuario = "";
 
         while (!tipoUsuarioValido(tipoUsuario)) {
@@ -75,15 +75,15 @@ public interface Menu {
         return tipoUsuario;
     }
     
-    default boolean opcionValida(int canatidadOpciones, int opcionNum) {
+    private boolean opcionValida(int canatidadOpciones, int opcionNum) {
         return 1 <= opcionNum && opcionNum <= canatidadOpciones;
     }
 
-    default void espaciarPantallas() {
+    protected void espaciarPantallas() {
         System.out.println("*\n*\n*\n*\n*\n*\n*\n*\n");
     }
 
-    default String[] ingresarUsuarioYContraseña() {
+    protected String[] ingresarUsuarioYContraseña() {
         System.out.printf("Nombre de usuario: ");
         Scanner entrada = new Scanner(System.in);
         String nombreUsuario = entrada.nextLine().toUpperCase();
@@ -95,7 +95,7 @@ public interface Menu {
         return usuarioYContraseña;
     }
 
-    default int leerOpcionMenu(int cantidadOpciones) {
+    public int leerOpcionMenu(int cantidadOpciones) {
         int opcion = -1;
         Scanner entrada = new Scanner(System.in);
         do {
@@ -113,5 +113,5 @@ public interface Menu {
         espaciarPantallas();
         return opcion;
     }
-
+    
 }

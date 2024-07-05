@@ -3,15 +3,14 @@ package softdev;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Administrador extends Usuario implements MenuAdministrador {
+public class Administrador extends Usuario{
     
     private IAdministradorStrategy accionAdministrador;
             
     
     public Administrador(String nombre, String contraseña) {
-        super(nombre, contraseña, 12);
+        super(nombre, contraseña, 12, new MenuAdministrador());
         this.accionAdministrador = new FuncionAdministradorStrategy();
-        
     }
 
     
@@ -26,7 +25,7 @@ public class Administrador extends Usuario implements MenuAdministrador {
         System.out.println("(5)Asignar desarrollador a un proyecto  | (11)Ver desarrolladores asignados");
         System.out.println("(6)Quitar desarrollador de un proyecto  | (12)Salir");
 
-        return ejecutarAccion(leerOpcionMenu(cantidadDeOpciones));
+        return ejecutarAccion(menu.leerOpcionMenu(cantidadDeOpciones));
     }
 
     @Override
@@ -80,50 +79,50 @@ public class Administrador extends Usuario implements MenuAdministrador {
     }
     
     public Usuario crearUsuario(){
-        return accionAdministrador.crearUsuario();
+        return accionAdministrador.crearUsuario((MenuAdministrador) menu);
     }
     
     public String[] solicitarEliminarUsuario(){
-        return accionAdministrador.solicitarEliminarUsuario();
+        return accionAdministrador.solicitarEliminarUsuario((MenuAdministrador) menu);
     }
  
     public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador) {
-        return accionAdministrador.registrarDesarrollador(ultimoIdDesarrollador);
+        return accionAdministrador.registrarDesarrollador((MenuAdministrador) menu, ultimoIdDesarrollador);
     }
     
     public String  solicitarEliminarDesarrollador(){
-        return accionAdministrador.solicitarEliminarDesarrollador();
+        return accionAdministrador.solicitarEliminarDesarrollador((MenuAdministrador) menu);
     }
     
     public String[] solicitarAsignarDesarrollador(){
-       return accionAdministrador.solicitarAsignarDesarrollador();
+       return accionAdministrador.solicitarAsignarDesarrollador((MenuAdministrador) menu);
     }
     
     public String[] solicitarDesasignarDesarrollador(){
-       return accionAdministrador.solicitarDesasignarDesarrollador();
+       return accionAdministrador.solicitarDesasignarDesarrollador((MenuAdministrador) menu);
     }
     
     public LocalDate solicitarFechaInicioProyecto(){
-        return accionAdministrador.solicitarFechaInicioProyecto();
+        return accionAdministrador.solicitarFechaInicioProyecto((MenuAdministrador) menu);
     } 
 
     public void mostrarClientes(ArrayList<Cliente> clientes){
-        accionAdministrador.mostrarClientes(clientes);
+        accionAdministrador.mostrarClientes((MenuAdministrador) menu, clientes);
     }
     
     public void mostrarGerentes(ArrayList<Gerente> gerentes){
-        accionAdministrador.mostrarGerentes(gerentes);
+        accionAdministrador.mostrarGerentes((MenuAdministrador) menu, gerentes);
     }
     
     public void mostrarAdministradores(ArrayList<Administrador> administradores){
-        accionAdministrador.mostrarAdministradores(administradores);
+        accionAdministrador.mostrarAdministradores((MenuAdministrador) menu, administradores);
     }
     
     public void mostrarDesarrolladoresDisponibles(ArrayList<Desarrollador> desarrolladores){
-        accionAdministrador.mostrarDesarrolladoresDisponibles(desarrolladores);
+        accionAdministrador.mostrarDesarrolladoresDisponibles((MenuAdministrador) menu, desarrolladores);
     }    
 
     public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores){
-         accionAdministrador.mostrarDesarrolladoresAsignados(desarrolladores);
+         accionAdministrador.mostrarDesarrolladoresAsignados((MenuAdministrador) menu, desarrolladores);
     }  
 }

@@ -3,9 +3,8 @@ package softdev;
 import java.util.Scanner;
 import static softdev.Constantes.*;
 
-public interface MenuCliente extends Menu {
-
-    default String[] ingresarDatosParaNuevoProyecto() {
+public class MenuSolicitante extends Menu {
+    public String[] ingresarDatosParaNuevoProyecto() {
         Scanner entrada = new Scanner(System.in);
         String contorno = "============================================================";
         String mensaje = "Ingrese los datos para llenar la solicitud de nuevo proyecto";
@@ -54,7 +53,7 @@ public interface MenuCliente extends Menu {
         return medio;
     }
 
-    default void presentarListaDeProyectos() {
+    public void presentarListaDeProyectos() {
         espaciarPantallas();
         System.out.println("-------------------------------");
         System.out.println("Lista de proyectos del cliente:");

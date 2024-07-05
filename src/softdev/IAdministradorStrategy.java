@@ -5,27 +5,27 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface IAdministradorStrategy extends Serializable{
-    public Usuario crearUsuario();
+    public Usuario crearUsuario(MenuAdministrador menu);
     
-    public String[] solicitarEliminarUsuario();
+    public String[] solicitarEliminarUsuario(MenuAdministrador menu);
 	
-    public Desarrollador registrarDesarrollador(int ultimoIdDesarrollador);
+    public Desarrollador registrarDesarrollador(MenuAdministrador menu, int ultimoIdDesarrollador);
     
-    public String  solicitarEliminarDesarrollador();
+    public String  solicitarEliminarDesarrollador(MenuAdministrador menu);
     
-    public String[] solicitarAsignarDesarrollador();
+    public String[] solicitarAsignarDesarrollador(MenuAdministrador menu);
     
-    public String[] solicitarDesasignarDesarrollador();
+    public String[] solicitarDesasignarDesarrollador(MenuAdministrador menu);
     
-    public LocalDate solicitarFechaInicioProyecto();
+    public LocalDate solicitarFechaInicioProyecto(MenuAdministrador menu);
 
-    public void mostrarClientes(ArrayList<Cliente> clientes);
+    public void mostrarClientes(MenuAdministrador menu, ArrayList<Cliente> clientes);
     
-    public void mostrarGerentes(ArrayList<Gerente> gerentes);
+    public void mostrarGerentes(MenuAdministrador menu, ArrayList<Gerente> gerentes);
     
-    public void mostrarAdministradores(ArrayList<Administrador> administradores);
+    public void mostrarAdministradores(MenuAdministrador menu, ArrayList<Administrador> administradores);
     
-    public void mostrarDesarrolladoresDisponibles(ArrayList<Desarrollador> desarrolladores);
+    public void mostrarDesarrolladoresDisponibles(MenuAdministrador menu, ArrayList<Desarrollador> desarrolladores);
 
-    public void mostrarDesarrolladoresAsignados(ArrayList<Desarrollador> desarrolladores);
+    public void mostrarDesarrolladoresAsignados(MenuAdministrador menu, ArrayList<Desarrollador> desarrolladores);
 }

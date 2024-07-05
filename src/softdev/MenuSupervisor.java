@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Scanner;
 import static softdev.Constantes.*;
 
-public interface MenuGerente extends Menu {
-
-    default String ingresarDatosDeProyectoAAprobar() {
+public class MenuSupervisor extends Menu{
+    public String ingresarDatosDeProyectoAAprobar() {
         String contorno = "=================================================";
         String mensaje = "Ingrese los datos del proyecto que quiere aprobar";
 
@@ -20,7 +19,7 @@ public interface MenuGerente extends Menu {
         return ingresarId();
     }
 
-    default String ingresarDatosDeProyectoARechazar() {
+    public String ingresarDatosDeProyectoARechazar() {
         String contorno = "=================================================";
         String mensaje = "Ingrese los datos del proyecto que quiere rechazar";
 
@@ -31,7 +30,7 @@ public interface MenuGerente extends Menu {
         return ingresarId();
     }
 
-    default String ingresarDatosDeProyectoAFinalizar() {
+    public String ingresarDatosDeProyectoAFinalizar() {
         String contorno = "===================================================";
         String mensaje = "Ingrese los datos del proyecto que quiere finalizar";
 
@@ -43,7 +42,7 @@ public interface MenuGerente extends Menu {
         return ingresarId();
         }
     
-    default LocalDate ingresarFechaFin(){
+    public LocalDate ingresarFechaFin(){
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate fechaDeFin = null;
@@ -61,7 +60,7 @@ public interface MenuGerente extends Menu {
         return fechaDeFin;
     }
 
-    default String ingresarNuevoEstadoDeProyecto() {
+    public String ingresarNuevoEstadoDeProyecto() {
         String contorno = "====================================================";
         String mensaje = "Ingrese el estado en el que se encuentra el proyecto";
 
@@ -75,7 +74,7 @@ public interface MenuGerente extends Menu {
 
     }
 
-    default String ingresarDatosDeProyecto() {
+    public String ingresarDatosDeProyecto() {
         String contorno = "==============================";
         String mensaje = "Ingrese los datos del proyecto";
 
@@ -114,7 +113,7 @@ public interface MenuGerente extends Menu {
         return nuevoEstado;
     }
 
-    default void mostrarOpcionesValidaseEnVertical(List<String> elementos) {
+    public void mostrarOpcionesValidaseEnVertical(List<String> elementos) {
         System.out.printf("Las opciones validas son:");
         int numOpcion = 0;
 
@@ -126,7 +125,7 @@ public interface MenuGerente extends Menu {
         System.out.println("\n"); // Salto de línea al final
     }
 
-    default void presentarListaDeProyectos() {
+    public void presentarListaDeProyectos() {
         espaciarPantallas();
         System.out.println("-------------------");
         System.out.println("Lista de proyectos:");

@@ -2,11 +2,11 @@ package softdev;
 
 import java.util.ArrayList;
 
-public class FuncionSolicitanteStrategy implements ISolicitanteStrategy, MenuCliente{
+public class FuncionSolicitanteStrategy implements ISolicitanteStrategy{
 
     @Override
-    public Proyecto solicitarNuevoProyecto() {
-        String tituloDescripcionMedioYPresupuesto[] = ingresarDatosParaNuevoProyecto();
+    public Proyecto solicitarNuevoProyecto(MenuSolicitante menu) {
+        String tituloDescripcionMedioYPresupuesto[] = menu.ingresarDatosParaNuevoProyecto();
 
         double presupuesto = Double.parseDouble(tituloDescripcionMedioYPresupuesto[3]);
 
@@ -15,18 +15,18 @@ public class FuncionSolicitanteStrategy implements ISolicitanteStrategy, MenuCli
     }
 
     @Override
-    public void mostrarDatosDeProyectosDelUsuario(ArrayList<Proyecto> proyectos) {
+    public void mostrarDatosDeProyectosDelUsuario(MenuSolicitante menu, ArrayList<Proyecto> proyectos) {
         if (proyectos.isEmpty()) {
             System.out.println("****************************************");
             System.out.println("EN ESTE MOMENTO USTED NO POSEE PROYECTOS");
             System.out.println("****************************************");
         } else {
-            mostrarProyectos(proyectos);
+            mostrarProyectos(menu, proyectos);
         }
     }
     
-     private void mostrarProyectos(ArrayList<Proyecto> proyectos) {
-        presentarListaDeProyectos();
+     private void mostrarProyectos(MenuSolicitante menu, ArrayList<Proyecto> proyectos) {
+        menu.presentarListaDeProyectos();
 
         for (Proyecto proyecto : proyectos) {
             System.out.println("-------------------------------");

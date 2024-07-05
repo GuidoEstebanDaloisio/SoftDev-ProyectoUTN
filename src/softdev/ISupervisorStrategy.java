@@ -5,15 +5,15 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 public interface ISupervisorStrategy extends Serializable{
-    public void mostrarProyectos(ArrayList<Proyecto> proyectos);
+    public void mostrarProyectos(MenuSupervisor menu, ArrayList<Proyecto> proyectos);
 
-    public String solicitarAprobarProyecto();
+    public String solicitarAprobarProyecto(MenuSupervisor menu);
 
-    public String solicitarRechazarProyecto();
+    public String solicitarRechazarProyecto(MenuSupervisor menu);
 
-    public String solicitarFinalizarProyecto();
+    public String solicitarFinalizarProyecto(MenuSupervisor menu);
     
-    public LocalDate ingresarFechaFinDeProyecto();
+    public LocalDate ingresarFechaFinDeProyecto(MenuSupervisor menu);
     
-    public String[] nuevoEstadoDelProyecto();
+    public String[] nuevoEstadoDelProyecto(MenuSupervisor menu);
 }

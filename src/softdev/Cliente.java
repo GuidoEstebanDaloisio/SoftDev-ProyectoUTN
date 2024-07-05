@@ -3,7 +3,7 @@ package softdev;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Cliente extends Usuario implements MenuCliente {
+public class Cliente extends Usuario{
 
     private ISolicitanteStrategy accionSolicitante;
 
@@ -12,7 +12,7 @@ public class Cliente extends Usuario implements MenuCliente {
     private int telefono;
 
     public Cliente(String direccion, String mail, int telefono, String nombre, String contraseña) {
-        super(nombre, contraseña, 3);
+        super(nombre, contraseña, 3, new MenuSolicitante());
         this.direccion = direccion;
         this.mail = mail;
         this.telefono = telefono;
@@ -25,7 +25,7 @@ public class Cliente extends Usuario implements MenuCliente {
         System.out.println("(1)Solicitar proyecto");
         System.out.println("(2)Consultar por proyecto");
         System.out.println("(3)Salir");
-        return ejecutarAccion(leerOpcionMenu(cantidadDeOpciones));
+        return ejecutarAccion(menu.leerOpcionMenu(cantidadDeOpciones));
     }
 
     @Override
@@ -55,11 +55,11 @@ public class Cliente extends Usuario implements MenuCliente {
     }
 
     public Proyecto solicitarNuevoProyecto() {
-        return accionSolicitante.solicitarNuevoProyecto();
+        return accionSolicitante.solicitarNuevoProyecto((MenuSolicitante) menu);
     }
 
     public void mostrarDatosDeProyectosDelUsuario(ArrayList<Proyecto> proyectos) {
-        accionSolicitante.mostrarDatosDeProyectosDelUsuario(proyectos);
+        accionSolicitante.mostrarDatosDeProyectosDelUsuario((MenuSolicitante) menu, proyectos);
     }
     
     // Sobrescribimos equals y hashCode para evitar problemas al volver a ejecutar el programa

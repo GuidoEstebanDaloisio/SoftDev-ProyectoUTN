@@ -6,9 +6,9 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import static softdev.Constantes.*;
 
-public interface MenuAdministrador extends Menu {
-
-    default String[] ingresarDatosParaNuevoUsuario() {
+public class MenuAdministrador extends Menu{
+    
+    public String[] ingresarDatosParaNuevoUsuario() {
         String contorno = "=================================================";
         String mensaje = "Ingrese los datos para registrar un nuevo usuario";
 
@@ -26,7 +26,7 @@ public interface MenuAdministrador extends Menu {
         return tipoUsuarioNombreYContraseña;
     }
 
-    default String ingresarDatosDeProyecto() {
+    public String ingresarDatosDeProyecto() {
         String contorno = "==============================";
         String mensaje = "Ingrese los datos del proyecto";
 
@@ -38,7 +38,7 @@ public interface MenuAdministrador extends Menu {
         return ingresarId();
     }
 
-    default String ingresarDatosDeDesarrolladorParaAsignar() {
+    public String ingresarDatosDeDesarrolladorParaAsignar() {
         String contorno = "=====================================================";
         String mensaje = "Ingrese los datos del desarrollador que desea asignar";
 
@@ -49,7 +49,7 @@ public interface MenuAdministrador extends Menu {
         return ingresarId();
     }
 
-    default String ingresarDatosDeDesarrolladorParaDesasignar() {
+    public String ingresarDatosDeDesarrolladorParaDesasignar() {
         String contorno = "========================================================";
         String mensaje = "Ingrese los datos del desarrollador que desea desasignar";
 
@@ -60,7 +60,7 @@ public interface MenuAdministrador extends Menu {
         return ingresarId();
     }
 
-    default LocalDate ingresarFechaDeInicioDeProyecto() {
+    public LocalDate ingresarFechaDeInicioDeProyecto() {
         Scanner scanner = new Scanner(System.in);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDate fechaDeInicio = null;
@@ -80,7 +80,7 @@ public interface MenuAdministrador extends Menu {
         return fechaDeInicio;
     }
 
-    default String[] ingresarDatosParaBorrarUsuario() {
+    public String[] ingresarDatosParaBorrarUsuario() {
         String contorno = "==============================================";
         String mensaje = "Ingrese los datos del usuario que desea borrar";
 
@@ -99,7 +99,7 @@ public interface MenuAdministrador extends Menu {
 
     }
 
-    default String ingresarDatosParaBorrarDesarrollador() {
+    public String ingresarDatosParaBorrarDesarrollador() {
         String contorno = "====================================================";
         String mensaje = "Ingrese los datos del desarrollador que desea borrar";
 
@@ -110,7 +110,7 @@ public interface MenuAdministrador extends Menu {
         return ingresarId();
     }
 
-    default String[] ingresarDatosParaNuevoDesarrollador() {
+    public String[] ingresarDatosParaNuevoDesarrollador() {
         Scanner entrada = new Scanner(System.in);
 
         System.out.println("=======================================================");
@@ -129,7 +129,7 @@ public interface MenuAdministrador extends Menu {
         return nombreYHabilidad;
     }
 
-    default String[] interfazCrearUsuario(String tipoUsuario) {
+    public String[] interfazCrearUsuario(String tipoUsuario) {
         String[] nombreYContraseña = ingresarUsuarioYContraseña();
 
         if (!tipoUsuario.equals("CLIENTE")) {
@@ -139,7 +139,7 @@ public interface MenuAdministrador extends Menu {
         return nombreYContraseña;
     }
 
-    default String[] ingresarDatosDelCliente() {
+    public String[] ingresarDatosDelCliente() {
 
         System.out.printf("Direccion: ");
         Scanner entrada = new Scanner(System.in);
@@ -169,31 +169,31 @@ public interface MenuAdministrador extends Menu {
         return direccionMailTelefono;
     }
 
-    default void presentarListaDeClientes() {
+    public void presentarListaDeClientes() {
         espaciarPantallas();
         System.out.println("------------------");
         System.out.println("Lista de clientes:");
     }
 
-    default void presentarListaDeGerentes() {
+    public void presentarListaDeGerentes() {
         espaciarPantallas();
         System.out.println("------------------");
         System.out.println("Lista de gerentes:");
     }
 
-    default void presentarListaDeAdministradores() {
+    public void presentarListaDeAdministradores() {
         espaciarPantallas();
         System.out.println("-------------------------");
         System.out.println("Lista de administradores:");
     }
 
-    default void presentarListaDeDesarrolladoresDisponibles() {
+    public void presentarListaDeDesarrolladoresDisponibles() {
         espaciarPantallas();
         System.out.println("-------------------------------------");
         System.out.println("Lista de desarrolladores disponibles:");
     }
 
-    default void presentarListaDeDesarrolladoresAsignados() {
+    public void presentarListaDeDesarrolladoresAsignados() {
         espaciarPantallas();
         System.out.println("-----------------------------------");
         System.out.println("Lista de desarrolladores asignados:");
