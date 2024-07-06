@@ -10,7 +10,10 @@ class Cliente {
     - direccion: String
     - mail: String
     - telefono: Integer
-    
+    -accionSolicitante: ISolicitanteStrategy
+
+
+
     +Cliente(String direccion, String mail, int telefono, String nombre, String contraseña)
     +mostrarDatosDeProyectosDelUsuario()
     +solicitarProyecto()
@@ -19,7 +22,9 @@ class Cliente {
 
 
 class Administrador {
+  -accionAdministrador: IAdministradorStrategy
   
+
   +Administrador(nombre: String, contraseña: String)
   +crearUsuario()
   +solicitarEliminarUsuario()
@@ -53,7 +58,8 @@ class Desarrollador {
 
 
 class Gerente {
-  
+  -accionSupervisor: ISupervisorStrategy
+
   +Gerente (nombre: String, contraseña: String)
   +mostrarProyectos(proyectos: ArrayList<Proyecto>)
   +solicitarAprobarProyecto()
@@ -110,6 +116,7 @@ Class Sistema {
   -USUARIOS_FILE: String
   -DESARROLLADORES_FILE: String
   -PROYECTOS_FILE: String
+  -menu: MenuInicio
 
   +iniciar()
   -verificarYCrearArchivo(nombreArchivo: String)
@@ -151,6 +158,8 @@ abstract class Usuario {
   # nombre: String
   # contraseña: String
   # cantidadDeOpciones: int
+  # menu: Menu
+
 
   +Usuario(nombre: String, contraseña: String, cantidadDeOpciones: int)
   +elegirAccion()
@@ -174,7 +183,7 @@ Sistema "1" o--"*" Proyecto: proyectos
 Sistema "1" o--"*" Desarrollador: desarrolladores
 
 Proyecto "1"-->"*" Desarrollador
-Proyecto "*"-->"1" Cliente
+Proyecto -->"1" Cliente
 
 Administrador ..> Sistema: crear nuevo usuario, eliminar usuario, registrar desarrollador, eliminar desarrollador, asignar desarrollador, desasignar desarrollador y mostrar usuarios y desarrolladores
 Gerente ..> Sistema: ver proyectos, aprobarlos, rechazarlos, finalizarlos y cambiar su estado de progreso

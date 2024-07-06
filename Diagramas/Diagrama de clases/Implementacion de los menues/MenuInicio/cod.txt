@@ -7,19 +7,28 @@ skinparam background color transparent
 skinparam shadowing false
 
 
-interface MenuInicio{
-  +iniciarSesionComo()
-  +inicioDeSesion(tipoUsuario: String)
-  +saludoDespedida()
-  +bienvenida(nombreUsuario: String)
-  +primerInicioDeSesion()
-  +bienvenidaPrimerUsuario(nombreUsuario: String)
+class Menu{
+  #ingresarId()
+  #mostrarOpcionesValidas(elementos: List<String>)
+  #mostrarOpcionesValidaseEnVertical(elementos: List<String>)
+  #elegirTipoDeUsuario(contorno: String, mensaje: String)
+  #opcionValida(canatidadOpciones: int, opcionNum: int)
+  #espaciarPantallas()
+  #ingresarUsuarioYContraseña()
+  +leerOpcionMenu(cantidadOpciones: int)
+  -tipoUsuarioValido(tipoUsuario: String)
+}
+
+class MenuInicio{
+  +iniciarSesionComo() 
+  +inicioDeSesion(String tipoUsuario) 
+  +saludoDespedida() 
+  +bienvenida(String nombreUsuario) 
+  +primerInicioDeSesion() 
+  +bienvenidaPrimerUsuario(String nombreUsuario) 
 }
 
 Class Sistema {
-  -desarrolladores: ArrayList<Desarrollador>
-  -usuarios: ArrayList<Usuario>
-  -proyectos: ArrayList<Proyecto>
   -usuarioActual: Usuario
   -USUARIOS_FILE: String
   -DESARROLLADORES_FILE: String
@@ -61,7 +70,7 @@ Class Sistema {
 }
 
 
-
-MenuInicio <|..   Sistema 
+Menu  <|--  MenuInicio
+MenuInicio  ..*  Sistema
 
 @enduml

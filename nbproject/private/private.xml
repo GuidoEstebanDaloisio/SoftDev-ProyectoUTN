@@ -12,10 +12,9 @@
     </editor-bookmarks>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/FuncionMostrarProyectos.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/ISupervisorStrategy.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/FuncionSupervisorStrategy.java</file>
-            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/FuncionSolicitarAprobarProyecto.java</file>
+            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Sistema.java</file>
+            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/Usuario.java</file>
+            <file>file:/C:/Users/Guido/Desktop/.JAVA/SoftDev-ProyectoUTN/src/softdev/MenuInicio.java</file>
         </group>
     </open-files>
 </project-private>

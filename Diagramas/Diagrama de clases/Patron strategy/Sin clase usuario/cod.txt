@@ -1,0 +1,130 @@
+@startuml
+hide circle
+skinparam monochrome true
+skinparam classAttributeIconSize 0
+skinparam roundcorner 0
+skinparam background color transparent
+skinparam shadowing false
+
+
+
+class Cliente {
+    - direccion: String
+    - mail: String
+    - telefono: Integer
+    -accionSolicitante: ISolicitanteStrategy
+
+    +Cliente(String direccion, String mail, int telefono, String nombre, String contraseña)
+    +mostrarDatosDeProyectosDelUsuario()
+    +solicitarProyecto()
+    +mostrarDatosDeProyectosDelUsuario(proyectos: ArrayList<Proyecto>)
+}
+
+class FuncionSolicitanteStrategy{
+	+ solicitarNuevoProyecto(menu : MenuSolicitante ) 
+  + mostrarDatosDeProyectosDelUsuario(menu : MenuSolicitante , proyectos : ArrayList<Proyecto> ) 
+  - mostrarProyectos(menu : MenuSolicitante , proyectos : ArrayList<Proyecto> ) 
+}
+
+interface ISolicitanteStrategy{
+	+ solicitarNuevoProyecto(menu : MenuSolicitante ) 
+  + mostrarDatosDeProyectosDelUsuario(menu : MenuSolicitante , proyectos : ArrayList<Proyecto> ) 
+}
+
+class Gerente {
+  -accionSupervisor: ISupervisorStrategy
+
+  +Gerente (nombre: String, contraseña: String)
+  +mostrarProyectos(proyectos: ArrayList<Proyecto>)
+  +solicitarAprobarProyecto()
+  +solicitarRechazarProyecto()
+  +solicitarFinalizarProyecto()
+  +ingresarFechaFinDeProyecto()
+  +nuevoEstadoDelProyecto()
+}
+
+class FuncionSupervisorStrategy{
+    +  mostrarProyectos(menu : MenuSupervisor, proyectos : ArrayList<Proyecto> )
+    +  solicitarAprobarProyecto(menu : MenuSupervisor) 
+    +  solicitarRechazarProyecto(menu : MenuSupervisor) 
+    +  solicitarFinalizarProyecto(menu : MenuSupervisor) 
+    +  ingresarFechaFinDeProyecto(menu : MenuSupervisor)
+    +  nuevoEstadoDelProyecto(menu : MenuSupervisor) 
+    -  mostrarDatos(menu : MenuSupervisor, proyectos : ArrayList<Proyecto> ) 
+}
+
+interface ISupervisorStrategy{
+    +  mostrarProyectos(menu : MenuSupervisor, proyectos : ArrayList<Proyecto> )
+    +  solicitarAprobarProyecto(menu : MenuSupervisor) 
+    +  solicitarRechazarProyecto(menu : MenuSupervisor) 
+    +  solicitarFinalizarProyecto(menu : MenuSupervisor) 
+    +  ingresarFechaFinDeProyecto(menu : MenuSupervisor)
+    +  nuevoEstadoDelProyecto(menu : MenuSupervisor) 
+}
+
+class Administrador {
+  -accionAdministrador: IAdministradorStrategy
+  
+  +Administrador(nombre: String, contraseña: String)
+  +crearUsuario()
+  +solicitarEliminarUsuario()
+  +registrarDesarrollador(ultimoIdDesarrollador: int)
+  +solicitarEliminarDesarrollador()
+  +solicitarAsignarDesarrollador()
+  +solicitarDesasignarDesarrollador()
+  +solicitarFechaInicioProyecto()
+  +mostrarClientes(clientes: ArrayList<Cliente>)
+  +mostrarGerentes(gerentes: ArrayList<Gerente>)
+  +mostrarAdministradores(administradores: ArrayList<Administrador>)
+  +mostrarDesarrolladoresDisponibles(desarrolladores: ArrayList<Desarrollador>)
+  +mostrarDesarrolladoresAsignados(desarrolladores: ArrayList<Desarrollador>)
+}
+
+
+class FuncionAdministradorStrategy{
+ +  crearUsuario(menu : MenuAdministrador) 
+    +  solicitarEliminarUsuario(menu : MenuAdministrador) 
+    +  registrarDesarrollador(menu : MenuAdministrador, ultimoIdDesarrollador: int) 
+    +  solicitarEliminarDesarrollador(menu : MenuAdministrador) 
+    +  solicitarAsignarDesarrollador(menu : MenuAdministrador) 
+    +  solicitarDesasignarDesarrollador(menu : MenuAdministrador) 
+    +  solicitarFechaInicioProyecto(menu : MenuAdministrador) 
+    +  mostrarClientes(menu : MenuAdministrador, clientes :  ArrayList<Cliente>) 
+    -  mostrarDatosClientes(menu : MenuAdministrador, clientes :  ArrayList<Cliente>)
+    +  mostrarGerentes(menu : MenuAdministrador, gerentes : ArrayList<Gerente>) 
+    -  mostrarDatosGerentes(menu : MenuAdministrador, gerentes : ArrayList<Gerente>) 
+    +  mostrarAdministradores(menu : MenuAdministrador, administradores : ArrayList<Administrador> )
+    -  mostrarDatosAdministradores(menu : MenuAdministrador, administradores : ArrayList<Administrador> )	
+    +  mostrarDesarrolladoresDisponibles(menu : MenuAdministrador, desarrolladores : ArrayList<Desarrollador> ) 
+    +  mostrarDesarrolladoresAsignados(menu : MenuAdministrador, desarrolladores : ArrayList<Desarrollador> ) 
+    -  mostrarDatosDesarrolladores(menu : MenuAdministrador, desarrolladores : ArrayList<Desarrollador> )  
+
+}
+
+interface IAdministradorStrategy{
+ +  crearUsuario(menu : MenuAdministrador) 
+    +  solicitarEliminarUsuario(menu : MenuAdministrador) 
+    +  registrarDesarrollador(menu : MenuAdministrador, ultimoIdDesarrollador: int) 
+    +  solicitarEliminarDesarrollador(menu : MenuAdministrador) 
+    +  solicitarAsignarDesarrollador(menu : MenuAdministrador) 
+    +  solicitarDesasignarDesarrollador(menu : MenuAdministrador) 
+    +  solicitarFechaInicioProyecto(menu : MenuAdministrador) 
+    +  mostrarClientes(menu : MenuAdministrador, clientes :  ArrayList<Cliente>) 
+    +  mostrarGerentes(menu : MenuAdministrador, gerentes : ArrayList<Gerente>) 
+    +  mostrarAdministradores(menu : MenuAdministrador, administradores : ArrayList<Administrador> )
+    +  mostrarDesarrolladoresDisponibles(menu : MenuAdministrador, desarrolladores : ArrayList<Desarrollador> ) 
+    +  mostrarDesarrolladoresAsignados(menu : MenuAdministrador, desarrolladores : ArrayList<Desarrollador> ) 
+}
+
+
+
+IAdministradorStrategy --o Administrador 
+ISupervisorStrategy --o Gerente 
+ISolicitanteStrategy --o Cliente 
+
+IAdministradorStrategy <|-- FuncionAdministradorStrategy
+ISupervisorStrategy <|-- FuncionSupervisorStrategy
+ISolicitanteStrategy <|-- FuncionSolicitanteStrategy
+
+
+@enduml
