@@ -19,7 +19,7 @@ public abstract class Usuario implements Serializable {
 
     public abstract String elegirAccion();
 
-    public abstract String ejecutarAccion(int accionNum);
+    public abstract String enviarAcionElegida(int accionNum);
 
     public abstract void mostrarDatos();
 
@@ -34,6 +34,11 @@ public abstract class Usuario implements Serializable {
     protected String getNombre() {
         return nombre;
     }
+
+    public String getContraseña() {
+        return contraseña;
+    }
+    
 
     public void setId(int id) {
         this.id = id;

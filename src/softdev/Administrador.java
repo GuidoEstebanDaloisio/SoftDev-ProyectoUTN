@@ -25,11 +25,11 @@ public class Administrador extends Usuario{
         System.out.println("(5)Asignar desarrollador a un proyecto  | (11)Ver desarrolladores asignados");
         System.out.println("(6)Quitar desarrollador de un proyecto  | (12)Salir");
 
-        return ejecutarAccion(menu.leerOpcionMenu(cantidadDeOpciones));
+        return enviarAcionElegida(menu.leerOpcionMenu(cantidadDeOpciones));
     }
 
     @Override
-    public String ejecutarAccion(int accionNum) {
+    public String enviarAcionElegida(int accionNum) {
         String opcion = null;
         switch (accionNum) {
             case 1 -> {

@@ -25,11 +25,11 @@ public class Cliente extends Usuario{
         System.out.println("(1)Solicitar proyecto");
         System.out.println("(2)Consultar por proyecto");
         System.out.println("(3)Salir");
-        return ejecutarAccion(menu.leerOpcionMenu(cantidadDeOpciones));
+        return enviarAcionElegida(menu.leerOpcionMenu(cantidadDeOpciones));
     }
 
     @Override
-    public String ejecutarAccion(int accionNum) {
+    public String enviarAcionElegida(int accionNum) {
         String opcion = null;
         switch (accionNum) {
             case 1 -> {

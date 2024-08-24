@@ -21,11 +21,11 @@ public class Gerente extends Usuario{
         System.out.println("(4)Finalizar proyecto");
         System.out.println("(5)Actualizar estado del proyecto");
         System.out.println("(6)Salir");
-        return ejecutarAccion(menu.leerOpcionMenu(cantidadDeOpciones));
+        return enviarAcionElegida(menu.leerOpcionMenu(cantidadDeOpciones));
     }
 
     @Override
-    public String ejecutarAccion(int accionNum) {
+    public String enviarAcionElegida(int accionNum) {
         String opcion = null;
         switch (accionNum) {
             case 1 -> {

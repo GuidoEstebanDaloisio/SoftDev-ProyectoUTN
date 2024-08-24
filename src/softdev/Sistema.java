@@ -24,7 +24,7 @@ public class Sistema implements Serializable {
         usuarioActual = null;
 
         menu = new MenuInicio();
-        
+
         usuarios = new ArrayList<>();
         desarrolladores = new ArrayList<>();
         proyectos = new ArrayList<>();
@@ -60,14 +60,12 @@ public class Sistema implements Serializable {
 
         } else {
 
-            String tipoDeUsuarioQueInicioSesion;
             String usuarioYContraseña[];
             Usuario usuarioLogueado;
 
             do {
-                tipoDeUsuarioQueInicioSesion = menu.iniciarSesionComo();
-                usuarioYContraseña = menu.inicioDeSesion(tipoDeUsuarioQueInicioSesion);
-                usuarioLogueado = loguearUsuario(usuarioYContraseña[0], usuarioYContraseña[1], tipoDeUsuarioQueInicioSesion);
+                usuarioYContraseña = menu.inicioDeSesion();
+                usuarioLogueado = loguearUsuario(usuarioYContraseña[0], usuarioYContraseña[1]);
             } while (usuarioLogueado == null);
 
             usuarioActual = usuarioLogueado;
@@ -144,7 +142,13 @@ public class Sistema implements Serializable {
 
         switch (opcion) {
             case "NUEVO_USUARIO": {
-                Usuario nuevoUsuario = ((Administrador) usuarioActual).crearUsuario();
+                Usuario nuevoUsuario = null;
+                do {
+                    nuevoUsuario = ((Administrador) usuarioActual).crearUsuario();
+
+                } while (!validarUsuario(nuevoUsuario));
+                
+
                 int id = obtenerUltimoIdUsuario(nuevoUsuario.getClass().getSimpleName()) + 1;
                 nuevoUsuario.setId(id);
                 guardarUsuario(nuevoUsuario);
@@ -282,15 +286,15 @@ public class Sistema implements Serializable {
         return salir;
     }
 
-    private Usuario loguearUsuario(String nombre, String contraseña, String tipo) {
+    private Usuario loguearUsuario(String nombre, String contraseña) {
 
         for (Usuario usuario : usuarios) {
-            if (usuario.compararNombreYContraseña(nombre, contraseña) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo)) {
+            if (usuario.compararNombreYContraseña(nombre, contraseña)) {
                 return usuario;
             }
         }
-        System.out.println("No se encontro ningun " + tipo + " con ese nombre y contrasenia");
-        System.out.println("          Por favor ingrese un usuario valido");
+        System.out.println("No se encontro ningun usuario con ese nombre y contrasenia");
+        System.out.println("        Por favor ingrese un usuario valido");
 
         return null;
     }
@@ -301,14 +305,31 @@ public class Sistema implements Serializable {
         usuarios.add(primerUsuario);
     }
 
+    private boolean validarUsuario(Usuario nuevoUsuario) {
+        for (Usuario usuario : usuarios) {
+            if (usuario.compararNombreYContraseña(nuevoUsuario.getNombre(), nuevoUsuario.getContraseña())) {
+                
+                System.out.println("Ese nombre y contrasenia ya pertenecen a otro usuario");
+                System.out.println("Por favor ingrese otro nombre y contrasenia");
+                return false;
+            }
+        }
+        return true;
+    }
+
     private void cambiarEstadoDeProyecto(Proyecto proyecto, String nuevoEstado) {
+        if (proyecto == null) {
+            System.out.println("El proyecto no existe. No se puede actualizar el estado.");
+            return; // Salimos del método si el proyecto no existe
+        }
+
         if (proyecto.comprobarSiEstaDisponibleParaActualizarProgreso()) {
             try {
                 proyecto.setProgreso(nuevoEstado);
                 System.out.println("El estado del proyecto se ha cambiado a: " + nuevoEstado);
             } catch (Exception e) {
                 System.out.println("Error al cambiar el estado del proyecto: " + e.getMessage());
-                e.printStackTrace(); // Opcional: para ver la traza completa del error
+                e.printStackTrace();
             }
         } else {
             System.out.println("El estado del proyecto no se puede actualizar en este momento.");
@@ -437,16 +458,16 @@ public class Sistema implements Serializable {
     }
 
     private Proyecto obtenerProyecto(String idRecibida) {
-        Proyecto proyectoEncontrado = null;
         int id = Integer.parseInt(idRecibida);
 
         for (Proyecto proyecto : proyectos) {
             if (proyecto.compararId(id)) {
-                proyectoEncontrado = proyecto;
+                return proyecto;
             }
         }
 
-        return proyectoEncontrado;
+        //Cuando el proyecto no existe
+        return null;
     }
 
     private int obtenerUltimoIdUsuario(String tipoUsuario) {
