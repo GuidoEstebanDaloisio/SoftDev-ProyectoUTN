@@ -147,7 +147,6 @@ public class Sistema implements Serializable {
                     nuevoUsuario = usuarioActual.ejecutarAccion(opcion);
 
                 } while (!validarUsuario(nuevoUsuario));
-                
 
                 int id = obtenerUltimoIdUsuario(nuevoUsuario.getClass().getSimpleName()) + 1;
                 nuevoUsuario.setId(id);
@@ -156,25 +155,25 @@ public class Sistema implements Serializable {
             }
             case "BORRAR_USUARIO": {
                 String tipoUsuarioEId[] = usuarioActual.ejecutarAccion(opcion);
-                
+
                 borrarUsuario(tipoUsuarioEId[0], tipoUsuarioEId[1]);
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
                 Desarrollador nuevoDesarrollador = usuarioActual.ejecutarAccion(opcion, obtenerUltimoIdDesarrollador());
-                
+
                 guardarDesarrollador(nuevoDesarrollador);
                 break;
             }
             case "BORRAR_DESARROLLADOR": {
                 String idDesarrollador = usuarioActual.ejecutarAccion(opcion);
-                
+
                 borrarDesarrollador(idDesarrollador);
                 break;
             }
             case "ASIGNAR_DESARROLLADOR": {
                 String idProyectoEIdDesarrollador[] = usuarioActual.ejecutarAccion(opcion);
-                
+
                 boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(), idProyectoEIdDesarrollador[1]);
                 boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idProyectoEIdDesarrollador[0]);
 
@@ -191,7 +190,7 @@ public class Sistema implements Serializable {
             }
             case "DESASIGNAR_DESARROLLADOR": {
                 String idProyectoEIdDesarrollador[] = usuarioActual.ejecutarAccion(opcion);
-                
+
                 boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresAsignados(), idProyectoEIdDesarrollador[1]);
                 boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idProyectoEIdDesarrollador[0]);
 
@@ -209,31 +208,31 @@ public class Sistema implements Serializable {
             }
             case "VER_CLIENTES": {
                 usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Cliente.class.getSimpleName()));
-                
+
                 break;
             }
             case "VER_GERENTES": {
                 usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Gerente.class.getSimpleName()));
-                
+
                 break;
             }
             case "VER_ADMINISTRADORES": {
                 usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Administrador.class.getSimpleName()));
-                
+
                 break;
             }
             case "VER_DESARROLLADORES_DISPONIBLES": {
                 usuarioActual.ejecutarAccion(opcion, obtenerDesarrolladoresDisponibles());
-                
+
                 break;
             }
             case "VER_DESARROLLADORES_ASIGNADOS": {
                 usuarioActual.ejecutarAccion(opcion, obtenerDesarrolladoresAsignados());
                 break;
             }
-            case "NUEVO_PROYECTO": {                
+            case "NUEVO_PROYECTO": {
                 Proyecto nuevoProyecto = usuarioActual.ejecutarAccion(opcion);
-                
+
                 nuevoProyecto.setClienteSolicitante(usuarioActual);
                 nuevoProyecto.setId(obtenerUltimoIdProyecto() + 1);
                 guardarProyecto(nuevoProyecto);
@@ -241,7 +240,7 @@ public class Sistema implements Serializable {
             }
             case "CONSULTAR_PROYECTO": {
                 usuarioActual.ejecutarAccion(opcion, obtenerProyectosDelUsuario((Cliente) usuarioActual));
-                
+
                 break;
             }
             case "VER_PROYECTOS": {
@@ -282,7 +281,7 @@ public class Sistema implements Serializable {
             }
             case "ACTUALIZAR_PROGRESO_PROYECTO": {
                 String nuevoEstadoYId[] = usuarioActual.ejecutarAccion(opcion);
-                
+
                 cambiarEstadoDeProyecto(obtenerProyecto(nuevoEstadoYId[1]), nuevoEstadoYId[0]);
                 break;
             }
@@ -294,6 +293,18 @@ public class Sistema implements Serializable {
             }
         }
         return salir;
+    }
+
+    public boolean esUltimoAdministrador(Usuario usuario) {
+        int contadorAdmin = 0;
+
+        for (Usuario u : usuarios) {
+            if (u instanceof Administrador) {
+                contadorAdmin++;
+            }
+        }
+
+        return contadorAdmin == 1 && usuario instanceof Administrador;
     }
 
     private Usuario loguearUsuario(String nombre, String contraseña) {
@@ -318,7 +329,7 @@ public class Sistema implements Serializable {
     private boolean validarUsuario(Usuario nuevoUsuario) {
         for (Usuario usuario : usuarios) {
             if (usuario.compararNombreYContraseña(nuevoUsuario.getNombre(), nuevoUsuario.getContraseña())) {
-                
+
                 System.out.println("Ese nombre y contrasenia ya pertenecen a otro usuario");
                 System.out.println("Por favor ingrese otro nombre y contrasenia");
                 return false;
@@ -419,7 +430,7 @@ public class Sistema implements Serializable {
             //Y solo se guardara la fecha de inicio la primera vez que se guarde un desarrollador
             if (proyecto.getFechaDeInicio() == null) {
                 LocalDate fechaInicio = usuarioActual.ejecutarAccion("PEDIR_FECHA");
-                        
+
                 proyecto.setFechaDeInicio(fechaInicio);
             }
 
@@ -536,8 +547,14 @@ public class Sistema implements Serializable {
         while (iter.hasNext()) {
             Usuario usuario = iter.next();
             if (usuario.compararId(id) && usuario.getClass().getSimpleName().toUpperCase().equals(tipo)) {
-                iter.remove(); // Uso seguro del método remove del iterador
-                System.out.println("El usuario " + usuario.getClass().getSimpleName() + " " + usuario.getNombre() + " fue borrado exitosamente.");
+
+                // Verificar si el usuario es el último administrador
+                if (esUltimoAdministrador(usuario)) {
+                    System.out.println("No se puede eliminar al ultimo administrador.");
+                } else {
+                    iter.remove(); // Uso seguro del método remove del iterador
+                    System.out.println("El usuario " + usuario.getClass().getSimpleName() + " " + usuario.getNombre() + " fue borrado exitosamente.");
+                }
                 usuarioEncontrado = true;
             }
         }
