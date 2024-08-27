@@ -3,7 +3,7 @@ package softdev;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Cliente extends Usuario{
+public class Cliente extends Usuario {
 
     private ISolicitanteStrategy accionSolicitante;
 
@@ -46,6 +46,35 @@ public class Cliente extends Usuario{
     }
 
     @Override
+    public <R> R ejecutarAccion(String accion) {
+        switch (accion) {
+            case "NUEVO_PROYECTO" -> {
+                return (R) solicitarNuevoProyecto();
+            }
+            default-> {
+                System.out.println("Se solicito una accion no disponible");
+                break;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public <R> R ejecutarAccion(String accion, Object elemento) {
+        switch (accion) {
+            case "CONSULTAR_PROYECTO" -> {
+                mostrarDatosDeProyectosDelUsuario((ArrayList<Proyecto>) elemento);
+                break;
+            }
+            default-> {
+                System.out.println("Se solicito una accion no disponible");
+                break;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void mostrarDatos() {
         System.out.println("ID: " + id);
         System.out.println("Nombre: " + nombre);
@@ -61,18 +90,22 @@ public class Cliente extends Usuario{
     public void mostrarDatosDeProyectosDelUsuario(ArrayList<Proyecto> proyectos) {
         accionSolicitante.mostrarDatosDeProyectosDelUsuario((MenuSolicitante) menu, proyectos);
     }
-    
+
     // Sobrescribimos equals y hashCode para evitar problemas al volver a ejecutar el programa
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Cliente cliente = (Cliente) o;
-        return telefono == cliente.telefono &&
-                Objects.equals(direccion, cliente.direccion) &&
-                Objects.equals(mail, cliente.mail) &&
-                Objects.equals(nombre, cliente.nombre) &&
-                Objects.equals(id, cliente.id);  // assuming id is a unique identifier
+        return telefono == cliente.telefono
+                && Objects.equals(direccion, cliente.direccion)
+                && Objects.equals(mail, cliente.mail)
+                && Objects.equals(nombre, cliente.nombre)
+                && Objects.equals(id, cliente.id);  // assuming id is a unique identifier
     }
 
     @Override

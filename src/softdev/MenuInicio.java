@@ -33,7 +33,7 @@ public class MenuInicio extends Menu{
         return ingresarUsuarioYContraseña();
     }
 
-    public void bienvenidaPrimerUsuario(String nombreUsuario) {
+    public void saludarPrimerUsuario(String nombreUsuario) {
         bienvenida(nombreUsuario);
         System.out.println("====================================================================================");
         System.out.println("Al ser el primer usuario en nuestro sistema te asignamos el rol de Administrador.");

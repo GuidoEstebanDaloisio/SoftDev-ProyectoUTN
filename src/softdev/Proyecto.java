@@ -11,7 +11,7 @@ public class Proyecto implements Serializable {
     private int id;
     private String titulo;
     private String descripcion;
-    private Cliente clienteSolicitante;
+    private Usuario clienteSolicitante;
     private String medioDeEncargo;
     private ArrayList<Desarrollador> desarrolladores;
     private LocalDate fechaDeInicio;
@@ -33,7 +33,7 @@ public class Proyecto implements Serializable {
 
     }
 
-    public void setClienteSolicitante(Cliente clienteSolicitante) {
+    public void setClienteSolicitante(Usuario clienteSolicitante) {
         this.clienteSolicitante = clienteSolicitante;
     }
 
@@ -98,7 +98,7 @@ public class Proyecto implements Serializable {
         this.progreso = progreso;
     }
 
-    public boolean compararClientes(Cliente cliente) {
+    public boolean compararClientes(Usuario cliente) {
         return clienteSolicitante.equals(cliente);
     }
 

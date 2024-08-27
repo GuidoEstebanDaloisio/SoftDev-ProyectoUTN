@@ -15,5 +15,5 @@ public interface ISupervisorStrategy extends Serializable{
     
     public LocalDate ingresarFechaFinDeProyecto(MenuSupervisor menu);
     
-    public String[] nuevoEstadoDelProyecto(MenuSupervisor menu);
+    public String[] actualizarEstadoDelProyecto(MenuSupervisor menu);
 }

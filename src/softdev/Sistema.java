@@ -50,7 +50,7 @@ public class Sistema implements Serializable {
             Administrador primerAdmin = (Administrador) usuarios.get(0);
 
             usuarioActual = primerAdmin;
-            menu.bienvenidaPrimerUsuario(primerUsuarioYContraseña[0]);
+            menu.saludarPrimerUsuario(primerUsuarioYContraseña[0]);
             while (!salir) {
                 String entrada = primerAdmin.elegirAccion();
                 salir = ejecutarAccion(entrada);
@@ -144,7 +144,7 @@ public class Sistema implements Serializable {
             case "NUEVO_USUARIO": {
                 Usuario nuevoUsuario = null;
                 do {
-                    nuevoUsuario = ((Administrador) usuarioActual).crearUsuario();
+                    nuevoUsuario = usuarioActual.ejecutarAccion(opcion);
 
                 } while (!validarUsuario(nuevoUsuario));
                 
@@ -155,22 +155,26 @@ public class Sistema implements Serializable {
                 break;
             }
             case "BORRAR_USUARIO": {
-                String tipoUsuarioEId[] = ((Administrador) usuarioActual).solicitarEliminarUsuario();
+                String tipoUsuarioEId[] = usuarioActual.ejecutarAccion(opcion);
+                
                 borrarUsuario(tipoUsuarioEId[0], tipoUsuarioEId[1]);
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
-                Desarrollador nuevoDesarrollador = ((Administrador) usuarioActual).registrarDesarrollador(obtenerUltimoIdDesarrollador());
+                Desarrollador nuevoDesarrollador = usuarioActual.ejecutarAccion(opcion, obtenerUltimoIdDesarrollador());
+                
                 guardarDesarrollador(nuevoDesarrollador);
                 break;
             }
             case "BORRAR_DESARROLLADOR": {
-                String idDesarrollador = ((Administrador) usuarioActual).solicitarEliminarDesarrollador();
+                String idDesarrollador = usuarioActual.ejecutarAccion(opcion);
+                
                 borrarDesarrollador(idDesarrollador);
                 break;
             }
             case "ASIGNAR_DESARROLLADOR": {
-                String idProyectoEIdDesarrollador[] = ((Administrador) usuarioActual).solicitarAsignarDesarrollador();
+                String idProyectoEIdDesarrollador[] = usuarioActual.ejecutarAccion(opcion);
+                
                 boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresDisponibles(), idProyectoEIdDesarrollador[1]);
                 boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idProyectoEIdDesarrollador[0]);
 
@@ -186,7 +190,8 @@ public class Sistema implements Serializable {
                 break;
             }
             case "DESASIGNAR_DESARROLLADOR": {
-                String idProyectoEIdDesarrollador[] = ((Administrador) usuarioActual).solicitarDesasignarDesarrollador();
+                String idProyectoEIdDesarrollador[] = usuarioActual.ejecutarAccion(opcion);
+                
                 boolean administradorValido = validarAdministradorSolicitado(obtenerDesarrolladoresAsignados(), idProyectoEIdDesarrollador[1]);
                 boolean proyectoValido = validarProyectoSolicitadoParaAdministrarDesarrolladores(idProyectoEIdDesarrollador[0]);
 
@@ -203,43 +208,48 @@ public class Sistema implements Serializable {
                 break;
             }
             case "VER_CLIENTES": {
-                ((Administrador) usuarioActual).mostrarClientes(obtenerUsuariosPorTipo(Cliente.class.getSimpleName()));
+                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Cliente.class.getSimpleName()));
+                
                 break;
             }
             case "VER_GERENTES": {
-                ((Administrador) usuarioActual).mostrarGerentes(obtenerUsuariosPorTipo(Gerente.class.getSimpleName()));
+                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Gerente.class.getSimpleName()));
+                
                 break;
             }
             case "VER_ADMINISTRADORES": {
-                ((Administrador) usuarioActual).mostrarAdministradores(obtenerUsuariosPorTipo(Administrador.class.getSimpleName()));
-
+                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Administrador.class.getSimpleName()));
+                
                 break;
             }
             case "VER_DESARROLLADORES_DISPONIBLES": {
-                ((Administrador) usuarioActual).mostrarDesarrolladoresDisponibles(obtenerDesarrolladoresDisponibles());
+                usuarioActual.ejecutarAccion(opcion, obtenerDesarrolladoresDisponibles());
+                
                 break;
             }
             case "VER_DESARROLLADORES_ASIGNADOS": {
-                ((Administrador) usuarioActual).mostrarDesarrolladoresAsignados(obtenerDesarrolladoresAsignados());
+                usuarioActual.ejecutarAccion(opcion, obtenerDesarrolladoresAsignados());
                 break;
             }
-            case "NUEVO_PROYECTO": {
-                Proyecto nuevoProyecto = ((Cliente) usuarioActual).solicitarNuevoProyecto();
-                nuevoProyecto.setClienteSolicitante((Cliente) usuarioActual);
+            case "NUEVO_PROYECTO": {                
+                Proyecto nuevoProyecto = usuarioActual.ejecutarAccion(opcion);
+                
+                nuevoProyecto.setClienteSolicitante(usuarioActual);
                 nuevoProyecto.setId(obtenerUltimoIdProyecto() + 1);
                 guardarProyecto(nuevoProyecto);
                 break;
             }
             case "CONSULTAR_PROYECTO": {
-                ((Cliente) usuarioActual).mostrarDatosDeProyectosDelUsuario(obtenerProyectosDelUsuario((Cliente) usuarioActual));
+                usuarioActual.ejecutarAccion(opcion, obtenerProyectosDelUsuario((Cliente) usuarioActual));
+                
                 break;
             }
             case "VER_PROYECTOS": {
-                ((Gerente) usuarioActual).mostrarProyectos(proyectos);
+                usuarioActual.ejecutarAccion(opcion, proyectos);
                 break;
             }
             case "APROBAR_PROYECTO": {
-                String id = ((Gerente) usuarioActual).solicitarAprobarProyecto();
+                String id = usuarioActual.ejecutarAccion(opcion);
 
                 if (validarProyectoSolicitadoParaDeterminarAprobacion(id, "APROBAR")) {
                     System.out.println("Proyecto aprobado");
@@ -249,7 +259,7 @@ public class Sistema implements Serializable {
                 break;
             }
             case "RECHAZAR_PROYECTO": {
-                String id = ((Gerente) usuarioActual).solicitarRechazarProyecto();
+                String id = usuarioActual.ejecutarAccion(opcion);
 
                 if (validarProyectoSolicitadoParaDeterminarAprobacion(id, "RECHAZAR")) {
                     System.out.println("Proyecto rechazado");
@@ -259,7 +269,7 @@ public class Sistema implements Serializable {
                 break;
             }
             case "FINALIZAR_PROYECTO": {
-                String id = ((Gerente) usuarioActual).solicitarFinalizarProyecto();
+                String id = usuarioActual.ejecutarAccion(opcion);
 
                 if (validarProyectoSolicitadoParaFinalizar(id)) {
 
@@ -271,8 +281,8 @@ public class Sistema implements Serializable {
 
             }
             case "ACTUALIZAR_PROGRESO_PROYECTO": {
-                String nuevoEstadoYId[] = ((Gerente) usuarioActual).nuevoEstadoDelProyecto();
-
+                String nuevoEstadoYId[] = usuarioActual.ejecutarAccion(opcion);
+                
                 cambiarEstadoDeProyecto(obtenerProyecto(nuevoEstadoYId[1]), nuevoEstadoYId[0]);
                 break;
             }
@@ -369,7 +379,7 @@ public class Sistema implements Serializable {
 
     private void finalizarProyecto(Proyecto proyecto) {
         proyecto.setProgreso(FINALIZADO);
-        LocalDate fechaFin = ((Gerente) usuarioActual).ingresarFechaFinDeProyecto();
+        LocalDate fechaFin = usuarioActual.ejecutarAccion("INGRESAR_FECHA_FIN");
         proyecto.setFechaDeFinalizacion(fechaFin);
         proyecto.setProyectoFinalizado(true);
     }
@@ -408,7 +418,8 @@ public class Sistema implements Serializable {
 
             //Y solo se guardara la fecha de inicio la primera vez que se guarde un desarrollador
             if (proyecto.getFechaDeInicio() == null) {
-                LocalDate fechaInicio = ((Administrador) usuarioActual).solicitarFechaInicioProyecto();
+                LocalDate fechaInicio = usuarioActual.ejecutarAccion("PEDIR_FECHA");
+                        
                 proyecto.setFechaDeInicio(fechaInicio);
             }
 
@@ -555,7 +566,7 @@ public class Sistema implements Serializable {
         }
     }
 
-    private ArrayList<Proyecto> obtenerProyectosDelUsuario(Cliente cliente) {
+    private ArrayList<Proyecto> obtenerProyectosDelUsuario(Usuario cliente) {
         ArrayList<Proyecto> proyectosDelUsuario = new ArrayList<>();
         for (Proyecto proyecto : proyectos) {
             if (proyecto.compararClientes(cliente)) {

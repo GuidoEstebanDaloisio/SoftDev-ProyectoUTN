@@ -43,7 +43,7 @@ public class FuncionSupervisorStrategy implements ISupervisorStrategy {
     }
 
     @Override
-    public String[] nuevoEstadoDelProyecto(MenuSupervisor menu) {
+    public String[] actualizarEstadoDelProyecto(MenuSupervisor menu) {
 
         String id = menu.ingresarDatosDeProyecto();
         String nuevoEstado = menu.ingresarNuevoEstadoDeProyecto();

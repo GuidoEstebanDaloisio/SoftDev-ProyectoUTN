@@ -1,6 +1,7 @@
 package softdev;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public abstract class Usuario implements Serializable {
 
@@ -20,6 +21,10 @@ public abstract class Usuario implements Serializable {
     public abstract String elegirAccion();
 
     public abstract String enviarAcionElegida(int accionNum);
+    
+    public abstract <R> R ejecutarAccion(String accion);
+    
+    public abstract <R> R ejecutarAccion(String accion, Object objeto);
 
     public abstract void mostrarDatos();
 

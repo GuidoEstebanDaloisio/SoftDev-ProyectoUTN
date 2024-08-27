@@ -3,7 +3,7 @@ package softdev;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
-public class Gerente extends Usuario{
+public class Gerente extends Usuario {
 
     private ISupervisorStrategy accionSupervisor;
 
@@ -51,6 +51,47 @@ public class Gerente extends Usuario{
     }
 
     @Override
+    public <R> R ejecutarAccion(String accion) {
+        switch (accion) {
+            case "APROBAR_PROYECTO"->{
+                return (R) solicitarAprobarProyecto();
+            }
+            case "RECHAZAR_PROYECTO"->{
+                return (R) solicitarRechazarProyecto();
+            }
+            case "FINALIZAR_PROYECTO"->{
+                return (R) solicitarFinalizarProyecto();
+            }
+            case "ACTUALIZAR_PROGRESO_PROYECTO"->{
+                return (R) actualizarEstadoDelProyecto();
+            }
+            case "INGRESAR_FECHA_FIN"->{
+                return (R) ingresarFechaFinDeProyecto();
+            }
+            default -> {
+                System.out.println("Se solicito una accion no disponible");
+                break;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public <R> R ejecutarAccion(String accion, Object elemento) {
+        switch (accion) {
+            case "VER_PROYECTOS" -> {
+                mostrarProyectos((ArrayList<Proyecto>) elemento);
+                break;
+            }
+            default -> {
+                System.out.println("Se solicito una accion no disponible");
+                break;
+            }
+        }
+        return null;
+    }
+
+    @Override
     public void mostrarDatos() {
         System.out.println("ID: " + id);
         System.out.println("Nombre: " + nombre);
@@ -68,15 +109,15 @@ public class Gerente extends Usuario{
         return accionSupervisor.solicitarRechazarProyecto((MenuSupervisor) menu);
     }
 
-    public String solicitarFinalizarProyecto(){
+    public String solicitarFinalizarProyecto() {
         return accionSupervisor.solicitarFinalizarProyecto((MenuSupervisor) menu);
     }
-    
-    public LocalDate ingresarFechaFinDeProyecto(){
+
+    public LocalDate ingresarFechaFinDeProyecto() {
         return accionSupervisor.ingresarFechaFinDeProyecto((MenuSupervisor) menu);
     }
-    
-    public String[] nuevoEstadoDelProyecto() {
-        return accionSupervisor.nuevoEstadoDelProyecto((MenuSupervisor) menu);
+
+    public String[] actualizarEstadoDelProyecto() {
+        return accionSupervisor.actualizarEstadoDelProyecto((MenuSupervisor) menu);
     }
 }
