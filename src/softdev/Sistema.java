@@ -207,17 +207,17 @@ public class Sistema implements Serializable {
                 break;
             }
             case "VER_CLIENTES": {
-                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Cliente.class.getSimpleName()));
+                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Cliente.class));
 
                 break;
             }
             case "VER_GERENTES": {
-                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Gerente.class.getSimpleName()));
+                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Gerente.class));
 
                 break;
             }
             case "VER_ADMINISTRADORES": {
-                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Administrador.class.getSimpleName()));
+                usuarioActual.ejecutarAccion(opcion, obtenerUsuariosPorTipo(Administrador.class));
 
                 break;
             }
@@ -594,11 +594,11 @@ public class Sistema implements Serializable {
         return proyectosDelUsuario;
     }
 
-    private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(String tipoUsuario) {
+    private <T extends Usuario> ArrayList<T> obtenerUsuariosPorTipo(Class<T> tipoUsuario) {
         ArrayList<T> usuariosFiltrados = new ArrayList<>();
         for (Usuario usuario : usuarios) {
-            if (usuario.getClass().getSimpleName().equals(tipoUsuario)) {
-                usuariosFiltrados.add((T) usuario);
+            if (tipoUsuario.isInstance(usuario)) {
+                usuariosFiltrados.add(tipoUsuario.cast(usuario));
             }
         }
         return usuariosFiltrados;
