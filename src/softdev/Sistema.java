@@ -145,10 +145,9 @@ public class Sistema implements Serializable {
                 Usuario nuevoUsuario = null;
                 do {
                     nuevoUsuario = usuarioActual.ejecutarAccion(opcion);
-
                 } while (!validarUsuario(nuevoUsuario));
 
-                int id = obtenerUltimoIdUsuario(nuevoUsuario.getClass().getSimpleName()) + 1;
+                int id = obtenerUltimoIdUsuario(nuevoUsuario.getClass()) + 1;
                 nuevoUsuario.setId(id);
                 guardarUsuario(nuevoUsuario);
                 break;
@@ -492,10 +491,10 @@ public class Sistema implements Serializable {
         return null;
     }
 
-    private int obtenerUltimoIdUsuario(String tipoUsuario) {
+    private <T extends Usuario> int obtenerUltimoIdUsuario(Class<T> tipoUsuario) {
         int maxId = 0;
         for (Usuario usuario : usuarios) {
-            if (usuario.getClass().getSimpleName().equals(tipoUsuario)) {
+            if (tipoUsuario.isInstance(usuario)) {
                 int id = usuario.getId();
                 if (id > maxId) {
                     maxId = id;
@@ -626,10 +625,11 @@ public class Sistema implements Serializable {
 
     private boolean contieneAdministrador() {
         for (Usuario usuario : usuarios) {
-            if (usuario.getClass().getSimpleName().equals(Administrador.class.getSimpleName())) {
+            if (usuario.getClass().equals(Administrador.class)) {
                 return true;
             }
         }
         return false;
     }
+
 }
