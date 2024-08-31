@@ -8,17 +8,16 @@ import static softdev.Constantes.*;
 
 public class MenuAdministrador extends Menu{
     
-    public String[] ingresarDatosParaNuevoUsuario() {
-        String contorno = "=================================================";
-        String mensaje = "Ingrese los datos para registrar un nuevo usuario";
+    public String[] ingresarDatosParaNuevoUsuario() {       
+        System.out.println("=================================================");
+        System.out.println("Ingrese los datos para registrar un nuevo usuario");
+        System.out.println("=================================================");        
 
-        System.out.println(contorno);
-        System.out.println(mensaje);
-        System.out.println(contorno);
+        String mensaje = "Tipo de usuario";
+        
+        mostrarOpcionesValidasEnVertical(TIPOS_USUARIO_VALIDOS);
+        String tipoUsuario = ingresarOpcion(TIPOS_USUARIO_VALIDOS, mensaje);
 
-        mostrarOpcionesValidas(TIPOS_USUARIO_VALIDOS);
-
-        String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
         String nombreYContraseña[] = interfazCrearUsuario(tipoUsuario);
 
         String tipoUsuarioNombreYContraseña[] = {tipoUsuario, nombreYContraseña[0], nombreYContraseña[1]};

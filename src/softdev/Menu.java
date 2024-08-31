@@ -8,7 +8,7 @@ import static softdev.Constantes.*;
 
 public class Menu implements Serializable {
 
-protected String ingresarId(){
+    protected String ingresarId() {
         int id = 0;
         boolean idValido = false;
         Scanner entrada = new Scanner(System.in);
@@ -24,18 +24,8 @@ protected String ingresarId(){
         }
         return String.valueOf(id);
     }
-    
-    protected void mostrarOpcionesValidas(List<String> elementos) {
-        System.out.printf("Las opciones validas son:");
 
-        // Imprimir encabezados
-        for (String elemento : elementos) {
-            System.out.printf(" %s", elemento);
-        }
-        System.out.println("\n"); // Salto de línea al final
-    }
-    
-    protected void mostrarOpcionesValidaseEnVertical(List<String> elementos) {
+    protected void mostrarOpcionesValidasEnVertical(List<String> elementos) {
         System.out.printf("Las opciones validas son:\n");
         int numOpcion = 0;
 
@@ -46,7 +36,40 @@ protected String ingresarId(){
         }
         System.out.println("\n"); // Salto de línea al final
     }
-   
+
+    protected String ingresarOpcion(List<String> opcionesValidas, String mensajeParaEntrada) {
+        Scanner entrada = new Scanner(System.in);
+
+        String opcionNombre = null;
+        int opcionNum = 0;
+
+        do {
+            System.out.printf(mensajeParaEntrada+": ");
+            opcionNum = entrada.nextInt();
+
+            opcionNombre = obtenerNombreDeLaOpcion(opcionesValidas, opcionNum);
+
+        } while (opcionNombre == null);
+
+        return opcionNombre;
+    }
+    
+    private String obtenerNombreDeLaOpcion(List<String> opcionesValidas, int opcionNum) {
+        int i = 0;
+        String opcionNombre = null;
+
+        for (String opcion : opcionesValidas) {
+            i++;
+            if (i == opcionNum) {
+                opcionNombre = opcion;
+            }
+        }
+        if (opcionNombre == null) {
+            System.out.println(ERROR_OPCION_INVALIDA);
+        }
+        return opcionNombre;
+    }
+
     private boolean tipoUsuarioValido(String tipoUsuario) {
         return TIPOS_USUARIO_VALIDOS.contains(tipoUsuario);
     }
@@ -74,8 +97,8 @@ protected String ingresarId(){
         }
         return tipoUsuario;
     }
-    
-    private boolean opcionValida(int canatidadOpciones, int opcionNum) {
+
+    private boolean esOpcionValida(int canatidadOpciones, int opcionNum) {
         return 1 <= opcionNum && opcionNum <= canatidadOpciones;
     }
 
@@ -102,16 +125,16 @@ protected String ingresarId(){
             System.out.printf("-");
             try {
                 opcion = entrada.nextInt();
-                if (!opcionValida(cantidadOpciones, opcion)) {
+                if (!esOpcionValida(cantidadOpciones, opcion)) {
                     System.out.println(ERROR_OPCION_INVALIDA);
                 }
             } catch (InputMismatchException e) {
                 System.out.println(ERROR_OPCION_INVALIDA_CARACTER);
                 entrada.nextLine(); // Descarta la entrada inválida
             }
-        } while (!opcionValida(cantidadOpciones, opcion));
+        } while (!esOpcionValida(cantidadOpciones, opcion));
         espaciarPantallas();
         return opcion;
     }
-    
+
 }

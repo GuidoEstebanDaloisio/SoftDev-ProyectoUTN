@@ -42,15 +42,11 @@ public class MenuSolicitante extends Menu {
     }
 
     private String ingresarMedioDeSolicitud() {
-        Scanner entrada = new Scanner(System.in);
-        String medio;
-        do {
-            mostrarOpcionesValidas(MEDIOS_DE_SOLICITUD);
-            System.out.printf("Medio por el que hace la solicitud: ");
-            medio = entrada.nextLine();
-        } while (!MEDIOS_DE_SOLICITUD.contains(medio.toUpperCase()));
-
-        return medio;
+        String mensajeParaEntrada = "Medio por el que hace la solicitud";
+        
+        mostrarOpcionesValidasEnVertical(MEDIOS_DE_SOLICITUD);
+        
+        return ingresarOpcion(MEDIOS_DE_SOLICITUD, mensajeParaEntrada);
     }
 
     public void presentarListaDeProyectos() {

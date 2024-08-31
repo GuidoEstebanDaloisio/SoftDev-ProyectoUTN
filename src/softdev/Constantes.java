@@ -47,9 +47,4 @@ public class Constantes {
     private static String CONTORNO_ID_INVALIDO = "---------------------------------------------------\n";
     private static String TEXTO_ID_INVALIDO = "ERROR: DEBE INGRESAR UN ID QUE SEA UN NUMERO ENTERO\n";
     static String ERROR_ID_INVALIDO = CONTORNO_ID_INVALIDO + TEXTO_ID_INVALIDO + CONTORNO_ID_INVALIDO;
-
-    private static String CONTORNO_ESTADO_PROYECTO_INVALIDO = "------------------------------------------------------------------\n";
-    private static String TEXTO_ESTADO_PROYECTO_INVALIDO = "ERROR: DEBE INGRESAR UNA OPCION QUE CORRESPONDA A UN ESTADO VALIDO\n";
-    static String ERROR_ESTADO_PROYECTO_INVALIDO = CONTORNO_ESTADO_PROYECTO_INVALIDO + TEXTO_ESTADO_PROYECTO_INVALIDO + CONTORNO_ESTADO_PROYECTO_INVALIDO;
-
 }
