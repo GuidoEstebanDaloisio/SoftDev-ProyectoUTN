@@ -156,6 +156,13 @@ public class Sistema implements Serializable {
                 String tipoUsuarioEId[] = usuarioActual.ejecutarAccion(opcion);
 
                 borrarUsuario(tipoUsuarioEId[0], tipoUsuarioEId[1]);
+               
+                //Si se borró a si mismo se cerrará sesion
+                if (!existeUsuario(usuarioActual)){
+                    menu.saludoDespedida();
+                    salir = true;
+                }
+                    
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
@@ -631,5 +638,13 @@ public class Sistema implements Serializable {
         }
         return false;
     }
-
+    
+    private  boolean existeUsuario(Usuario usuario) {
+    for (Usuario u : usuarios) {
+        if (u.equals(usuario)) {  // Usar equals para comparar objetos
+            return true;
+        }
+    }
+    return false;
+}
 }
