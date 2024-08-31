@@ -80,15 +80,15 @@ public class MenuAdministrador extends Menu{
     }
 
     public String[] ingresarDatosParaBorrarUsuario() {
-        String contorno = "==============================================";
-        String mensaje = "Ingrese los datos del usuario que desea borrar";
-
-        System.out.println(contorno);
-        System.out.println(mensaje);
-        System.out.println(contorno);
-
-        String tipoUsuario = elegirTipoDeUsuario(contorno, mensaje);
-
+        System.out.println("==============================================");
+        System.out.println("Ingrese los datos del usuario que desea borrar");
+        System.out.println("==============================================");
+        
+        String mensaje = "Tipo de usuario";
+        
+        mostrarOpcionesValidasEnVertical(TIPOS_USUARIO_VALIDOS);
+        String tipoUsuario = ingresarOpcion(TIPOS_USUARIO_VALIDOS, mensaje);        
+        
         String id = ingresarId();
 
 
