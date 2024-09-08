@@ -78,6 +78,10 @@ public class Proyecto implements Serializable {
         return fechaDeInicio;
     }
 
+    public String getProgreso() {
+        return progreso;
+    }
+
     public boolean comprobarSiEstaEsperandoAprobacion() {
         return progreso.equals(ESPERANDO_APROBACION);
     }
@@ -86,16 +90,28 @@ public class Proyecto implements Serializable {
         return progreso.equals(RECHAZADO);
     }
 
-    public boolean comprobarSiEstaDisponibleParaActualizarProgreso() {
-        return !(progreso.equals(ESPERANDO_APROBACION) || progreso.equals(ESPERANDO_DESARROLLADOR) | progreso.equals(RECHAZADO) || progreso.equals(FINALIZADO));
-    }
-    
-    public boolean comprobarSiEstaDisponibleParaFinalizar(){
-        return ESTADOS_PROYECTO.contains(progreso);
+    public boolean comprobarSiEstaDisponibleParaFinalizar() {
+        return ESTADOS_PROYECTO_SEGUNDA_FASE.contains(progreso);
     }
 
     public void setProgreso(String progreso) {
         this.progreso = progreso;
+    }
+
+    public void cambiarEstado(String nuevoEstado) {
+        ServicioDeValidacion v = new ServicioDeValidacion();
+
+        if (v.validarActualizacionDelProyecto(progreso)) {
+            try {
+                progreso = nuevoEstado;
+                System.out.println("El estado del proyecto se ha cambiado a: " + nuevoEstado);
+            } catch (Exception e) {
+                System.out.println("Error al cambiar el estado del proyecto: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("El estado del proyecto no se puede actualizar en este momento.");
+        }
     }
 
     public boolean compararClientes(Usuario cliente) {
@@ -128,9 +144,7 @@ public class Proyecto implements Serializable {
                 if (proyectoFinalizado) {
                     System.out.println("Fecha fin: " + fechaDeFinalizacion.format(formatter));
                 }
-
             }
-
         }
     }
 

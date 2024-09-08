@@ -21,7 +21,9 @@ public class Constantes {
     static String CIERRE = "En fase de cierre del proyecto";
     static String FINALIZADO = "Finalizado";
     static String RECHAZADO = "El proyecto fue rechazado";
-    public static final List<String> ESTADOS_PROYECTO = Arrays.asList(EN_DESARROLLO, PRUEBAS, IMPLEMENTACION, MANTENIMIENTO, CIERRE);
+    
+    public static final List<String> ESTADOS_PROYECTO_PRIMERA_FASE = Arrays.asList(ESPERANDO_APROBACION, ESPERANDO_DESARROLLADOR);
+    public static final List<String> ESTADOS_PROYECTO_SEGUNDA_FASE = Arrays.asList(EN_DESARROLLO, PRUEBAS, IMPLEMENTACION, MANTENIMIENTO, CIERRE);
 
     //ERRORES
     private static String CONTORNO_USUARIO_INVALIDO = "          -------------------------------\n";

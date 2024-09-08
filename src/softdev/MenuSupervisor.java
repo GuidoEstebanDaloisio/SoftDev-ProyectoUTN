@@ -42,29 +42,15 @@ public class MenuSupervisor extends Menu{
         }
     
     public LocalDate ingresarFechaFin(){
-        Scanner scanner = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate fechaDeFin = null;
-
-        while (fechaDeFin == null) {
-            System.out.print("Ingrese la fecha de finalizacion del proyecto (formato: dd-MM-yyyy): ");
-            String input = scanner.nextLine();
-
-            try {
-                fechaDeFin = LocalDate.parse(input, formatter);
-            } catch (DateTimeParseException e) {
-                System.out.println("Formato de fecha incorrecto. Por favor, intente de nuevo.");
-            }
-        }
-        return fechaDeFin;
+        return ingresarFechaDe("finalizacion del proyecto");
     }
 
     public String ingresarNuevoEstadoDeProyecto() {
         String mensajeParaEntrada = "Nuevo estado";
         
-        mostrarOpcionesValidasEnVertical(ESTADOS_PROYECTO);
+        mostrarOpcionesValidasEnVertical(ESTADOS_PROYECTO_SEGUNDA_FASE);
         
-        return ingresarOpcion(ESTADOS_PROYECTO, mensajeParaEntrada);
+        return ingresarOpcion(ESTADOS_PROYECTO_SEGUNDA_FASE, mensajeParaEntrada);
     }
 
     public String ingresarDatosDeProyecto() {

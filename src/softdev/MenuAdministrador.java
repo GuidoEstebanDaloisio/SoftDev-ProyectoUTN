@@ -6,15 +6,15 @@ import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 import static softdev.Constantes.*;
 
-public class MenuAdministrador extends Menu{
-    
-    public String[] ingresarDatosParaNuevoUsuario() {       
+public class MenuAdministrador extends Menu {
+
+    public String[] ingresarDatosParaNuevoUsuario() {
         System.out.println("=================================================");
         System.out.println("Ingrese los datos para registrar un nuevo usuario");
-        System.out.println("=================================================");        
+        System.out.println("=================================================");
 
         String mensaje = "Tipo de usuario";
-        
+
         mostrarOpcionesValidasEnVertical(TIPOS_USUARIO_VALIDOS);
         String tipoUsuario = ingresarOpcion(TIPOS_USUARIO_VALIDOS, mensaje);
 
@@ -32,7 +32,6 @@ public class MenuAdministrador extends Menu{
         System.out.println(contorno);
         System.out.println(mensaje);
         System.out.println(contorno);
-
 
         return ingresarId();
     }
@@ -60,37 +59,20 @@ public class MenuAdministrador extends Menu{
     }
 
     public LocalDate ingresarFechaDeInicioDeProyecto() {
-        Scanner scanner = new Scanner(System.in);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDate fechaDeInicio = null;
-
-        while (fechaDeInicio == null) {
-            System.out.print("Ingrese la fecha de inicio del proyecto (formato: dd-MM-yyyy): ");
-            String input = scanner.nextLine();
-
-            try {
-                fechaDeInicio = LocalDate.parse(input, formatter);
-            } catch (DateTimeParseException e) {
-                System.out.println("Formato de fecha incorrecto. Por favor, intente de nuevo.");
-            }
-        }
-        
-        espaciarPantallas();
-        return fechaDeInicio;
+        return ingresarFechaDe("inicio del proyecto");
     }
 
     public String[] ingresarDatosParaBorrarUsuario() {
         System.out.println("==============================================");
         System.out.println("Ingrese los datos del usuario que desea borrar");
         System.out.println("==============================================");
-        
-        String mensaje = "Tipo de usuario";
-        
-        mostrarOpcionesValidasEnVertical(TIPOS_USUARIO_VALIDOS);
-        String tipoUsuario = ingresarOpcion(TIPOS_USUARIO_VALIDOS, mensaje);        
-        
-        String id = ingresarId();
 
+        String mensaje = "Tipo de usuario";
+
+        mostrarOpcionesValidasEnVertical(TIPOS_USUARIO_VALIDOS);
+        String tipoUsuario = ingresarOpcion(TIPOS_USUARIO_VALIDOS, mensaje);
+
+        String id = ingresarId();
 
         String tipoUsuarioEId[] = {tipoUsuario, id};
         espaciarPantallas();

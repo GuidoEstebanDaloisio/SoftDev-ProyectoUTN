@@ -156,13 +156,13 @@ public class Sistema implements Serializable {
                 String tipoUsuarioEId[] = usuarioActual.ejecutarAccion(opcion);
 
                 borrarUsuario(tipoUsuarioEId[0], tipoUsuarioEId[1]);
-               
+
                 //Si se borró a si mismo se cerrará sesion
-                if (!existeUsuario(usuarioActual)){
+                if (!existeUsuario(usuarioActual)) {
                     menu.saludoDespedida();
                     salir = true;
                 }
-                    
+
                 break;
             }
             case "NUEVO_DESARROLLADOR": {
@@ -274,8 +274,8 @@ public class Sistema implements Serializable {
                 break;
             }
             case "FINALIZAR_PROYECTO": {
-                String id = usuarioActual.ejecutarAccion(opcion);
-
+                String id = usuarioActual.ejecutarAccion(opcion);         
+              
                 if (validarProyectoSolicitadoParaFinalizar(id)) {
 
                     System.out.println("Proyecto Finalizado");
@@ -287,8 +287,14 @@ public class Sistema implements Serializable {
             }
             case "ACTUALIZAR_PROGRESO_PROYECTO": {
                 String nuevoEstadoYId[] = usuarioActual.ejecutarAccion(opcion);
+                Proyecto p = obtenerProyecto(nuevoEstadoYId[1]);
 
-                cambiarEstadoDeProyecto(obtenerProyecto(nuevoEstadoYId[1]), nuevoEstadoYId[0]);
+                if (p != null) {
+                    p.cambiarEstado(nuevoEstadoYId[0]);
+                } else {
+                    System.out.println("El proyecto no existe. No se puede actualizar el estado.");
+                }
+
                 break;
             }
 
@@ -342,25 +348,6 @@ public class Sistema implements Serializable {
             }
         }
         return true;
-    }
-
-    private void cambiarEstadoDeProyecto(Proyecto proyecto, String nuevoEstado) {
-        if (proyecto == null) {
-            System.out.println("El proyecto no existe. No se puede actualizar el estado.");
-            return; // Salimos del método si el proyecto no existe
-        }
-
-        if (proyecto.comprobarSiEstaDisponibleParaActualizarProgreso()) {
-            try {
-                proyecto.setProgreso(nuevoEstado);
-                System.out.println("El estado del proyecto se ha cambiado a: " + nuevoEstado);
-            } catch (Exception e) {
-                System.out.println("Error al cambiar el estado del proyecto: " + e.getMessage());
-                e.printStackTrace();
-            }
-        } else {
-            System.out.println("El estado del proyecto no se puede actualizar en este momento.");
-        }
     }
 
     private boolean validarProyectoSolicitadoParaDeterminarAprobacion(String idRecibida, String nuevoEstado) {
@@ -638,13 +625,13 @@ public class Sistema implements Serializable {
         }
         return false;
     }
-    
-    private  boolean existeUsuario(Usuario usuario) {
-    for (Usuario u : usuarios) {
-        if (u.equals(usuario)) {  // Usar equals para comparar objetos
-            return true;
+
+    private boolean existeUsuario(Usuario usuario) {
+        for (Usuario u : usuarios) {
+            if (u.equals(usuario)) {  // Usar equals para comparar objetos
+                return true;
+            }
         }
+        return false;
     }
-    return false;
-}
 }

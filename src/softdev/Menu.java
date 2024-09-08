@@ -1,6 +1,9 @@
 package softdev;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -52,6 +55,26 @@ public class Menu implements Serializable {
         } while (opcionNombre == null);
 
         return opcionNombre;
+    }
+    
+    public LocalDate ingresarFechaDe(String tipoDeFecha) {
+        Scanner scanner = new Scanner(System.in);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDate fechaDeInicio = null;
+
+        while (fechaDeInicio == null) {
+            System.out.print("Ingrese la fecha de " + tipoDeFecha + " (formato: dd-MM-yyyy): ");
+            String input = scanner.nextLine();
+
+            try {
+                fechaDeInicio = LocalDate.parse(input, formatter);
+            } catch (DateTimeParseException e) {
+                System.out.println("Formato de fecha incorrecto. Por favor, intente de nuevo.");
+            }
+        }
+        
+        espaciarPantallas();
+        return fechaDeInicio;
     }
     
     private String obtenerNombreDeLaOpcion(List<String> opcionesValidas, int opcionNum) {
